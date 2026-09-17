@@ -1,0 +1,15 @@
+{
+  "$schema": "https://rork.com/schema/rork.json",
+  "apps": [
+    {
+      "name": "DJ Games",
+      "path": "web-dj-games",
+      "framework": "web"
+    },
+    {
+      "name": "Functions",
+      "path": "functions",
+      "framework": "cloudflare"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DJ Games design system — dark slate canvas, acid green signal, ember orange accent. */
+
+@layer base {
+  :root {
+    --background: 156 20% 5%;
+    --foreground: 135 14% 94%;
+
+    --surface: 153 15% 9%;
+    --surface-raised: 153 14% 12%;
+
+    --signal: 144 100% 61%;
+    --signal-soft: 144 60% 24%;
+    --ember: 25 100% 55%;
+
+    --card: 153 15% 9%;
+    --card-foreground: 135 14% 94%;
+
+    --popover: 153 16% 8%;
+    --popover-foreground: 135 14% 94%;
+
+    --primary: 144 100% 61%;
+    --primary-foreground: 156 30% 5%;
+
+    --secondary: 153 14% 14%;
+    --secondary-foreground: 135 14% 94%;
+
+    --muted: 153 12% 16%;
+    --muted-foreground: 153 10% 60%;
+
+    --accent: 25 100% 55%;
+    --accent-foreground: 156 30% 5%;
+
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 135 14% 94%;
+
+    --border: 153 12% 18%;
+    --input: 153 12% 18%;
+    --ring: 144 100% 61%;
+
+    --radius: 0.875rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, hsl(var(--signal) / 0.07), transparent 60%),
+      linear-gradient(hsl(var(--background)), hsl(var(--background)));
+  }
+
+  ::selection {
+    background: hsl(var(--signal) / 0.85);
+    color: hsl(var(--primary-foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--signal));
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    font-variation-settings: "wdth" 88;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[0.68rem] uppercase tracking-[0.32em] text-signal;
+  }
+
+  .display-title {
+    @apply font-display font-extrabold uppercase leading-[0.92] tracking-[-0.01em];
+  }
+
+  .surface-card {
+    @apply relative rounded-lg border border-border/80 bg-surface/85 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .surface-card-interactive {
+    @apply surface-card hover:-translate-y-1 hover:border-signal/45 hover:shadow-glow;
+  }
+
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, hsl(var(--signal) / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--signal) / 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(120% 90% at 50% 0%, black, transparent 75%);
+  }
+
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: hsl(var(--signal) / 0.5);
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+  }
+
+  .corner-ticks::before {
+    top: -1px;
+    left: -1px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 4px;
+  }
+
+  .corner-ticks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 32px hsl(var(--signal) / 0.55);
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /*
+   * Showcase variant: grid cards enter with a soft rise + scale-up and resolve
+   * from a light blur to sharp, for a more cinematic entrance. Pair with `.reveal`.
+   */
+  .reveal-modern {
+    transform: translate3d(0, 26px, 0) scale(0.975);
+    filter: blur(5px);
+    transition:
+      opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal-visible.reveal-modern {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal-modern {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
