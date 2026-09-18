@@ -3,6 +3,9 @@ node_modules
 .expo
 .rork
 
+# App Store Connect CLI working files (may contain account metadata)
+.asc
+
 # Cloudflare Functions
 functions/node_modules
 !functions/package.json
