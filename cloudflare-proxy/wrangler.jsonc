@@ -1,0 +1,22 @@
+{
+  // Deploy config for the playdjgames.com -> Rork origin proxy.
+  //
+  // This Worker belongs in YOUR Cloudflare account and is intentionally NOT
+  // listed in rork.json, so Rork never builds or deploys it.
+  //
+  //   npx wrangler login
+  //   npx wrangler deploy
+  //
+  // The routes below only attach once playdjgames.com is an active zone in the
+  // same Cloudflare account (i.e. after the nameserver switch completes).
+  "name": "playdjgames-proxy",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-18",
+  "routes": [
+    { "pattern": "playdjgames.com/*", "zone_name": "playdjgames.com" },
+    { "pattern": "www.playdjgames.com/*", "zone_name": "playdjgames.com" }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
