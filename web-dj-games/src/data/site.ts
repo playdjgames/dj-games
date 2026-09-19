@@ -59,7 +59,7 @@ export const SITE: SiteConfig = {
     youtube: "[YOUTUBE_URL]",
     tiktok: "[TIKTOK_URL]",
     x: "[X_URL]",
-    instagram: "[INSTAGRAM_URL]",
+    instagram: "https://www.instagram.com/playdjgames/",
     facebook: "https://www.facebook.com/PlayDJGames",
   },
   copyrightYear: 2026,
