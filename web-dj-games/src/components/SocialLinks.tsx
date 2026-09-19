@@ -30,18 +30,21 @@ const ICONS: Record<SocialKey, LucideIcon | typeof XIcon> = {
 interface SocialLinksProps {
   className?: string;
   iconSize?: number;
+  /** Renders the platform name beside each icon (footer uses this for clarity).
+   *  Default false keeps the compact icon-only row used elsewhere. */
+  showLabels?: boolean;
 }
 
 /**
  * Renders only the platforms with a real URL filled in inside `data/site.ts`.
  * Returns nothing while every social link is still a placeholder.
  */
-export const SocialLinks = ({ className, iconSize = 18 }: SocialLinksProps) => {
+export const SocialLinks = ({ className, iconSize = 18, showLabels = false }: SocialLinksProps) => {
   const socials = activeSocials();
   if (socials.length === 0) return null;
 
   return (
-    <ul className={cn("flex flex-wrap items-center gap-2.5", className)}>
+    <ul className={cn("flex flex-wrap items-center gap-2.5", showLabels && "flex-col items-start gap-1", className)}>
       {socials.map(({ key, label, url }) => {
         const Icon = ICONS[key];
         return (
@@ -51,9 +54,15 @@ export const SocialLinks = ({ className, iconSize = 18 }: SocialLinksProps) => {
               target="_blank"
               rel="noreferrer noopener"
               aria-label={label}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface-raised text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-signal/50 hover:text-signal"
+              className={cn(
+                "inline-flex min-h-[44px] items-center gap-2.5 rounded-md text-muted-foreground transition-colors duration-300 hover:text-signal",
+                showLabels
+                  ? "px-1 font-mono text-[0.68rem] uppercase tracking-[0.18em]"
+                  : "h-11 w-11 justify-center border border-border bg-surface-raised hover:-translate-y-0.5 hover:border-signal/50",
+              )}
             >
-              <Icon size={iconSize} />
+              <Icon size={iconSize} className={showLabels ? "text-signal" : undefined} />
+              {showLabels ? label : null}
             </a>
           </li>
         );

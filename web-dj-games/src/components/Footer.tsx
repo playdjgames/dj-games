@@ -89,7 +89,7 @@ export const Footer = () => {
           {websiteDomain()}
         </a>
 
-        <SocialLinks className="mt-6" />
+        <SocialLinks className="mt-4" showLabels />
       </div>
 
       <nav aria-label="Footer">
