@@ -14,7 +14,7 @@
 export const isLive = (url: string | undefined | null): url is string =>
   typeof url === "string" && url.trim().length > 0 && !url.trim().startsWith("[");
 
-export type SocialKey = "discord" | "youtube" | "tiktok" | "x" | "instagram";
+export type SocialKey = "discord" | "youtube" | "tiktok" | "x" | "instagram" | "facebook";
 
 export interface SiteConfig {
   brandName: string;
@@ -60,6 +60,9 @@ export const SITE: SiteConfig = {
     tiktok: "[TIKTOK_URL]",
     x: "[X_URL]",
     instagram: "[INSTAGRAM_URL]",
+    // 👇 Your Facebook PAGE url, e.g. https://www.facebook.com/PlayDJGames
+    //    (facebook.com on its own is the login homepage, not a profile).
+    facebook: "[FACEBOOK_URL]",
   },
   copyrightYear: 2026,
 };
@@ -95,6 +98,7 @@ export const SOCIAL_LABELS: Record<SocialKey, string> = {
   tiktok: "TikTok",
   x: "X",
   instagram: "Instagram",
+  facebook: "Facebook",
 };
 
 /** Only the social platforms you have actually filled in. */

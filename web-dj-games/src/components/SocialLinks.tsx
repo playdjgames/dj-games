@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle, Music2, Youtube } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Music2, Youtube } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { activeSocials, type SocialKey } from "@/data/site";
@@ -24,6 +24,7 @@ const ICONS: Record<SocialKey, LucideIcon | typeof XIcon> = {
   tiktok: Music2,
   x: XIcon,
   instagram: Instagram,
+  facebook: Facebook,
 };
 
 interface SocialLinksProps {
