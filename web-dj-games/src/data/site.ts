@@ -60,9 +60,7 @@ export const SITE: SiteConfig = {
     tiktok: "[TIKTOK_URL]",
     x: "[X_URL]",
     instagram: "[INSTAGRAM_URL]",
-    // 👇 Your Facebook PAGE url, e.g. https://www.facebook.com/PlayDJGames
-    //    (facebook.com on its own is the login homepage, not a profile).
-    facebook: "[FACEBOOK_URL]",
+    facebook: "https://www.facebook.com/PlayDJGames",
   },
   copyrightYear: 2026,
 };
