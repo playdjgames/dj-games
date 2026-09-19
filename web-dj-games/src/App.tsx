@@ -14,6 +14,7 @@ import GameDetail from "./pages/GameDetail";
 import Games from "./pages/Games";
 import Home from "./pages/Home";
 import Legal from "./pages/Legal";
+import MediaLibrary from "./pages/MediaLibrary";
 import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
 import NotFound from "./pages/NotFound";
@@ -41,8 +42,9 @@ const App = () => {
             <Route path="/news/:slug" element={<NewsPost />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/support" element={<Support />} />
-            {/* Private studio page — intentionally not linked in nav or footer. */}
+            {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />
+            <Route path="/media" element={<MediaLibrary />} />
             <Route path="/privacy" element={<Legal kind="privacy" />} />
             <Route path="/terms" element={<Legal kind="terms" />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

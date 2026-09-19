@@ -27,6 +27,13 @@
 const ORIGIN_HOST = "playdjgames-com.rork.app";
 
 /**
+ * The project's Cloudflare Worker backend. `/media/*` must reach this instead
+ * of the site origin, otherwise the SPA's catch-all route would answer a media
+ * request with an HTML page — social publishers need the real bytes.
+ */
+const BACKEND_HOST = "dj-games-backend.rork.app";
+
+/**
  * Send `www.playdjgames.com` to the bare domain with a permanent redirect.
  * Keeps one canonical URL for search engines. Set to false to serve both.
  */
@@ -56,8 +63,12 @@ export default {
       return Response.redirect(apex.toString(), 301);
     }
 
+    // Promotional media is served by the backend Worker straight out of R2.
+    const isMediaPath = url.pathname.startsWith("/media/");
+    const originHost = isMediaPath ? BACKEND_HOST : ORIGIN_HOST;
+
     // Rebuild the request against the origin, preserving path + query exactly.
-    const target = new URL(url.pathname + url.search, `https://${ORIGIN_HOST}`);
+    const target = new URL(url.pathname + url.search, `https://${originHost}`);
 
     const headers = new Headers(request.headers);
     for (const name of STRIPPED_REQUEST_HEADERS) headers.delete(name);
@@ -97,7 +108,7 @@ export default {
     if (location) {
       try {
         const resolved = new URL(location, target.toString());
-        if (resolved.hostname === ORIGIN_HOST) {
+        if (resolved.hostname === originHost) {
           resolved.protocol = "https:";
           resolved.hostname = url.hostname;
           resolved.port = "";
