@@ -29,7 +29,7 @@
     --secondary-foreground: 135 14% 94%;
 
     --muted: 153 12% 16%;
-    --muted-foreground: 153 10% 60%;
+    --muted-foreground: 153 11% 66%;
 
     --accent: 25 100% 55%;
     --accent-foreground: 156 30% 5%;
@@ -53,6 +53,9 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* The site is dark-locked: force dark native UI (scrollbars, form controls,
+       autofill) even when the OS/browser is set to light mode. */
+    color-scheme: dark;
   }
 
   body {
@@ -70,6 +73,16 @@
   :focus-visible {
     outline: 2px solid hsl(var(--signal));
     outline-offset: 3px;
+  }
+
+  /* Keep browser autofill dark instead of flashing the OS light-mode white. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: hsl(var(--foreground));
+    -webkit-box-shadow: 0 0 0 1000px hsl(var(--surface-raised)) inset;
+    caret-color: hsl(var(--foreground));
+    transition: background-color 9999s ease-in-out 0s;
   }
 
   h1,

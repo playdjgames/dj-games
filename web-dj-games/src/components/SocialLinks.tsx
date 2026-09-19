@@ -57,7 +57,7 @@ export const SocialLinks = ({ className, iconSize = 18, showLabels = false }: So
               className={cn(
                 "inline-flex min-h-[44px] items-center gap-2.5 rounded-md text-muted-foreground transition-colors duration-300 hover:text-signal",
                 showLabels
-                  ? "px-1 font-mono text-[0.68rem] uppercase tracking-[0.18em]"
+                  ? "px-1 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-foreground/80"
                   : "h-11 w-11 justify-center border border-border bg-surface-raised hover:-translate-y-0.5 hover:border-signal/50",
               )}
             >
