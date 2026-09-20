@@ -10,6 +10,7 @@
 //                                   the real MIME type and Range support, so
 //                                   Meta/Windsor can fetch it with a plain GET.
 //   GET  /media-admin/config        admin  — whether R2 storage is wired up
+//   GET  /media-admin/health        admin  — live credential check against R2
 //   GET  /media-admin/list          admin  — metadata for every stored file
 //   POST /media-admin/upload-url    admin  — presigned R2 PUT for one upload
 //   POST /media-admin/record        admin  — save metadata after upload finishes
@@ -31,7 +32,15 @@ export { MediaLibrary } from "./media";
 
 import type { MediaRow } from "./media";
 import { contentTypeForKey, safeFilename, safeSlug, specForContentType } from "./_lib/media-types";
-import { copyObject, deleteObject, getObject, presignPut, readR2Config, type R2Config } from "./_lib/r2";
+import {
+  copyObject,
+  deleteObject,
+  getObject,
+  headObject,
+  presignPut,
+  readR2Config,
+  type R2Config,
+} from "./_lib/r2";
 
 type Env = {
   DO: Fetcher;
@@ -186,6 +195,27 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
 
   if (!config) {
     return Response.json({ ok: false, error: "storage_not_configured" }, { status: 503 });
+  }
+
+  // Live credential check: proves the keys sign correctly and the bucket is
+  // reachable, rather than merely that the envs are present. Reports only a
+  // status word — never the bucket, account or key material — and probes a
+  // reserved key that can never collide with real media.
+  if (path === "/media-admin/health" && request.method === "GET") {
+    const probe = await headObject(config, "health-check/probe");
+    // 404 is the success case: the request signed and the bucket answered, the
+    // probe object simply isn't there.
+    if (probe.status === 404 || probe.status === 200) {
+      return Response.json({ ok: true, storage: "ready" });
+    }
+    if (probe.status === 401 || probe.status === 403) {
+      return Response.json({ ok: false, storage: "credentials_rejected" }, { status: 503 });
+    }
+    if (probe.status === 400) {
+      return Response.json({ ok: false, storage: "bucket_unreachable" }, { status: 503 });
+    }
+    console.error("r2 health probe failed", { status: probe.status });
+    return Response.json({ ok: false, storage: "unavailable" }, { status: 503 });
   }
 
   if (path === "/media-admin/list" && request.method === "GET") {
