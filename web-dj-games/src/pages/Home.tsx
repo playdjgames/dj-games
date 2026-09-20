@@ -64,11 +64,11 @@ const Home = () => {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
                   </span>
-                  Live now · {live.price ?? "$5.99"} · No subscription
+                  Live now · {live.price ?? "FREE"}
                 </p>
 
                 <p className="mt-5 max-w-md text-[1.02rem] leading-relaxed text-muted-foreground">
-                  Every DIY project, step by step — tools, prices, and where to get them.
+                  Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -156,7 +156,7 @@ const Home = () => {
 
               <div className="flex flex-col items-stretch justify-center gap-4 border-t border-border/60 pt-7 lg:items-start lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                 <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
-                  One-time purchase · {live.price ?? "$5.99"}
+                  Free · {live.price ?? "FREE"} · iPhone
                 </p>
                 <StoreButtons
                   appStoreUrl={live.appStoreUrl}

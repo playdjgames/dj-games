@@ -81,7 +81,7 @@ export interface Game {
   /** Phone screenshots are "portrait"; wide key art is "landscape". */
   screenshotAspect?: "portrait" | "landscape";
   features: GameFeature[];
-  /** Shown on the detail page when set, e.g. "$5.99" or "Free". */
+  /** Shown on the detail page when set, e.g. "FREE". */
   price?: string;
   /** Apple age rating, e.g. "12+". */
   ageRating?: string;
@@ -107,9 +107,9 @@ export const GAMES: Game[] = [
   {
     slug: "everything-diy",
     title: "Everything DIY",
-    tagline: "Every DIY project, step by step — tools, prices, and where to get them.",
+    tagline: "Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.",
     description:
-      "Everything DIY is an iPhone app that helps you take on any DIY project. Type in what you want to fix or build and it gives you step-by-step instructions and videos. Point your camera at a tool or material and it helps identify it, then tells you where to get it and roughly what it costs.",
+      "Everything DIY is a free iOS app from DJ Games. Get step-by-step instructions for everyday projects, see the tools you need and where to get them, and use the camera to help identify tools and materials.",
     genre: "DIY & Utilities",
     status: "available",
     statusLabel: "Available now",
@@ -120,7 +120,7 @@ export const GAMES: Game[] = [
     releaseDate: "2026-09-10",
     seoTitle: "Everything DIY — Step-by-Step DIY Projects for iPhone | DJ Games",
     seoDescription:
-      "Everything DIY for iPhone: step-by-step project guides, camera tool identification, price estimates and where to buy. $5.99 on the App Store. No subscription.",
+      "Everything DIY for iPhone: step-by-step project guides, camera tool identification, where to get tools and materials. Free on the App Store.",
     coverImage: "/apps/everything-diy-icon.png",
     coverFit: "contain",
     screenshots: [
@@ -156,7 +156,7 @@ export const GAMES: Game[] = [
       {
         question: "Is there a subscription?",
         answer:
-          "No. Everything DIY is a one-time $5.99 purchase. No subscription, no ads.",
+          "No. Everything DIY is free. No subscription, no ads.",
       },
       {
         question: "What's included?",
@@ -164,7 +164,7 @@ export const GAMES: Game[] = [
           "Step-by-step project guides with video walkthroughs, camera-based tool and material identification, price estimates, and where-to-buy info for everything a job needs.",
       },
     ],
-    price: "$5.99",
+    price: "FREE",
     appStoreId: 6803175688,
     appStoreUrl: "https://apps.apple.com/us/app/everything-diy/id6803175688",
     googlePlayUrl: "[GOOGLE_PLAY_URL]",

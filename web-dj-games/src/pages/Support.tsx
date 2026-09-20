@@ -19,7 +19,7 @@ const ENTRIES: SupportEntry[] = [
     icon: Apple,
     question: "How do I get Everything DIY?",
     answer: [
-      "Everything DIY is on the Apple App Store for iPhone. It's a one-time purchase — $5.99, no subscription, no ads.",
+      "Everything DIY is on the Apple App Store for iPhone. It's free — no subscription, no ads.",
       "Search \"Everything DIY\" in the App Store, or tap the button here. Once it's installed, type in any project — replace a faucet, mount a TV — and the app walks you through it step by step, with the tools, prices, and where to get them.",
     ],
     link: { label: "Open the App Store", href: FEATURED_APP_URL, external: true },

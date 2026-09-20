@@ -36,7 +36,7 @@ export const POSTS: NewsPost[] = [
     body: [
       "Everything DIY is officially available on the App Store. If you have ever stood in a hardware aisle wondering what tool you actually need — or what a job is going to cost before you start pulling things apart — this is the app for you.",
       "Type in any project and the app puts together step-by-step instructions plus video walkthroughs. Not sure what a part is called? Point your camera at it and the app helps identify tools and materials, then tells you where to get them and roughly what they cost.",
-      "Everything DIY is $5.99 on iPhone. If you take on a project with it, we'd genuinely love to hear how it went — feedback goes straight into how we improve the next version.",
+      "Everything DIY is free on iPhone. If you take on a project with it, we'd genuinely love to hear how it went — feedback goes straight into how we improve the next version.",
     ],
   },
   {

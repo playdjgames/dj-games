@@ -316,7 +316,7 @@ const GameDetail = () => {
               </h2>
               <p className="mt-2.5 max-w-md text-[0.95rem] leading-relaxed text-muted-foreground">
                 {isLive
-                  ? `Available now on the App Store for iPhone. One-time purchase${game.price ? ` — ${game.price}` : ""}.`
+                  ? `Available now on the App Store for iPhone${game.price ? ` — ${game.price}` : ""}.`
                   : isConcept
                     ? "Early concept — not launching this week. First looks and the release window land here and in the newsletter first."
                     : "A real build is in review with Apple. Get one email the day it goes live — no spam, no drip campaign."}
