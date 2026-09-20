@@ -34,6 +34,14 @@ const ORIGIN_HOST = "playdjgames-com.rork.app";
 const BACKEND_HOST = "dj-games-backend.rork.app";
 
 /**
+ * Dedicated hostname for promotional media, so a social publisher only ever
+ * sees `media.playdjgames.com/<game>/<file.mp4>`. Requests arriving here are
+ * rewritten onto the backend's `/media/` prefix, which keeps the short public
+ * URL stable even if the storage behind it ever moves.
+ */
+const MEDIA_HOST = "media.playdjgames.com";
+
+/**
  * Send `www.playdjgames.com` to the bare domain with a permanent redirect.
  * Keeps one canonical URL for search engines. Set to false to serve both.
  */
@@ -56,19 +64,25 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
+    // The media hostname is its own thing: never redirect it, never send it to
+    // the site origin. `media.example.com/vexara/clip.mp4` maps onto the
+    // backend's `/media/vexara/clip.mp4`.
+    const isMediaHost = url.hostname === MEDIA_HOST;
+
     // One canonical hostname: fold www. into the bare domain before any work.
-    if (REDIRECT_WWW_TO_APEX && url.hostname.startsWith("www.")) {
+    if (!isMediaHost && REDIRECT_WWW_TO_APEX && url.hostname.startsWith("www.")) {
       const apex = new URL(url.toString());
       apex.hostname = url.hostname.slice(4);
       return Response.redirect(apex.toString(), 301);
     }
 
     // Promotional media is served by the backend Worker straight out of R2.
-    const isMediaPath = url.pathname.startsWith("/media/");
+    const isMediaPath = isMediaHost || url.pathname.startsWith("/media/");
     const originHost = isMediaPath ? BACKEND_HOST : ORIGIN_HOST;
+    const originPath = isMediaHost ? `/media${url.pathname}` : url.pathname;
 
     // Rebuild the request against the origin, preserving path + query exactly.
-    const target = new URL(url.pathname + url.search, `https://${originHost}`);
+    const target = new URL(originPath + url.search, `https://${originHost}`);
 
     const headers = new Headers(request.headers);
     for (const name of STRIPPED_REQUEST_HEADERS) headers.delete(name);

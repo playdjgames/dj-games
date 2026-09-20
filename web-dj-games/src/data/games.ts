@@ -284,10 +284,10 @@ export const GAMES: Game[] = [
   {
     slug: "valiant-kingdoms",
     title: "Valiant Kingdoms",
-    tagline: "A new strategy project in the works at the studio.",
-    /** 👇 REPLACE this with the real store copy when it's written in App Store Connect. */
+    tagline: "Banners on the ridge. A crown that won't hold itself.",
+    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
     description:
-      "Valiant Kingdoms is currently in development. We'll share more about what it is — screenshots, features and a release window — once it's further along.",
+      "Valiant Kingdoms is in development at DJ Games.\n\nA realm of walled cities and mountain passes, of torch-lit harbors and long cold nights under the aurora. Somewhere down there a kingdom is waiting to be held — or taken.\n\nWe're not ready to talk about how it plays just yet. Screenshots, features and a release window will show up here first, and newsletter subscribers hear the horn before anyone else.",
     genre: "In development",
     status: "in-development",
     statusLabel: "In development",
@@ -307,10 +307,10 @@ export const GAMES: Game[] = [
   {
     slug: "neon-world",
     title: "Neon World",
-    tagline: "A brand-new project in the works at the studio.",
-    /** 👇 REPLACE this with the real store copy when it's written in App Store Connect. */
+    tagline: "An unmapped planet, glowing in the dark.",
+    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
     description:
-      "Neon World is currently in development. We'll share more about what it is — screenshots, features and a release window — once it's further along.",
+      "Neon World is in development at DJ Games.\n\nBioluminescent forests wired with green light, rivers running molten under a ringed giant, and one explorer a very long way from home.\n\nWhat happens out there stays under wraps for now. Screenshots, features and a release window will show up here first — the newsletter gets them early.",
     genre: "In development",
     status: "in-development",
     statusLabel: "In development",
@@ -330,10 +330,10 @@ export const GAMES: Game[] = [
   {
     slug: "neon-city-underground",
     title: "Neon City: Underground",
-    tagline: "A brand-new project in the works at the studio.",
-    /** 👇 REPLACE this with the real store copy when it's written in App Store Connect. */
+    tagline: "Rain, neon, and whatever runs beneath the city.",
+    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
     description:
-      "Neon City: Underground is currently in development. We'll share more about what it is — screenshots, features and a release window — once it's further along.",
+      "Neon City: Underground is in development at DJ Games.\n\nWet asphalt under the overpass. An all-night arcade throwing pink and green across the puddles. Somebody walking somewhere they probably shouldn't, with the skyline burning cold behind them.\n\nThe rest stays in the dark a while longer. Screenshots, features and a release window will show up here first — the newsletter gets them early.",
     genre: "In development",
     status: "in-development",
     statusLabel: "In development",
