@@ -47,6 +47,8 @@ export interface StorageStatus {
 
 export class MediaAuthError extends Error {}
 export class MediaStorageError extends Error {}
+/** Thrown when the browser's cross-origin PUT to R2 was blocked outright. */
+class MediaCorsError extends Error {}
 
 const ACCEPTED: Record<string, { kind: MediaKind; maxBytes: number }> = {
   "video/mp4": { kind: "video", maxBytes: 512 * 1024 * 1024 },
@@ -205,10 +207,9 @@ const putWithProgress = (
       reject(new Error(`storage rejected the upload (${xhr.status})`));
     };
     // A browser-side PUT to R2 is cross-origin, so a missing bucket CORS policy
-    // surfaces here as an opaque network error with no status. Say so plainly
-    // instead of leaving a dead-end "upload failed".
-    xhr.onerror = () =>
-      reject(new Error("Storage refused the browser upload — add a CORS policy to the R2 bucket (see setup notes)."));
+    // surfaces here as an opaque network error with no status. Flag it as such
+    // so the caller can fix the bucket and retry instead of failing the upload.
+    xhr.onerror = () => reject(new MediaCorsError("storage blocked the browser upload"));
     xhr.onabort = () => reject(new Error("upload cancelled"));
     xhr.send(file);
   });
@@ -257,7 +258,27 @@ export const uploadMedia = async (
   }
 
   const probe = await probeMedia(file, kindForContentType(contentType));
-  await putWithProgress(presignData.uploadUrl, file, contentType, onProgress);
+
+  try {
+    await putWithProgress(presignData.uploadUrl, file, contentType, onProgress);
+  } catch (error: unknown) {
+    if (!(error instanceof MediaCorsError)) throw error;
+
+    // First upload against a fresh bucket: R2 rejects the cross-origin PUT
+    // until a CORS policy names this site. Ask the backend to write one with
+    // its own credentials, then retry once — no dashboard trip required.
+    const enabled = await request("/media-admin/enable-uploads", adminKey, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ origin: window.location.origin }),
+    });
+    if (!enabled.ok) {
+      throw new Error("Storage is refusing uploads from this site and couldn't be reconfigured automatically.");
+    }
+
+    onProgress(0);
+    await putWithProgress(presignData.uploadUrl, file, contentType, onProgress);
+  }
 
   const record = await request("/media-admin/record", adminKey, {
     method: "POST",

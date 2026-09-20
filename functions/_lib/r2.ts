@@ -70,8 +70,14 @@ const host = (config: R2Config): string => `${config.accountId}.r2.cloudflaresto
 const objectUrl = (config: R2Config, key: string): string =>
   `https://${host(config)}/${encodeSegment(config.bucket)}/${encodeKey(key)}`;
 
-const canonicalPath = (config: R2Config, key: string): string =>
-  `/${encodeSegment(config.bucket)}/${encodeKey(key)}`;
+/**
+ * Canonical URI for the request being signed. Omitting the key targets the
+ * bucket itself, which is how sub-resource operations such as `?cors` work.
+ */
+const canonicalPath = (config: R2Config, key?: string): string =>
+  key === undefined
+    ? `/${encodeSegment(config.bucket)}`
+    : `/${encodeSegment(config.bucket)}/${encodeKey(key)}`;
 
 /**
  * Builds a presigned URL the browser can upload to directly, so large videos
@@ -126,7 +132,10 @@ export const presignPut = async (
 
 interface SignedRequestOptions {
   method: string;
-  key: string;
+  /** Object key. Omit to address the bucket itself (sub-resource operations). */
+  key?: string;
+  /** Canonical query string, e.g. `cors=` for the bucket CORS sub-resource. */
+  query?: string;
   extraHeaders?: Record<string, string>;
   body?: BodyInit | null;
   /** Hex sha256 of the body. Defaults to the empty-body digest. */
@@ -152,7 +161,7 @@ export const signedRequest = async (config: R2Config, options: SignedRequestOpti
   const canonicalRequest = [
     options.method,
     canonicalPath(config, options.key),
-    "",
+    options.query ?? "",
     canonicalHeaders,
     signedHeaders,
     payloadHash,
@@ -174,12 +183,62 @@ export const signedRequest = async (config: R2Config, options: SignedRequestOpti
   );
   headers.delete("host");
 
-  return fetch(objectUrl(config, options.key), {
+  const base =
+    options.key === undefined
+      ? `https://${host(config)}/${encodeSegment(config.bucket)}`
+      : objectUrl(config, options.key);
+  const target = options.query ? `${base}?${options.query}` : base;
+
+  return fetch(target, {
     method: options.method,
     headers,
     body: options.body ?? null,
   });
 };
+
+/**
+ * Writes the bucket's CORS policy over the S3 API.
+ *
+ * A browser -> R2 presigned PUT is cross-origin, so without this policy the
+ * browser blocks every upload before it leaves the page. Setting it from the
+ * Worker (which already holds the credentials) means the studio never has to
+ * hand-edit bucket settings in the Cloudflare dashboard.
+ */
+export const putBucketCors = async (config: R2Config, origins: string[]): Promise<Response> => {
+  const rules = origins.map((origin) => `<AllowedOrigin>${origin}</AllowedOrigin>`).join("");
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><CORSRule>' +
+    rules +
+    "<AllowedMethod>PUT</AllowedMethod><AllowedMethod>GET</AllowedMethod><AllowedMethod>HEAD</AllowedMethod>" +
+    "<AllowedHeader>*</AllowedHeader><ExposeHeader>ETag</ExposeHeader><MaxAgeSeconds>3600</MaxAgeSeconds>" +
+    "</CORSRule></CORSConfiguration>";
+
+  return signedRequest(config, {
+    method: "PUT",
+    query: "cors=",
+    extraHeaders: { "content-type": "application/xml" },
+    body: xml,
+    payloadHash: await sha256Hex(xml),
+  });
+};
+
+/** Reads the bucket's current CORS policy back, used to verify the write. */
+export const getBucketCors = (config: R2Config): Promise<Response> =>
+  signedRequest(config, { method: "GET", query: "cors=" });
+
+/**
+ * Existence check for the bucket itself: 200 when it exists, 404 when it does
+ * not. Probing an object cannot tell those apart — a missing object in a real
+ * bucket and any object in a missing bucket both answer 404 — so bucket-level
+ * checks must address the bucket, not a key.
+ */
+export const headBucket = (config: R2Config): Promise<Response> =>
+  signedRequest(config, { method: "HEAD" });
+
+/** Creates the bucket. Requires a token with bucket-admin permission. */
+export const createBucket = (config: R2Config): Promise<Response> =>
+  signedRequest(config, { method: "PUT" });
 
 /** Streams an object back, forwarding Range so video scrubbing works. */
 export const getObject = async (config: R2Config, key: string, range: string | null): Promise<Response> =>

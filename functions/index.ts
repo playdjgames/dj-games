@@ -13,6 +13,8 @@
 //   GET  /media-admin/health        admin  — live credential check against R2
 //   GET  /media-admin/list          admin  — metadata for every stored file
 //   POST /media-admin/upload-url    admin  — presigned R2 PUT for one upload
+//   POST /media-admin/enable-uploads admin — writes the bucket CORS policy so the
+//                                   browser is allowed to PUT directly to R2
 //   POST /media-admin/record        admin  — save metadata after upload finishes
 //   POST /media-admin/folder        admin  — create a game folder
 //   POST /media-admin/remove-folder admin  — delete an empty folder
@@ -34,10 +36,13 @@ import type { MediaRow } from "./media";
 import { contentTypeForKey, safeFilename, safeSlug, specForContentType } from "./_lib/media-types";
 import {
   copyObject,
+  createBucket,
   deleteObject,
+  getBucketCors,
   getObject,
-  headObject,
+  headBucket,
   presignPut,
+  putBucketCors,
   readR2Config,
   type R2Config,
 } from "./_lib/r2";
@@ -202,17 +207,18 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
   // status word — never the bucket, account or key material — and probes a
   // reserved key that can never collide with real media.
   if (path === "/media-admin/health" && request.method === "GET") {
-    const probe = await headObject(config, "health-check/probe");
-    // 404 is the success case: the request signed and the bucket answered, the
-    // probe object simply isn't there.
-    if (probe.status === 404 || probe.status === 200) {
+    // Probe the BUCKET, not an object. A HEAD on a key returns 404 both when
+    // the object is simply absent and when the bucket does not exist at all,
+    // so an object probe reports a broken setup as healthy.
+    const probe = await headBucket(config);
+    if (probe.status === 200) {
       return Response.json({ ok: true, storage: "ready" });
+    }
+    if (probe.status === 404) {
+      return Response.json({ ok: false, storage: "bucket_missing" }, { status: 503 });
     }
     if (probe.status === 401 || probe.status === 403) {
       return Response.json({ ok: false, storage: "credentials_rejected" }, { status: 503 });
-    }
-    if (probe.status === 400) {
-      return Response.json({ ok: false, storage: "bucket_unreachable" }, { status: 503 });
     }
     console.error("r2 health probe failed", { status: probe.status });
     return Response.json({ ok: false, storage: "unavailable" }, { status: 503 });
@@ -266,6 +272,62 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
       contentType: spec.contentType,
       publicUrl: publicUrlFor(env, request, storageKey),
     });
+  }
+
+  // Self-service bucket setup. A browser -> R2 upload is cross-origin, so R2
+  // blocks it until the bucket carries a CORS policy naming the site. Rather
+  // than make the studio hand-edit bucket settings in the Cloudflare dashboard,
+  // the Worker writes the policy itself with the credentials it already holds.
+  // The page calls this automatically the first time an upload is refused.
+  if (path === "/media-admin/enable-uploads" && request.method === "POST") {
+    const body = await jsonBody<{ origin?: string }>(request);
+    const requested = String(body?.origin ?? "").trim();
+
+    // Always authorise the caller's own origin, plus the known site hosts, so
+    // uploads work from the live domain and the preview build alike.
+    const origins = new Set<string>([
+      "https://playdjgames.com",
+      "https://www.playdjgames.com",
+      "https://2s7937nfb5j5e0l2chd6r-web-dj-games.rork.live",
+    ]);
+    if (/^https:\/\/[a-z0-9.-]+$/i.test(requested)) origins.add(requested);
+
+    // The configured bucket may not exist yet (R2 does not create one on first
+    // write). Create it before writing the policy, otherwise every upload fails
+    // with NoSuchBucket long before CORS is ever consulted.
+    let created = false;
+    const exists = await headBucket(config);
+    if (exists.status === 404) {
+      const made = await createBucket(config);
+      if (!made.ok) {
+        const detail = await made.text().catch(() => "");
+        const code = /<Code>([^<]+)<\/Code>/.exec(detail)?.[1] ?? "unknown";
+        console.error("r2 bucket create failed", { status: made.status, code });
+        return Response.json(
+          { ok: false, error: "bucket_create_failed", status: made.status, code },
+          { status: 502 },
+        );
+      }
+      created = true;
+    }
+
+    const applied = await putBucketCors(config, [...origins]);
+    if (!applied.ok) {
+      // R2 answers with an S3 XML error; surface just its <Code> so the studio
+      // learns *why* (almost always a token lacking bucket-config permission)
+      // without ever echoing bucket, account or key material.
+      const detail = await applied.text().catch(() => "");
+      const code = /<Code>([^<]+)<\/Code>/.exec(detail)?.[1] ?? "unknown";
+      console.error("r2 cors write failed", { status: applied.status, code });
+      return Response.json(
+        { ok: false, error: "cors_write_failed", status: applied.status, code },
+        { status: 502 },
+      );
+    }
+
+    // Read it back so a success here really means uploads are unblocked.
+    const verify = await getBucketCors(config);
+    return Response.json({ ok: true, verified: verify.ok, bucketCreated: created, origins: [...origins] });
   }
 
   if (path === "/media-admin/record" && request.method === "POST") {
