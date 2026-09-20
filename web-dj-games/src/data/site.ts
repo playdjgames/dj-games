@@ -23,37 +23,23 @@ export interface SiteConfig {
   /** Canonical site URL. Used for the footer's domain line, and for SEO/share URLs
    *  once the domain actually serves the site — see `canonicalOrigin()`. */
   website: string;
-  /** 👇 REPLACE with your real business email. */
+  /** General / business contact. */
   email: string;
+  /** Player support contact. */
+  supportEmail: string;
   /** 👇 REPLACE each link you actually use. Untouched ones stay hidden site-wide. */
   socials: Record<SocialKey, string>;
   copyrightYear: number;
 }
 
-/** Your PayPal.me username — the part after paypal.me/ on your PayPal.me page. */
-export const DONATIONS = {
-  paypalMe: "dutt1",
-} as const;
-
-/**
- * Builds a paypal.me contribution URL for a whole-dollar amount (forced to USD).
- * Returns null when no username is configured, so the support CTA stays hidden
- * site-wide — same pattern as `isLive`. Tolerates a leading "@" if one is pasted in.
- */
-export const paypalMeUrl = (amount: number): string | null => {
-  if (!isLive(DONATIONS.paypalMe)) return null;
-  const handle = DONATIONS.paypalMe.trim().replace(/^@+/, "");
-  if (handle.length === 0) return null;
-  return `https://paypal.me/${handle}/${amount}USD`;
-};
-
 export const SITE: SiteConfig = {
   brandName: "DJ Games",
-  tagline: "Original games. Big ideas. Built to play.",
+  tagline: "Original iOS games and apps.",
   description:
-    "Discover original games and apps from DJ Games. Explore our latest releases, upcoming projects, and new interactive experiences.",
+    "DJ Games is an independent iOS studio. Everything DIY is out now on the App Store — more games are on the way.",
   website: "https://playdjgames.com",
-  email: "dutter07@gmail.com",
+  email: "hello@playdjgames.com",
+  supportEmail: "support@playdjgames.com",
   socials: {
     discord: "[DISCORD_URL]",
     youtube: "[YOUTUBE_URL]",
@@ -111,6 +97,8 @@ export const NAV_LINKS: { label: string; to: string; accent?: "ember" }[] = [
   { label: "Coming Soon", to: "/coming-soon" },
   { label: "About", to: "/about" },
   { label: "News", to: "/news" },
-  { label: "Contact", to: "/contact" },
   { label: "Support", to: "/support", accent: "ember" },
 ];
+
+/** The one live app, used by the sticky mobile CTA and anywhere an install link is needed. */
+export const FEATURED_APP_URL = "https://apps.apple.com/us/app/everything-diy/id6803175688";

@@ -44,13 +44,13 @@ export const POSTS: NewsPost[] = [
     title: "First look at Run Dummy",
     date: "2026-08-22",
     category: "Announcement",
-    excerpt: "Mazes, magnets and a ticking clock — our next game is taking shape.",
+    excerpt: "A crash-test dummy, a booby-trapped lab and a ticking clock — our next game is taking shape.",
     image: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/8f5580aa-235a-40c1-a0a1-929739609630.png",
     gameSlug: "run-dummy",
     body: [
-      "Time to talk about what's next. Run Dummy is a maze game built around one idea: you never steer the ball directly. Instead you use magnets to push and pull it around the course, trying to reach the goal before the timer runs out.",
-      "It sounds simple — and that's the point. The first level takes about ten seconds to understand. The interesting part is how much control you can develop over the magnetic pull once the mazes start asking for precision.",
-      "We're still tuning levels and difficulty pacing, but the core loop is in and it's addictive. Watch this space for a release window.",
+      "Time to talk about what's next. Run Dummy is a 3D maze runner starring a crash-test dummy loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.",
+      "The walls can't hurt you — the traps will. Every trial hides spinning blades, floor spikes, dart launchers, crumbling tiles and pressure switches between you and the exit. Chain clean wall streaks to unlock new runners and chase up to 3 stars per trial.",
+      "35 trials across 5 chapters are in and tuned, and the build is now with Apple for review. Watch this space for a release date.",
     ],
   },
   {

@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
+import { StatusBadge } from "@/components/StatusBadge";
 import { StoreButtons } from "@/components/StoreButtons";
 import type { Game } from "@/data/games";
 import { cn } from "@/lib/utils";
@@ -11,11 +13,18 @@ interface GameCardProps {
 }
 
 /**
- * Reusable featured-game card. Everything it renders comes from the game entry
- * in `data/games.ts`, so new titles appear without touching this component.
+ * Library card. Each game carries its own accent (`--game-accent`), so the
+ * grid reads as a lineup of distinct titles instead of clones. Available apps
+ * get a store button; everything else routes to its project page.
  */
 export const GameCard = ({ game, className }: GameCardProps) => (
-  <article className={cn("surface-card-interactive corner-ticks group flex flex-col overflow-hidden", className)}>
+  <article
+    className={cn(
+      "surface-card game-accent game-accent-glow group flex flex-col overflow-hidden transition-all duration-300",
+      className,
+    )}
+    style={{ "--game-accent": game.accent } as CSSProperties}
+  >
     <Link
       to={`/games/${game.slug}`}
       className="relative block aspect-[16/9] overflow-hidden"
@@ -52,42 +61,34 @@ export const GameCard = ({ game, className }: GameCardProps) => (
       <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/10 to-transparent" />
     </Link>
 
-    <div className="flex flex-1 flex-col gap-4 p-5">
-      <div>
-        <h3 className="display-title text-xl sm:text-2xl">{game.title}</h3>
-
-        <ul className="mt-3 flex flex-wrap gap-2">
-          <li className="rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-signal">
-            {game.genre}
-          </li>
-          {game.platforms.map((platform) => (
-            <li
-              key={platform}
-              className="rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground"
-            >
-              {platform}
-            </li>
-          ))}
-        </ul>
+    <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="flex flex-wrap items-center gap-2">
+        <StatusBadge status={game.status} label={game.statusLabel} />
+        <span className="rounded-full border border-border bg-surface-raised px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground">
+          {game.genre}
+        </span>
       </div>
 
+      <h3 className="display-title text-xl sm:text-2xl">{game.title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">{game.tagline}</p>
 
-      <div className="mt-auto flex flex-wrap items-center gap-3 pt-1">
+      <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
         <Link
           to={`/games/${game.slug}`}
-          className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-signal/45 px-4 font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] text-signal transition-all duration-300 hover:bg-signal hover:text-primary-foreground"
+          className="game-accent-text game-accent-border inline-flex min-h-[44px] items-center gap-2 rounded-md border px-4 font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors duration-300"
         >
-          Learn more
+          {game.status === "available" ? "Learn more" : "View project"}
           <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
         </Link>
 
-        <StoreButtons
-          appStoreUrl={game.appStoreUrl}
-          googlePlayUrl={game.googlePlayUrl}
-          gameTitle={game.title}
-          size="sm"
-        />
+        {game.status === "available" ? (
+          <StoreButtons
+            appStoreUrl={game.appStoreUrl}
+            googlePlayUrl={game.googlePlayUrl}
+            gameTitle={game.title}
+            size="sm"
+          />
+        ) : null}
       </div>
     </div>
   </article>

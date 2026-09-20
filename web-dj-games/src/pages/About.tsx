@@ -1,7 +1,6 @@
-import { ArrowRight, ChevronRight, Gamepad2, Lightbulb, TrendingUp } from "lucide-react";
+import { ArrowRight, ChevronRight, Gamepad2, Heart, Hammer, Lightbulb, type LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { ContactForm } from "@/components/ContactForm";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -9,21 +8,21 @@ import { formatPostDate, sortedPosts } from "@/data/news";
 import { isLive, SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
 
-const VALUES: { icon: typeof Lightbulb; title: string; body: string }[] = [
+const VALUES: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Lightbulb,
-    title: "Original ideas",
-    body: "We build games around ideas that are designed to be different and memorable.",
+    title: "Prototype fast",
+    body: "Ideas go from sketch to playable build in days, not quarters. If it isn't fun early, it doesn't ship.",
   },
   {
     icon: Gamepad2,
-    title: "Fun first",
-    body: "Gameplay comes first. Every game should be easy to understand and fun to keep playing.",
+    title: "Respect your time",
+    body: "We ship games that respect your time: no endless tutorials, no pay-to-win, no ads-first design.",
   },
   {
-    icon: TrendingUp,
-    title: "Always building",
-    body: "DJ Games is constantly working on new games, concepts, and interactive experiences.",
+    icon: Hammer,
+    title: "Built from scratch",
+    body: "Every world, mechanic and piece of art is made in-studio. If we ask for a spot on your home screen, it's for something you can't get anywhere else.",
   },
 ];
 
@@ -31,7 +30,7 @@ const About = () => {
   useSeo({
     title: "About — DJ Games",
     description:
-      "DJ Games is an independent game and app development brand focused on creating original interactive experiences.",
+      "DJ Games is an independent iOS studio. We prototype fast, build everything from scratch, and ship games that respect your time.",
   });
 
   const posts = sortedPosts().slice(0, 3);
@@ -48,8 +47,8 @@ const About = () => {
             <span className="text-signal text-glow">DJ Games</span>
           </>
         }
-        description="We are an independent studio building original games and interactive experiences, one bold idea at a time."
-        stamp={["Bold", "Ideas", "Brighter", "Worlds"]}
+        description="An indie studio, not a factory. Original iOS games and apps, built to play."
+        stamp={["Bold", "Ideas", "Real", "Games"]}
       />
 
       <section className="container py-16 sm:py-20">
@@ -59,18 +58,17 @@ const About = () => {
 
             <div className="space-y-4 text-[1.02rem] leading-relaxed text-muted-foreground">
               <p>
-                DJ Games is an independent game and app development brand focused on creating original interactive
-                experiences. We're small on purpose — it means every idea gets to be strange, specific, and actually
-                ours.
+                DJ Games is an independent iOS studio run as DJ Games LLC. We're small on purpose — it means every
+                idea gets to be strange, specific, and actually ours.
               </p>
               <p>
-                We prototype fast, playtest early, and ship games that respect your time. No endless tutorials, no
-                pay-to-win nonsense. Just games that are easy to pick up and genuinely satisfying to get good at.
+                We prototype fast and ship games and apps that respect your time. Everything DIY — our step-by-step
+                DIY companion — is live on the App Store today, with more titles in review and in development right
+                now.
               </p>
               <p>
-                Everything you see here — the art, the worlds, the mechanics — is built from scratch by the studio. If
-                we're going to ask for a spot on your home screen, it should be for something you can't get anywhere
-                else.
+                Everything you see here — the art, the worlds, the mechanics — is built from scratch by the studio.
+                No licensed filler, no reskinned templates.
               </p>
             </div>
           </div>
@@ -79,7 +77,7 @@ const About = () => {
 
       <section className="container pb-16 sm:pb-20">
         <Reveal>
-          <SectionHeading eyebrow="Why DJ Games" title="What Drives Us" />
+          <SectionHeading eyebrow="Why DJ Games" title="What drives us" />
         </Reveal>
 
         <div className="mt-9 grid gap-5 md:grid-cols-3">
@@ -101,7 +99,7 @@ const About = () => {
         <Reveal>
           <SectionHeading
             eyebrow="Latest news"
-            title="Studio Updates"
+            title="Studio updates"
             action={
               <Link
                 to="/news"
@@ -151,22 +149,46 @@ const About = () => {
             <p className="eyebrow">
               <span className="text-ember">//</span> Get in touch
             </p>
-            <h2 className="display-title mt-2 text-3xl">Get In Touch</h2>
+            <h2 className="display-title mt-2 text-3xl">Contact</h2>
             <p className="mt-4 text-[0.96rem] leading-relaxed text-muted-foreground">
-              We'd love to hear from you. Whether you have a question, feedback, or just want to say hi, drop us a
-              message.
+              Questions, feedback, or just want to say hi — we read everything.
             </p>
 
-            {isLive(SITE.email) ? (
-              <a
-                href={`mailto:${SITE.email}`}
-                className="mt-4 inline-block font-mono text-[0.72rem] uppercase tracking-[0.16em] text-signal transition-colors hover:text-foreground"
-              >
-                {SITE.email}
-              </a>
-            ) : null}
+            <dl className="mt-6 space-y-4">
+              <div>
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">General</dt>
+                <dd className="mt-1">
+                  {isLive(SITE.email) ? (
+                    <a
+                      href={`mailto:${SITE.email}`}
+                      className="font-mono text-[0.85rem] tracking-[0.04em] text-signal transition-colors hover:text-foreground"
+                    >
+                      {SITE.email}
+                    </a>
+                  ) : null}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
+                  Player support
+                </dt>
+                <dd className="mt-1">
+                  <a
+                    href={`mailto:${SITE.supportEmail}`}
+                    className="font-mono text-[0.85rem] tracking-[0.04em] text-signal transition-colors hover:text-foreground"
+                  >
+                    {SITE.supportEmail}
+                  </a>
+                </dd>
+              </div>
+            </dl>
 
-            <ContactForm className="mt-7" />
+            <div className="mt-7 flex items-start gap-2.5 border-t border-border/60 pt-6">
+              <Heart size={16} className="mt-0.5 shrink-0 text-ember" />
+              <p className="text-[0.82rem] leading-relaxed text-muted-foreground">
+                DJ Games LLC · playdjgames.com
+              </p>
+            </div>
           </div>
         </Reveal>
       </section>

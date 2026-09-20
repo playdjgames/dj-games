@@ -24,7 +24,7 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
     sections: [
       {
         heading: "The short version",
-        body: "We don't collect your personal information. Our games contain no advertising, no tracking, and no account system, and this website uses no tracking cookies. If you support the studio through PayPal, PayPal processes the payment under its own privacy policy and we only learn the amount and the name on the payment. The rest of this page explains the details.",
+        body: "We don't collect your personal information. Our apps contain no advertising, no tracking, and no account system, and this website uses no tracking cookies. Purchases are handled by Apple under Apple's own privacy policy. The rest of this page explains the details.",
       },
       {
         heading: "Who this policy covers",
@@ -39,16 +39,12 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
         body: "Downloads, purchases, crash reports, and platform features such as Game Center are handled by Apple under Apple's own privacy policy (apple.com/legal/privacy). We never receive a copy of that information unless you contact us directly.",
       },
       {
-        heading: "Supporting the studio",
-        body: "If you choose to support the studio with a contribution, the payment is processed entirely by PayPal under PayPal's own privacy policy (paypal.com/privacy). This website never sees your card, bank, or login details — we receive only the payment amount and the name associated with it, which we use solely to say thanks or to help resolve a payment issue. Contributions are voluntary and are not tax-deductible.",
-      },
-      {
         heading: "Children's privacy",
         body: "Our games are not directed at children under 13 and do not knowingly collect personal information from anyone, including children. If you believe a child has provided us with personal information, contact us and we will delete it.",
       },
       {
         heading: "This website",
-        body: `The website (${DOMAIN}) does not use tracking cookies or advertising pixels. If you message us through the contact form, your email client handles the message and we receive only what you choose to write. If you sign up for studio updates, we store your email address solely to send you news about DJ Games; every email includes an unsubscribe link.`,
+        body: `The website (${DOMAIN}) does not use tracking cookies or advertising pixels. If you email us, we receive only what you choose to write. If you sign up for studio updates, we store your email address solely to send you news about DJ Games; every email includes an unsubscribe link.`,
       },
       {
         heading: "Your rights",
@@ -81,8 +77,8 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
         body: "Games downloaded through the App Store are additionally governed by Apple's terms and by any end user licence agreement included with the game itself.",
       },
       {
-        heading: "Contributions",
-        body: "Contributions are voluntary payments that support the studio's development work. They do not purchase any product, service, or early access, and they are not tax-deductible. Payments are completed on PayPal under PayPal's own terms; this site only composes a paypal.me link with the amount you choose. If you believe a payment was made in error, contact us and we will work with you and PayPal to resolve it.",
+        heading: "Purchases",
+        body: "Apps are bought through the App Store, and the purchase is a one-time payment at the price shown on the product's page — no subscription. Payment, refunds, and receipts are handled entirely by Apple under Apple's own terms; this site never processes payments and never stores payment details.",
       },
       {
         heading: "Availability",

@@ -1,125 +1,99 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { ComingSoonCard } from "@/components/ComingSoonCard";
+import { ConceptCard } from "@/components/ConceptCard";
 import { Hero } from "@/components/Hero";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useGameLibrary } from "@/data/library";
-import { isWithApple } from "@/data/prerelease";
 import { useSeo } from "@/hooks/use-seo";
-import { cn } from "@/lib/utils";
 
 const ComingSoon = () => {
   useSeo({
     title: "Coming Soon — DJ Games",
     description:
-      "See what DJ Games is building next. Concept art, development status, and early looks at our upcoming games.",
+      "See what DJ Games is building next: titles submitted to Apple and early concepts in development. Get notified when a game goes live.",
   });
 
-  const { upcoming } = useGameLibrary();
+  const { submitted, concepts } = useGameLibrary();
 
   return (
     <>
       <Hero
         compact
-        eyebrow="In development"
+        eyebrow="In the pipeline"
         title={
           <>
             Coming <span className="text-signal text-glow">Soon</span>
           </>
         }
-        description="The projects currently taking shape in the studio. Some are deep in production, some are still sketches — all of them are being built in the open."
+        description="Submitted to Apple up top — those are next through the door. Early concepts below: first looks, not release dates."
         stamp={["New", "Worlds", "Loading"]}
       />
 
-      <section className="container py-16 sm:py-20">
-        <Reveal>
-          <SectionHeading eyebrow="On the workbench" title="Upcoming Projects" note={`${upcoming.length} projects`} />
-        </Reveal>
+      {/* SUBMITTED — large, closest to launch */}
+      {submitted.length > 0 ? (
+        <section className="container py-14 sm:py-16">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Submitted to Apple"
+              title="In review now"
+              note={`${submitted.length} ${submitted.length === 1 ? "title" : "titles"} with Apple`}
+            />
+          </Reveal>
 
-        {upcoming.length === 0 ? (
-          <p className="mt-10 font-mono text-sm uppercase tracking-[0.16em] text-muted-foreground">
-            Nothing announced right now — check back soon.
-          </p>
-        ) : (
-          <div className="mt-10 space-y-8">
-            {upcoming.map((game, index) => (
+          <div className="mt-8 space-y-6">
+            {submitted.map((game, index) => (
               <Reveal key={game.slug} delay={index * 80}>
-                <article className="surface-card corner-ticks grid overflow-hidden lg:grid-cols-[1fr_1fr]">
-                  <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto">
-                    <img
-                      src={game.coverImage}
-                      alt={`${game.title} concept art`}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover opacity-80 grayscale"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-surface" />
-                    <span
-                      className={cn(
-                        "absolute left-4 top-4 rounded-md border bg-background/85 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.18em] backdrop-blur",
-                        game.reviewStage && isWithApple(game.reviewStage)
-                          ? "border-signal/60 text-signal"
-                          : "border-ember/60 text-ember",
-                      )}
-                    >
-                      {game.reviewStage && isWithApple(game.reviewStage) ? "Launching soon" : "Coming soon"}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col justify-center gap-4 p-7 sm:p-10">
-                    <h3 className="display-title text-2xl sm:text-3xl">{game.title}</h3>
-
-                    <div className="flex flex-wrap gap-2">
-                      <span
-                        className={cn(
-                          "rounded-full border px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em]",
-                          game.reviewStage && isWithApple(game.reviewStage)
-                            ? "border-signal/40 bg-signal/10 text-signal"
-                            : "border-ember/40 bg-ember/10 text-ember",
-                        )}
-                      >
-                        {game.statusLabel}
-                      </span>
-                      <span className="rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground">
-                        {game.genre}
-                      </span>
-                      <span className="rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground">
-                        {game.releaseDate}
-                      </span>
-                      {game.prerelease?.version ? (
-                        <span className="rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground">
-                          Build {game.prerelease.version}
-                        </span>
-                      ) : null}
-                      {game.ageRating ? (
-                        <span className="rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground">
-                          {game.ageRating}
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <p className="text-[0.96rem] leading-relaxed text-muted-foreground">{game.description}</p>
-
-                    <Link
-                      to={`/games/${game.slug}`}
-                      className="inline-flex w-fit min-h-[44px] items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-signal transition-colors hover:text-foreground"
-                    >
-                      View project page
-                      <ArrowRight size={15} />
-                    </Link>
-                  </div>
-                </article>
+                <ComingSoonCard game={game} />
               </Reveal>
             ))}
           </div>
-        )}
-      </section>
 
+          <Reveal className="mt-6" delay={120}>
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Every title here has a real build in Apple review. Launch dates get announced on{" "}
+              <Link to="/news" className="text-signal transition-colors hover:text-foreground">
+                the news page
+              </Link>{" "}
+              and by email first.
+            </p>
+          </Reveal>
+        </section>
+      ) : null}
+
+      {/* CONCEPTS — compact, deliberately lower weight */}
+      {concepts.length > 0 ? (
+        <section className="container pb-16 sm:pb-20">
+          <Reveal>
+            <SectionHeading eyebrow="Early concepts" title="In development" note="Not launching this week" />
+          </Reveal>
+
+          <ul className="mt-8 space-y-3">
+            {concepts.map((game, index) => (
+              <Reveal key={game.slug} as="li" delay={index * 70}>
+                <ConceptCard game={game} />
+              </Reveal>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {/* NOTIFY */}
       <section className="container pb-20 sm:pb-24">
         <Reveal>
           <NewsletterSignup />
+        </Reveal>
+        <Reveal className="mt-6" delay={90}>
+          <p className="text-center font-mono text-[0.66rem] uppercase tracking-[0.16em] text-muted-foreground">
+            One email when a game goes live. TestFlight invites for subscribers.{" "}
+            <Link to="/support" className="text-signal transition-colors hover:text-foreground">
+              Questions? Support
+              <ArrowRight size={12} className="ml-1 inline" />
+            </Link>
+          </p>
         </Reveal>
       </section>
     </>

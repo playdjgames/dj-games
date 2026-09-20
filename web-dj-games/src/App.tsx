@@ -9,7 +9,6 @@ import { watchForWatermarkBadge } from "@/lib/remove-watermark";
 
 import About from "./pages/About";
 import ComingSoon from "./pages/ComingSoon";
-import Contact from "./pages/Contact";
 import GameDetail from "./pages/GameDetail";
 import Games from "./pages/Games";
 import Home from "./pages/Home";
@@ -40,7 +39,6 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="/support" element={<Support />} />
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />

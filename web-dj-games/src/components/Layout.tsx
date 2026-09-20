@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { StickyMobileCta } from "@/components/StickyMobileCta";
 
 /** Scrolls to top on navigation, unless the URL carries a hash target. */
 const ScrollManager = () => {
@@ -33,6 +34,7 @@ export const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <StickyMobileCta />
     </div>
   );
 };

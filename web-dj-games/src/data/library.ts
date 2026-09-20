@@ -75,9 +75,13 @@ const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   genre: app.primaryGenreName,
   status: "available",
   statusLabel: "Available now",
+  category: "utilities",
+  accent: "#B8FF3C",
   platforms: ["iOS"],
   featured: true,
   releaseDate: app.releaseDate,
+  seoTitle: `${app.trackName} — Live on iOS | DJ Games`,
+  seoDescription: `${app.trackName} by DJ Games is available now on the App Store for iPhone.`,
   coverImage: app.artworkUrl ?? "",
   coverFit: "contain",
   screenshots: app.screenshotUrls,
@@ -102,13 +106,16 @@ const gameFromApp = (app: AppStoreApp): LibraryGame => ({
 const enrichPrerelease = (game: Game, app: PrereleaseApp): LibraryGame => ({
   ...game,
   title: app.nameIsPlaceholder ? game.title : app.name,
-  // An App Store subtitle is Apple's own one-liner — exactly what a tagline is.
-  tagline: app.subtitle ?? game.tagline,
+  // The site's own hook line always wins — it is written to sell the game on
+  // cards. Apple's description (real store copy) still wins below.
+  tagline: game.tagline,
   description: app.description ?? game.description,
-  statusLabel: app.reviewStateLabel,
+  // Early concepts must always read as early: never let a review state like
+  // "Preparing for submission" make a concept look close to launching.
+  statusLabel: game.status === "concept" ? game.statusLabel : app.reviewStateLabel,
   prerelease: app,
   reviewStage: app.reviewStage,
-  ageRating: app.ageRating ?? undefined,
+  ageRating: app.ageRating ?? game.ageRating,
 });
 
 /** Folds live App Store data into a curated entry. */
@@ -154,6 +161,10 @@ export interface GameLibrary {
   games: LibraryGame[];
   featured: LibraryGame[];
   released: LibraryGame[];
+  /** In review / submitted to Apple — the launch pipeline. */
+  submitted: LibraryGame[];
+  /** Early concepts — announced, but nowhere near launching. */
+  concepts: LibraryGame[];
   upcoming: LibraryGame[];
   latest: LibraryGame | undefined;
   genres: string[];
@@ -194,14 +205,18 @@ export const useGameLibrary = (): GameLibrary => {
     const games = mergeLibrary(data);
     const released = games.filter((game) => game.status === "available").sort(byNewest);
 
+    // Closest to launch first, so "In review" outranks "Submitted".
+    const withApple = games
+      .filter((game) => game.status === "submitted")
+      .sort((a, b) => STAGE_ORDER[a.reviewStage ?? "building"] - STAGE_ORDER[b.reviewStage ?? "building"]);
+
     return {
       games,
       released,
       featured: released.filter((game) => game.featured),
-      // Closest to launch first, so "In review" outranks "In development".
-      upcoming: games
-        .filter((game) => game.status !== "available")
-        .sort((a, b) => STAGE_ORDER[a.reviewStage ?? "building"] - STAGE_ORDER[b.reviewStage ?? "building"]),
+      submitted: withApple,
+      concepts: games.filter((game) => game.status === "concept"),
+      upcoming: withApple,
       latest: released[0],
       genres: Array.from(new Set(games.map((game) => game.genre))),
       bySlug: (slug) => games.find((game) => game.slug === slug),

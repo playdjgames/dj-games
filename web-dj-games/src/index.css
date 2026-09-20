@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* DJ Games design system — dark slate canvas, acid green signal, ember orange accent. */
+/* DJ Games design system — near-black canvas, neon lime signal, hot orange accent.
+   Signal #B8FF3C = hsl(84 100% 62%) · Ember #FF6A00 = hsl(24 100% 50%). */
 
 @layer base {
   :root {
@@ -12,9 +13,9 @@
     --surface: 153 15% 9%;
     --surface-raised: 153 14% 12%;
 
-    --signal: 144 100% 61%;
-    --signal-soft: 144 60% 24%;
-    --ember: 25 100% 55%;
+    --signal: 84 100% 62%;
+    --signal-soft: 84 60% 24%;
+    --ember: 24 100% 50%;
 
     --card: 153 15% 9%;
     --card-foreground: 135 14% 94%;
@@ -90,7 +91,9 @@
   h3,
   h4 {
     @apply font-display;
-    font-variation-settings: "wdth" 88;
+    /* Bold condensed headlines — Archivo's width axis dialed down hard. */
+    font-variation-settings: "wdth" 78;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -100,7 +103,8 @@
   }
 
   .display-title {
-    @apply font-display font-extrabold uppercase leading-[0.92] tracking-[-0.01em];
+    @apply font-display font-black uppercase leading-[0.92] tracking-[-0.01em];
+    font-variation-settings: "wdth" 78;
   }
 
   .surface-card {
@@ -148,6 +152,41 @@
 
   .text-glow {
     text-shadow: 0 0 32px hsl(var(--signal) / 0.55);
+  }
+
+  /*
+   * Per-game accent. A card sets `--game-accent` to its own hex and every
+   * accent-colored element inside picks it up, so no two cards look identical.
+   * Falls back to the global signal when unset.
+   */
+  .game-accent {
+    --ga: var(--game-accent, hsl(var(--signal)));
+  }
+
+  .game-accent-text {
+    color: var(--ga);
+  }
+
+  .game-accent-border {
+    border-color: color-mix(in srgb, var(--ga) 45%, transparent);
+  }
+
+  .game-accent-chip {
+    border-color: color-mix(in srgb, var(--ga) 40%, transparent);
+    background: color-mix(in srgb, var(--ga) 10%, transparent);
+    color: var(--ga);
+  }
+
+  .game-accent-glow:hover {
+    border-color: color-mix(in srgb, var(--ga) 55%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--ga) 30%, transparent),
+      0 18px 50px -22px color-mix(in srgb, var(--ga) 45%, transparent);
+  }
+
+  /* Status chip on the hero — the “facts, immediately” line. */
+  .status-chip {
+    @apply inline-flex w-fit items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[0.64rem] font-semibold uppercase tracking-[0.18em];
   }
 }
 

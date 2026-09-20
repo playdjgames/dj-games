@@ -56,8 +56,9 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
 
   return (
     <section
+      id="notify"
       className={cn(
-        "surface-card corner-ticks relative overflow-hidden px-6 py-12 text-center sm:px-12 sm:py-16",
+        "surface-card corner-ticks relative scroll-mt-24 overflow-hidden px-6 py-12 text-center sm:px-12 sm:py-16",
         className,
       )}
     >
@@ -69,11 +70,11 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
 
       <div className="relative mx-auto max-w-2xl">
         <p className="eyebrow">
-          <span className="text-ember">//</span> Community
+          <span className="text-ember">//</span> Be first
         </p>
-        <h2 className="display-title mt-3 text-3xl sm:text-4xl">Join the DJ Games community</h2>
+        <h2 className="display-title mt-3 text-3xl sm:text-4xl">Get notified first</h2>
         <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground">
-          Get new releases, playtest invites, and behind-the-scenes devlogs straight to your inbox. No spam, just games.
+          Get TestFlight invites and one email when a game goes live.
         </p>
 
         <form onSubmit={onSubmit} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
@@ -94,7 +95,7 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
             className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-md bg-signal px-6 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.98] disabled:opacity-60"
           >
             {isSubmitting ? <Loader2 size={15} className="animate-spin" /> : null}
-            Join
+            Notify me
             <ArrowRight size={15} />
           </button>
         </form>
