@@ -237,7 +237,6 @@
   html {
     scroll-behavior: auto;
   }
-
   *,
   *::before,
   *::after {
@@ -252,4 +251,41 @@
     transform: none;
     filter: none;
   }
+}
+
+/*
+ * Dynamic site background (DynamicBackground.tsx). The glow hue is a registered
+ * custom property so the browser interpolates lime ↔ ember smoothly. The drift
+ * lasts exactly one full image loop (5 slides × 16s = 80s) so hue and artwork
+ * stay in sync; the reduce-motion rule above collapses it back to static lime.
+ */
+@property --bg-glow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b8ff3c;
+}
+
+@keyframes bg-glow-drift {
+  0% {
+    --bg-glow: #b8ff3c;
+  }
+  50% {
+    --bg-glow: #ff6a00;
+  }
+  100% {
+    --bg-glow: #b8ff3c;
+  }
+}
+
+.dynamic-bg-glow {
+  --bg-glow: #b8ff3c;
+  animation: bg-glow-drift 80s ease-in-out infinite;
+  background:
+    radial-gradient(110% 70% at 50% -10%, color-mix(in srgb, var(--bg-glow) 14%, transparent), transparent 62%),
+    radial-gradient(65% 50% at 90% 110%, color-mix(in srgb, var(--bg-glow) 10%, transparent), transparent 72%);
+}
+
+.dynamic-bg-slide {
+  transition: opacity 2.6s ease-in-out;
+  will-change: opacity;
 }

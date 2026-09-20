@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import { Footer } from "@/components/Footer";
+import { DynamicBackground } from "@/components/DynamicBackground";
 import { Navbar } from "@/components/Navbar";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
 
@@ -28,9 +29,10 @@ export const Layout = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <DynamicBackground />
       <ScrollManager />
       <Navbar />
-      <main key={pathname} className="flex-1 animate-fade-in pt-[68px]">
+      <main key={pathname} className="relative z-10 flex-1 animate-fade-in pt-[68px]">
         <Outlet />
       </main>
       <Footer />
