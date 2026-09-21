@@ -7,13 +7,13 @@ import { useSeo } from "@/hooks/use-seo";
 
 /* ------------------------------- constants -------------------------------- */
 
-const ACCENT = "#E8FF47";
+const ACCENT = "#8BE1FF";
 
 /* --------------------------------- atoms ---------------------------------- */
 
-/** Section label — tiny uppercase tracking, lime. */
+/** Section label — tiny uppercase tracking, ice. */
 const SectionLabel = ({ children }: { children: string }) => (
-  <h2 className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.28em] text-[#E8FF47]">
+  <h2 className="mb-3 font-mono text-[0.68rem] font-bold uppercase tracking-[0.28em] text-[#8BE1FF]">
     {children}
   </h2>
 );
@@ -68,12 +68,12 @@ const Donate = () => {
   }, []);
 
   return (
-    <div className="donate-root relative min-h-screen bg-[#0B0B0F] text-[#F4F1EA] antialiased selection:bg-[#E8FF47] selection:text-[#0B0B0F]">
-      {/* Soft pink + lime radial glows */}
+    <div className="donate-root relative min-h-screen bg-[#0A0E14] text-[#EDF5FB] antialiased selection:bg-[#8BE1FF] selection:text-[#0A0E14]">
+      {/* Soft amber + ice radial glows */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-28 right-[-5rem] h-[22rem] w-[22rem] rounded-full bg-[#FF4D8D]/[0.16] blur-[110px]" />
-        <div className="absolute bottom-[-7rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#E8FF47]/[0.09] blur-[130px]" />
-        <div className="absolute left-1/2 top-[38%] h-[16rem] w-[26rem] -translate-x-1/2 rounded-full bg-[#FF4D8D]/[0.06] blur-[120px]" />
+        <div className="absolute -top-28 right-[-5rem] h-[22rem] w-[22rem] rounded-full bg-[#FFB020]/[0.16] blur-[110px]" />
+        <div className="absolute bottom-[-7rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#8BE1FF]/[0.09] blur-[130px]" />
+        <div className="absolute left-1/2 top-[38%] h-[16rem] w-[26rem] -translate-x-1/2 rounded-full bg-[#FFB020]/[0.06] blur-[120px]" />
       </div>
 
       <main className="relative z-10 mx-auto w-full max-w-[520px] px-5 pb-[max(3rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6">
@@ -82,7 +82,7 @@ const Donate = () => {
           type="button"
           onClick={onBack}
           aria-label="Back"
-          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full pr-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.18em] text-[#9A958B] transition-colors duration-200 hover:text-[#F4F1EA] active:scale-[0.97]"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full pr-3 font-mono text-[0.72rem] font-bold uppercase tracking-[0.18em] text-[#8FA3B4] transition-colors duration-200 hover:text-[#EDF5FB] active:scale-[0.97]"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Back
@@ -90,13 +90,13 @@ const Donate = () => {
 
         {/* Header */}
         <header className="mt-8">
-          <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.34em] text-[#E8FF47]">
+          <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.34em] text-[#8BE1FF]">
             DJ Games
           </p>
-          <h1 className="dj-display mt-3 text-[3.1rem] leading-[0.95] tracking-[0.01em] text-[#F4F1EA]">
+          <h1 className="dj-display mt-3 text-[3.1rem] leading-[0.95] tracking-[0.01em] text-[#EDF5FB]">
             Support the house
           </h1>
-          <p className="mt-4 text-[0.98rem] leading-relaxed text-[#9A958B]">
+          <p className="mt-4 text-[0.98rem] leading-relaxed text-[#8FA3B4]">
             Tips keep LAST CALL moving. Pick a method, pick an amount. More payment
             options will show up here as they go live.
           </p>
@@ -123,25 +123,25 @@ const Donate = () => {
                       ? "cursor-pointer active:scale-[0.99]"
                       : "cursor-not-allowed opacity-40",
                     isSelected
-                      ? "border-[#E8FF47] bg-[#E8FF47]/[0.06] shadow-[0_0_24px_-8px_#E8FF4766]"
-                      : "border-[#2A2A36] bg-[#14141C] hover:border-[#3A3A48]",
+                      ? "border-[#8BE1FF] bg-[#8BE1FF]/[0.06] shadow-[0_0_24px_-8px_#8BE1FF66]"
+                      : "border-[#263444] bg-[#131A24] hover:border-[#33475C]",
                   ].join(" ")}
                 >
                   <span
                     aria-hidden="true"
                     className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[1.05rem] font-black"
                     style={{
-                      backgroundColor: method.badge?.bg ?? "#2A2A36",
-                      color: method.badge?.text ?? "#F4F1EA",
+                      backgroundColor: method.badge?.bg ?? "#263444",
+                      color: method.badge?.text ?? "#EDF5FB",
                     }}
                   >
                     {method.badge?.glyph ?? method.name.charAt(0)}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[1.02rem] font-bold leading-tight text-[#F4F1EA]">
+                    <span className="block text-[1.02rem] font-bold leading-tight text-[#EDF5FB]">
                       {method.name}
                     </span>
-                    <span className="mt-0.5 block font-mono text-[0.66rem] font-medium uppercase tracking-[0.16em] text-[#9A958B]">
+                    <span className="mt-0.5 block font-mono text-[0.66rem] font-medium uppercase tracking-[0.16em] text-[#8FA3B4]">
                       {method.meta}
                     </span>
                   </span>
@@ -150,11 +150,11 @@ const Donate = () => {
                     aria-hidden="true"
                     className={[
                       "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-200",
-                      isSelected ? "border-[#E8FF47]" : "border-[#2A2A36]",
+                      isSelected ? "border-[#8BE1FF]" : "border-[#263444]",
                     ].join(" ")}
                   >
                     {isSelected && (
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#E8FF47]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#8BE1FF]" />
                     )}
                   </span>
                 </button>
@@ -178,8 +178,8 @@ const Donate = () => {
                   className={[
                     "inline-flex min-h-[48px] min-w-[72px] items-center justify-center rounded-full border px-6 font-mono text-[0.9rem] font-bold transition-all duration-200 active:scale-[0.96]",
                     isPicked
-                      ? "border-[#E8FF47] bg-[#E8FF47]/[0.08] text-[#E8FF47] shadow-[0_0_20px_-6px_#E8FF4766]"
-                      : "border-[#2A2A36] bg-[#14141C] text-[#9A958B] hover:border-[#3A3A48] hover:text-[#F4F1EA]",
+                      ? "border-[#8BE1FF] bg-[#8BE1FF]/[0.08] text-[#8BE1FF] shadow-[0_0_20px_-6px_#8BE1FF66]"
+                      : "border-[#263444] bg-[#131A24] text-[#8FA3B4] hover:border-[#33475C] hover:text-[#EDF5FB]",
                   ].join(" ")}
                 >
                   ${chip}
@@ -189,11 +189,11 @@ const Donate = () => {
             {/* Custom USD input — integers, min 1 */}
             <div
               className={[
-                "ml-auto flex min-h-[48px] items-center gap-1.5 rounded-full border bg-[#14141C] px-5 transition-colors duration-200 focus-within:border-[#E8FF47]",
-                !amountValid ? "border-[#FF4D8D]/70" : "border-[#2A2A36]",
+                "ml-auto flex min-h-[48px] items-center gap-1.5 rounded-full border bg-[#131A24] px-5 transition-colors duration-200 focus-within:border-[#8BE1FF]",
+                !amountValid ? "border-[#FFB020]/70" : "border-[#263444]",
               ].join(" ")}
             >
-              <span aria-hidden="true" className="font-mono text-[0.9rem] font-bold text-[#9A958B]">
+              <span aria-hidden="true" className="font-mono text-[0.9rem] font-bold text-[#8FA3B4]">
                 $
               </span>
               <label htmlFor="donate-custom-amount" className="sr-only">
@@ -208,12 +208,12 @@ const Donate = () => {
                 placeholder="Custom"
                 value={amount}
                 onChange={onAmountInput}
-                className="w-[4.5rem] bg-transparent py-3 font-mono text-[0.9rem] font-bold text-[#F4F1EA] placeholder:font-medium placeholder:text-[#9A958B]/60 focus:outline-none"
+                className="w-[4.5rem] bg-transparent py-3 font-mono text-[0.9rem] font-bold text-[#EDF5FB] placeholder:font-medium placeholder:text-[#8FA3B4]/60 focus:outline-none"
               />
             </div>
           </div>
           {!amountValid && (
-            <p className="mt-2.5 font-mono text-[0.68rem] font-medium uppercase tracking-[0.14em] text-[#FF4D8D]">
+            <p className="mt-2.5 font-mono text-[0.68rem] font-medium uppercase tracking-[0.14em] text-[#FFB020]">
               Minimum tip is $1
             </p>
           )}
@@ -228,7 +228,7 @@ const Donate = () => {
               rel="noopener noreferrer"
               style={{
                 backgroundColor: selected.theme?.bg ?? ACCENT,
-                color: selected.theme?.text ?? "#0B0B0F",
+                color: selected.theme?.text ?? "#0A0E14",
               }}
               className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full font-mono text-[0.82rem] font-bold uppercase tracking-[0.18em] shadow-[0_14px_40px_-14px_rgba(0,0,0,0.8)] transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
             >
@@ -239,7 +239,7 @@ const Donate = () => {
               type="button"
               disabled
               aria-disabled="true"
-              className="flex min-h-[56px] w-full cursor-not-allowed items-center justify-center rounded-full bg-[#14141C] font-mono text-[0.82rem] font-bold uppercase tracking-[0.18em] text-[#9A958B]"
+              className="flex min-h-[56px] w-full cursor-not-allowed items-center justify-center rounded-full bg-[#131A24] font-mono text-[0.82rem] font-bold uppercase tracking-[0.18em] text-[#8FA3B4]"
             >
               Coming soon
             </button>
@@ -247,7 +247,7 @@ const Donate = () => {
         </div>
 
         {/* Fine print */}
-        <p className="mt-5 text-center text-[0.78rem] leading-relaxed text-[#9A958B]">
+        <p className="mt-5 text-center text-[0.78rem] leading-relaxed text-[#8FA3B4]">
           You’ll finish checkout on the provider. We never see your card details.
           Not tax-deductible.
         </p>

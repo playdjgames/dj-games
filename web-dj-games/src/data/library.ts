@@ -76,7 +76,7 @@ const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   status: "available",
   statusLabel: "Available now",
   category: "utilities",
-  accent: "#B8FF3C",
+  accent: "#8BE1FF",
   platforms: ["iOS"],
   featured: true,
   releaseDate: app.releaseDate,

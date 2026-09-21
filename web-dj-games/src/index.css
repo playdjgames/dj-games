@@ -2,45 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* DJ Games design system — near-black canvas, neon lime signal, hot orange accent.
-   Signal #B8FF3C = hsl(84 100% 62%) · Ember #FF6A00 = hsl(24 100% 50%). */
+/* DJ Games design system — blue-black canvas, ice-blue signal, warm amber accent
+   (2026-09-21 "ice neon" pivot). Signal #8BE1FF = hsl(196 100% 77%) · Ember #FFB020 = hsl(39 100% 56%). */
 
 @layer base {
   :root {
-    --background: 156 20% 5%;
-    --foreground: 135 14% 94%;
+    --background: 216 33% 6%;
+    --foreground: 200 44% 95%;
 
-    --surface: 153 15% 9%;
-    --surface-raised: 153 14% 12%;
+    --surface: 215 31% 11%;
+    --surface-raised: 215 28% 14%;
 
-    --signal: 84 100% 62%;
-    --signal-soft: 84 60% 24%;
-    --ember: 24 100% 50%;
+    --signal: 196 100% 77%;
+    --signal-soft: 196 60% 26%;
+    --ember: 39 100% 56%;
 
-    --card: 153 15% 9%;
-    --card-foreground: 135 14% 94%;
+    --card: 215 31% 11%;
+    --card-foreground: 200 44% 95%;
 
-    --popover: 153 16% 8%;
-    --popover-foreground: 135 14% 94%;
+    --popover: 215 30% 10%;
+    --popover-foreground: 200 44% 95%;
 
-    --primary: 144 100% 61%;
-    --primary-foreground: 156 30% 5%;
+    --primary: 196 100% 72%;
+    --primary-foreground: 216 33% 6%;
 
-    --secondary: 153 14% 14%;
-    --secondary-foreground: 135 14% 94%;
+    --secondary: 215 20% 16%;
+    --secondary-foreground: 200 44% 95%;
 
-    --muted: 153 12% 16%;
-    --muted-foreground: 153 11% 66%;
+    --muted: 215 20% 17%;
+    --muted-foreground: 210 14% 68%;
 
-    --accent: 25 100% 55%;
-    --accent-foreground: 156 30% 5%;
+    --accent: 39 100% 56%;
+    --accent-foreground: 216 33% 6%;
 
     --destructive: 0 72% 52%;
     --destructive-foreground: 135 14% 94%;
 
-    --border: 153 12% 18%;
-    --input: 153 12% 18%;
-    --ring: 144 100% 61%;
+    --border: 214 22% 20%;
+    --input: 214 22% 20%;
+    --ring: 196 100% 72%;
 
     --radius: 0.875rem;
   }
@@ -255,30 +255,30 @@
 
 /*
  * Dynamic site background (DynamicBackground.tsx). The glow hue is a registered
- * custom property so the browser interpolates lime ↔ ember smoothly. The drift
+ * custom property so the browser interpolates ice ↔ azure smoothly. The drift
  * lasts exactly one full image loop (5 slides × 16s = 80s) so hue and artwork
- * stay in sync; the reduce-motion rule above collapses it back to static lime.
+ * stay in sync; the reduce-motion rule above collapses it back to static ice.
  */
 @property --bg-glow {
   syntax: "<color>";
   inherits: true;
-  initial-value: #b8ff3c;
+  initial-value: #8be1ff;
 }
 
 @keyframes bg-glow-drift {
   0% {
-    --bg-glow: #b8ff3c;
+    --bg-glow: #8be1ff;
   }
   50% {
-    --bg-glow: #ff6a00;
+    --bg-glow: #4d9fff;
   }
   100% {
-    --bg-glow: #b8ff3c;
+    --bg-glow: #8be1ff;
   }
 }
 
 .dynamic-bg-glow {
-  --bg-glow: #b8ff3c;
+  --bg-glow: #8be1ff;
   animation: bg-glow-drift 80s ease-in-out infinite;
   background:
     radial-gradient(110% 70% at 50% -10%, color-mix(in srgb, var(--bg-glow) 14%, transparent), transparent 62%),
@@ -292,41 +292,41 @@
 
 /*
  * Marketing page (/marketing) background drift. Same trick as the site glow:
- * a registered custom property animates a low-opacity lime ↔ ember radial
- * wash over the forest base, stepping every 16s across an 80s loop — the same
- * rhythm as the site's crossfading backdrop. inherits:true so the page's grid
- * lines can tint along with it. Reduce-motion collapses it to static lime.
+ * a registered custom property animates a low-opacity ice ↔ azure blue radial
+ * wash over the blue-black base, stepping every 16s across an 80s loop — the
+ * same rhythm as the site's crossfading backdrop. inherits:true so the page's
+ * grid lines can tint along with it. Reduce-motion collapses it to static ice.
  */
 @property --mk-glow {
   syntax: "<color>";
   inherits: true;
-  initial-value: #c8ff3a;
+  initial-value: #8be1ff;
 }
 
 @keyframes mk-glow-drift {
   0% {
-    --mk-glow: #c8ff3a;
+    --mk-glow: #8be1ff;
   }
   20% {
-    --mk-glow: #ff6a2a;
+    --mk-glow: #4d9fff;
   }
   40% {
-    --mk-glow: #c8ff3a;
+    --mk-glow: #8be1ff;
   }
   60% {
-    --mk-glow: #ff6a2a;
+    --mk-glow: #3d8bff;
   }
   80% {
-    --mk-glow: #c8ff3a;
+    --mk-glow: #8be1ff;
   }
   100% {
-    --mk-glow: #c8ff3a;
+    --mk-glow: #8be1ff;
   }
 }
 
 .mk-page-bg {
   animation: mk-glow-drift 80s ease-in-out infinite;
-  background-color: #0a0f0d;
+  background-color: #0a0e14;
   background-image:
     radial-gradient(90% 55% at 50% 0%, color-mix(in srgb, var(--mk-glow) 12%, transparent), transparent 60%),
     radial-gradient(70% 50% at 85% 105%, color-mix(in srgb, var(--mk-glow) 9%, transparent), transparent 70%),
@@ -342,10 +342,10 @@
 }
 
 /*
- * Donate screen (/donate) — scoped nightlife palette, deliberately its own
- * tokens, not the site's: near-black #0B0B0F canvas, card #14141C, border
- * #2A2A36, bone #F4F1EA text, muted taupe #9A958B, lime #E8FF47 accent, hot
- * pink #FF4D8D glow. Bebas Neue display + DM Sans body (loaded in index.html).
+ * Donate screen (/donate) — scoped nightlife palette, aligned to the site's
+ * 2026-09-21 ice-neon pivot: blue-black #0A0E14 canvas, card #131A24, border
+ * #263444, ice-white #EDF5FB text, muted steel #8FA3B4, ice #8BE1FF accent,
+ * amber #FFB020 glow. Bebas Neue display + DM Sans body (loaded in index.html).
  */
 .donate-root {
   font-family: "DM Sans", "Outfit", system-ui, sans-serif;
