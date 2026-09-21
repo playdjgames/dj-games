@@ -58,40 +58,6 @@ const Home = () => {
             <p className="mt-4 text-xl font-light text-foreground/90 sm:text-2xl">
               Original iOS games and apps. Built to play.
             </p>
-
-            {live ? (
-              <>
-                <p className="status-chip mt-7 border-signal/50 bg-signal/10 text-signal">
-                  <span className="relative inline-flex h-2 w-2" aria-hidden="true">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
-                  </span>
-                  Live now · {live.price ?? "FREE"}
-                </p>
-
-                <p className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">
-                  Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.
-                </p>
-
-                <div className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
-                  <a
-                    href={live.appStoreUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-md bg-signal px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.98] sm:w-auto"
-                  >
-                    Download on the App Store
-                  </a>
-                  <Link
-                    to="/coming-soon"
-                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-md border border-ember/60 px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-ember transition-all duration-300 hover:bg-ember hover:text-primary-foreground hover:shadow-ember active:scale-[0.98] sm:w-auto"
-                  >
-                    See what's coming
-                    <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </>
-            ) : null}
           </div>
         </div>
       </section>
