@@ -199,30 +199,38 @@ const Donate = () => {
                 </button>
               );
             })}
-            {/* Custom USD input — integers, min 1 */}
-            <div
-              className={[
-                "ml-auto flex min-h-[48px] items-center gap-1.5 rounded-full border bg-[#131A24] px-5 transition-colors duration-200 focus-within:border-[#8BE1FF]",
-                !amountValid ? "border-[#FFB020]/70" : "border-[#263444]",
-              ].join(" ")}
-            >
-              <span aria-hidden="true" className="font-mono text-[0.9rem] font-bold text-[#8FA3B4]">
-                $
+            {/* Custom USD input — integers, min 1, labeled above the field */}
+            <div className="ml-auto flex flex-col items-end gap-1.5">
+              <span
+                aria-hidden="true"
+                className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.22em] text-[#8BE1FF]"
+              >
+                Custom
               </span>
-              <label htmlFor="donate-custom-amount" className="sr-only">
-                Custom amount (USD), minimum one dollar
-              </label>
-              <input
-                id="donate-custom-amount"
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                autoComplete="off"
-                placeholder="Custom"
-                value={amount}
-                onChange={onAmountInput}
-                className="w-[4.5rem] bg-transparent py-3 font-mono text-[0.9rem] font-bold text-[#EDF5FB] placeholder:font-medium placeholder:text-[#8FA3B4]/60 focus:outline-none"
-              />
+              <div
+                className={[
+                  "flex min-h-[48px] items-center gap-1.5 rounded-full border bg-[#131A24] px-5 transition-colors duration-200 focus-within:border-[#8BE1FF]",
+                  !amountValid ? "border-[#FFB020]/70" : "border-[#263444]",
+                ].join(" ")}
+              >
+                <span aria-hidden="true" className="font-mono text-[0.9rem] font-bold text-[#8FA3B4]">
+                  $
+                </span>
+                <label htmlFor="donate-custom-amount" className="sr-only">
+                  Custom amount (USD), minimum one dollar
+                </label>
+                <input
+                  id="donate-custom-amount"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  autoComplete="off"
+                  placeholder="Custom"
+                  value={amount}
+                  onChange={onAmountInput}
+                  className="w-[4.5rem] bg-transparent py-3 font-mono text-[0.9rem] font-bold text-[#EDF5FB] placeholder:font-medium placeholder:text-[#8FA3B4]/60 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
           {!amountValid && (
