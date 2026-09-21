@@ -39,19 +39,6 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
     "ageRating": null
   },
   {
-    "appStoreId": 6813098751,
-    "name": "Valiant Kingdoms",
-    "nameIsPlaceholder": false,
-    "subtitle": null,
-    "description": null,
-    "keywords": [],
-    "version": "1.0.3",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": null
-  },
-  {
     "appStoreId": 6805272943,
     "name": "Run Dummy",
     "nameIsPlaceholder": false,

@@ -364,35 +364,6 @@ export const GAMES: Game[] = [
     trailerUrl: "[TRAILER_URL]",
   },
   {
-    slug: "valiant-kingdoms",
-    division: "mobile-games",
-    title: "Valiant Kingdoms",
-    tagline: "Banners on the ridge. A crown that won't hold itself.",
-    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
-    description:
-      "Valiant Kingdoms is an upcoming iOS game from DJ Games, in development now.\n\nA realm of walled cities and mountain passes, of torch-lit harbors and long cold nights under the aurora. Somewhere down there a kingdom is waiting to be held — or taken.\n\nWe're not ready to talk about how it plays just yet. Screenshots, features and a release window will show up here first, and newsletter subscribers hear the horn before anyone else.",
-    genre: "Early concept",
-    status: "concept",
-    statusLabel: "In development",
-    category: "concept",
-    accent: "#FF5C5C",
-    platforms: ["iOS"],
-    featured: false,
-    releaseDate: "TBA",
-    seoTitle: "Valiant Kingdoms — Upcoming iOS Game | DJ Games",
-    seoDescription:
-      "Valiant Kingdoms is an upcoming iOS game from DJ Games — banners on the ridge, a crown that won't hold itself. In development; follow along for the first look.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/b4bff000-bed3-4737-93b7-9a8a2c2e9ece.png",
-    coverFit: "cover",
-    screenshots: [],
-    features: [],
-    appStoreId: 6813098751,
-    appStoreUrl: "[APP_STORE_URL]",
-    googlePlayUrl: "[GOOGLE_PLAY_URL]",
-    websiteUrl: "[GAME_WEBSITE_URL]",
-    trailerUrl: "[TRAILER_URL]",
-  },
-  {
     slug: "neon-world",
     division: "mobile-games",
     title: "Neon World",
@@ -452,7 +423,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "blood-war",
-    division: "pc-games",
+    division: "mobile-games",
     title: "Blood War",
     tagline: "Two sides. One field. No truce.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */

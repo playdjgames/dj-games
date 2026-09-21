@@ -47,7 +47,6 @@ const SUBMITTED = [
 ] as const;
 
 const CONCEPTS = [
-  { title: "Valiant Kingdoms", line: "Banners on the ridge. A crown that won\u2019t hold itself.", href: `${SITE_URL}/games/valiant-kingdoms` },
   { title: "Neon World", line: "An unmapped planet, glowing in the dark.", href: `${SITE_URL}/games/neon-world` },
   { title: "Neon City: Underground", line: "Rain, neon, and whatever runs beneath the city.", href: `${SITE_URL}/games/neon-city-underground` },
 ] as const;
