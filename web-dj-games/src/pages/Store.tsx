@@ -11,7 +11,6 @@ import { ProductSheet } from "@/components/store/ProductSheet";
 import {
   cartCount,
   defaultSelections,
-  DROP_NAME,
   useStoreCatalog,
   type StoreProduct,
 } from "@/data/store";
@@ -25,7 +24,7 @@ const Store = () => {
   useSeo({
     title: "Store — DJ Games",
     description:
-      `${DROP_NAME} merch from DJ Games. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.`,
+      "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.",
   });
 
   const { products, categories, isLoading, isEmpty } = useStoreCatalog();
@@ -59,7 +58,7 @@ const Store = () => {
         eyebrow="DJ Games"
         title={
           <>
-            Last <span className="text-signal text-glow">Call</span>
+            The <span className="text-signal text-glow">Store</span>
           </>
         }
         description="Merch from the house. Drops live here."
@@ -130,10 +129,10 @@ const Store = () => {
           /* Empty state — the drop is not on the rack yet. Never fake products. */
           <Reveal>
             <div className="surface-card corner-ticks mx-auto mt-4 max-w-xl p-8 text-center sm:p-12">
-              <p className="eyebrow">{DROP_NAME}</p>
+              <p className="eyebrow">Store</p>
               <h2 className="display-title mt-3 text-3xl sm:text-4xl">Drop loading</h2>
               <p className="mt-4 text-[0.98rem] leading-relaxed text-muted-foreground">
-                {DROP_NAME} isn&rsquo;t on the rack yet. When the first run goes live, it lands
+                Nothing is on the rack yet. When the next run goes live, it lands
                 here first.
               </p>
 

@@ -2,15 +2,12 @@
  * ============================================================================
  * DJ GAMES STORE — CATALOG SOURCE
  * ============================================================================
- * The Store page IS the merch catalog. /store shows the LAST CALL rack directly
+ * The Store page IS the merch catalog. /store shows the house rack directly
  * — no shop home, no external product host, no checkout hand-off. The house
  * products below are the catalog's source of truth; the bag lives on the page
  * and checkout stays disabled until payments are actually wired.
  * ============================================================================
  */
-
-/** Current drop / product line. */
-export const DROP_NAME = "LAST CALL";
 
 /** The in-app storefront route. */
 export const STORE_ROUTE = "/store";
@@ -75,7 +72,7 @@ const colors = (...labels: string[]): ProductOptionGroup => ({
   values: labels.map((label, index) => ({ id: `color-${index}`, label, available: true })),
 });
 
-/* ------------------------------ the LAST CALL rack ------------------------ */
+/* ------------------------------ the house rack ---------------------------- */
 
 /**
  * The first house rack. Real UI, real add-to-bag — placeholder art renders as a
@@ -84,11 +81,11 @@ const colors = (...labels: string[]): ProductOptionGroup => ({
  */
 export const HOUSE_PRODUCTS: StoreProduct[] = [
   {
-    id: "last-call-tee",
-    name: "LAST CALL tee",
+    id: "house-tee",
+    name: "House tee",
     tagline: "Nights don\u2019t end. They fade.",
     description:
-      "Heavyweight cotton tee with the LAST CALL mark across the chest. Cut for the hours after the set.",
+      "Heavyweight cotton tee with the house mark across the chest. Cut for the hours after the set.",
     price: 32,
     currency: "USD",
     images: [],
@@ -98,11 +95,11 @@ export const HOUSE_PRODUCTS: StoreProduct[] = [
     options: [sizes("S", "M", "L", "XL", "XXL"), colors("Black", "Ice")],
   },
   {
-    id: "last-call-hoodie",
-    name: "LAST CALL hoodie",
+    id: "house-hoodie",
+    name: "House hoodie",
     tagline: "House merch. Loud on purpose.",
     description:
-      "Fleece-lined hoodie, boxy fit, big LAST CALL print. The one you reach for when the night runs long.",
+      "Fleece-lined hoodie, boxy fit, big house print. The one you reach for when the night runs long.",
     price: 58,
     currency: "USD",
     images: [],
