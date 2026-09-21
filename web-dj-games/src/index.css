@@ -342,8 +342,8 @@
 }
 
 /*
- * Donate screen (/donate) — scoped nightlife palette, aligned to the site's
- * 2026-09-21 ice-neon pivot: blue-black #0A0E14 canvas, card #131A24, border
+ * Donate page (/donate) — a regular page inside the site Layout. Scoped
+ * palette aligned to the 2026-09-21 ice-neon pivot: blue-black #0A0E14 canvas, card #131A24, border
  * #263444, ice-white #EDF5FB text, muted steel #8FA3B4, ice #8BE1FF accent,
  * amber #FFB020 glow. Bebas Neue display + DM Sans body (loaded in index.html).
  */

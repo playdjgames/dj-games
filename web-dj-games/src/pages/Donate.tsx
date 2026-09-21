@@ -68,7 +68,7 @@ const Donate = () => {
   }, []);
 
   return (
-    <div className="donate-root relative min-h-screen bg-[#0A0E14] text-[#EDF5FB] antialiased selection:bg-[#8BE1FF] selection:text-[#0A0E14]">
+    <div className="donate-root relative text-[#EDF5FB] antialiased selection:bg-[#8BE1FF] selection:text-[#0A0E14]">
       {/* Soft amber + ice radial glows */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -top-28 right-[-5rem] h-[22rem] w-[22rem] rounded-full bg-[#FFB020]/[0.16] blur-[110px]" />
@@ -76,7 +76,7 @@ const Donate = () => {
         <div className="absolute left-1/2 top-[38%] h-[16rem] w-[26rem] -translate-x-1/2 rounded-full bg-[#FFB020]/[0.06] blur-[120px]" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-[520px] px-5 pb-[max(3rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6">
+      <main className="relative z-10 mx-auto w-full max-w-[520px] px-5 pb-20 pt-8 sm:px-6">
         {/* Back */}
         <button
           type="button"

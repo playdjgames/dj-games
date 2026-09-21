@@ -33,9 +33,8 @@ const App = () => {
       <Toaster position="bottom-right" />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
-          {/* Standalone campaign pages — own chrome, no site Layout. */}
+          {/* Standalone campaign page — own chrome, no site Layout. */}
           <Route path="/marketing" element={<Marketing />} />
-          <Route path="/donate" element={<Donate />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
@@ -45,6 +44,7 @@ const App = () => {
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/donate" element={<Donate />} />
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />
             <Route path="/media" element={<MediaLibrary />} />
