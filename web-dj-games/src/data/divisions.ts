@@ -29,8 +29,8 @@ export interface Division {
 /** Display order everywhere on the site: shipped-most-often first. */
 export const DIVISIONS: Division[] = [
   { id: "apps", label: "Apps", note: "iOS tools and productivity" },
-  { id: "mobile-games", label: "Mobile Games", note: "iPhone and iPad" },
-  { id: "pc-games", label: "PC Games", note: "Desktop titles" },
+  { id: "mobile-games", label: "Mobile", note: "iPhone and iPad" },
+  { id: "pc-games", label: "PC", note: "Desktop titles" },
   { id: "web", label: "Web", note: "Sites and web design" },
 ];
 
