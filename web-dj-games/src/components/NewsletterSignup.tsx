@@ -1,5 +1,6 @@
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useCallback, useState, type FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import { SocialLinks } from "@/components/SocialLinks";
@@ -16,7 +17,9 @@ interface NewsletterSignupProps {
  * Cloudflare Worker and are viewable/exportable from the /subscribers page.
  */
 export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
-  const [email, setEmail] = useState<string>("");
+  // Prefill from ?email= — the /marketing campaign page hands its email here.
+  const [searchParams] = useSearchParams();
+  const [email, setEmail] = useState<string>(() => searchParams.get("email") ?? "");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const hasSocials = activeSocials().length > 0;
 

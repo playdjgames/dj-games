@@ -13,6 +13,7 @@ import GameDetail from "./pages/GameDetail";
 import Games from "./pages/Games";
 import Home from "./pages/Home";
 import Legal from "./pages/Legal";
+import Marketing from "./pages/Marketing";
 import MediaLibrary from "./pages/MediaLibrary";
 import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
@@ -31,6 +32,8 @@ const App = () => {
       <Toaster position="bottom-right" />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
+          {/* Standalone campaign page — own chrome, no site Layout. */}
+          <Route path="/marketing" element={<Marketing />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
