@@ -30,7 +30,7 @@ const About = () => {
   useSeo({
     title: "About — DJ Games",
     description:
-      "DJ Games is an independent iOS studio. We prototype fast, build everything from scratch, and ship games that respect your time.",
+      "DJ Games is an independent studio. We build iOS games and apps, design and build websites, and prototype fast — everything from scratch, nothing reskinned.",
   });
 
   const posts = sortedPosts().slice(0, 3);
@@ -47,7 +47,7 @@ const About = () => {
             <span className="text-signal text-glow">DJ Games</span>
           </>
         }
-        description="An indie studio, not a factory. Original iOS games and apps, built to play."
+        description="An indie studio, not a factory. Original iOS games and apps — and we design and build websites too."
         stamp={["Bold", "Ideas", "Real", "Games"]}
       />
 
@@ -65,6 +65,10 @@ const About = () => {
                 We prototype fast and ship games and apps that respect your time. Everything DIY — our step-by-step
                 DIY companion — is live on the App Store today, with more titles in review and in development right
                 now.
+              </p>
+              <p>
+                And it doesn't stop at the App Store: we design and build websites too — including this one. Fast,
+                clean, made to last, with no template filler.
               </p>
               <p>
                 Everything you see here — the art, the worlds, the mechanics — is built from scratch by the studio.

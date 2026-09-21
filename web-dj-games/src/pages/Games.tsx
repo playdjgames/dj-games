@@ -9,6 +9,7 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { DIVISIONS, divisionById, type Division, type DivisionId } from "@/data/divisions";
 import { useGameLibrary } from "@/data/library";
+import { SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 
@@ -149,9 +150,23 @@ const Games = () => {
             )}
           </div>
         ) : (
-          <p className="mt-10 font-mono text-sm uppercase tracking-[0.16em] text-muted-foreground">
-            Nothing here yet — this side of the studio is just getting started.
-          </p>
+          <div className="mt-10">
+            <p className="font-mono text-sm uppercase tracking-[0.16em] text-muted-foreground">
+              Nothing here yet — this side of the studio is just getting started.
+            </p>
+            {/* Web is a service, not a shipped title — the empty tab is the invite. */}
+            {active === "web" ? (
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                Need a website? We design and build them — fast, clean, and built to last.{" "}
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="font-mono text-signal transition-colors hover:text-foreground"
+                >
+                  {SITE.email}
+                </a>
+              </p>
+            ) : null}
+          </div>
         )}
       </section>
     </>

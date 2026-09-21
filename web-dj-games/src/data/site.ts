@@ -34,9 +34,9 @@ export interface SiteConfig {
 
 export const SITE: SiteConfig = {
   brandName: "DJ Games",
-  tagline: "Original iOS games and apps.",
+  tagline: "Original iOS games and apps — and the websites too.",
   description:
-    "DJ Games is an independent iOS studio. Everything DIY is out now on the App Store — more games are on the way.",
+    "DJ Games is an independent studio. Everything DIY is out now on the App Store — more games are on the way, and we design and build websites too.",
   website: "https://playdjgames.com",
   email: "hello@playdjgames.com",
   supportEmail: "support@playdjgames.com",

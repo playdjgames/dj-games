@@ -33,7 +33,7 @@ const VALUES: { title: string; body: string }[] = [
 
 const Home = () => {
   useSeo({
-    title: "DJ Games — Original iOS Games and Apps",
+    title: "DJ Games — Original iOS Games, Apps and Websites",
     description: SITE.description,
   });
 
@@ -42,13 +42,14 @@ const Home = () => {
   const posts = sortedPosts().slice(0, 3);
 
   // What the studio makes, counted from the real library — a division with
-  // nothing in it never appears.
+  // nothing in it never appears. Web is the exception: it's a service we sell,
+  // so it always shows, with an "available" note instead of a count.
   const divisions = useMemo(
     () =>
       DIVISIONS.map((division) => ({
         ...division,
         count: games.filter((game) => game.division === division.id).length,
-      })).filter((division) => division.count > 0),
+      })).filter((division) => division.count > 0 || division.id === "web"),
     [games],
   );
 
@@ -87,9 +88,13 @@ const Home = () => {
                     className="group inline-flex items-baseline gap-2 whitespace-nowrap font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:text-signal"
                   >
                     {division.label}
-                    <span className="text-[0.6rem] text-muted-foreground/60 transition-colors group-hover:text-signal/70">
-                      {division.count}
-                    </span>
+                    {division.count > 0 ? (
+                      <span className="text-[0.6rem] text-muted-foreground/60 transition-colors group-hover:text-signal/70">
+                        {division.count}
+                      </span>
+                    ) : (
+                      <span className="text-ember text-[0.6rem]">available</span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -222,7 +227,7 @@ const Home = () => {
 
         <Reveal delay={60}>
           <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Independent studio. No ads-first junk. No pay-to-win.
+            Independent studio. Games, apps — and websites. No ads-first junk. No pay-to-win.
           </p>
         </Reveal>
 
