@@ -432,6 +432,33 @@ export const GAMES: Game[] = [
     websiteUrl: "[GAME_WEBSITE_URL]",
     trailerUrl: "[TRAILER_URL]",
   },
+  {
+    slug: "blood-war",
+    title: "Blood War",
+    tagline: "Two sides. One field. No truce.",
+    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
+    description:
+      "Blood War is an upcoming iOS game from DJ Games, in development now.\n\nTwo war banners on two ridges, and a field between them that nobody means to share. It's early — too early to show how it plays — but the first battles are already being fought in prototypes.\n\nScreenshots, features and a release window will show up here first — the newsletter gets them before anyone else.",
+    genre: "Early concept",
+    status: "concept",
+    statusLabel: "In development",
+    category: "concept",
+    accent: "#E23B3B",
+    platforms: ["iOS"],
+    featured: false,
+    releaseDate: "TBA",
+    seoTitle: "Blood War — Upcoming iOS Game | DJ Games",
+    seoDescription:
+      "Blood War is an upcoming iOS game from DJ Games — two sides, one field, no truce. In development; follow along for the first look.",
+    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
+    coverFit: "cover",
+    screenshots: [],
+    features: [],
+    appStoreUrl: "[APP_STORE_URL]",
+    googlePlayUrl: "[GOOGLE_PLAY_URL]",
+    websiteUrl: "[GAME_WEBSITE_URL]",
+    trailerUrl: "[TRAILER_URL]",
+  },
 ];
 
 /**
