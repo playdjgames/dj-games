@@ -32,7 +32,7 @@ interface MkNavLink {
 
 const NAV: MkNavLink[] = [
   { label: "Home", href: `${SITE_URL}/` },
-  { label: "Work", href: `${SITE_URL}/games` },
+  { label: "Apps-n-Stuff", href: `${SITE_URL}/games` },
   { label: "Coming Soon", href: `${SITE_URL}/coming-soon` },
   { label: "About", href: `${SITE_URL}/about` },
   { label: "News", href: `${SITE_URL}/news` },

@@ -9,7 +9,7 @@ import { isLive, SITE, websiteDomain } from "@/data/site";
 import { isNewsletterConnected, subscribeEmail } from "@/lib/newsletter";
 
 const FOOTER_LINKS: { label: string; to: string }[] = [
-  { label: "Work", to: "/games" },
+  { label: "Apps-n-Stuff", to: "/games" },
   { label: "Coming Soon", to: "/coming-soon" },
   { label: "About", to: "/about" },
   { label: "News", to: "/news" },

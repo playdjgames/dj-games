@@ -45,7 +45,9 @@ export const POSTS: NewsPost[] = [
     date: "2026-08-22",
     category: "Announcement",
     excerpt: "A crash-test dummy, a booby-trapped lab and a ticking clock — our next game is taking shape.",
-    image: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/8f5580aa-235a-40c1-a0a1-929739609630.png",
+    // Same key art as the Run Dummy library card (games.ts `coverImage`) — the
+    // post and the card must never show two different versions of the game.
+    image: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/74b7731b-abaa-4f03-a756-155d3d402b85.png",
     gameSlug: "run-dummy",
     body: [
       "Time to talk about what's next. Run Dummy is a 3D maze runner starring a crash-test dummy loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.",

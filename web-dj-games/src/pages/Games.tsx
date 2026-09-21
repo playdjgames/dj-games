@@ -23,7 +23,7 @@ const GROUP_META = {
 
 const Games = () => {
   useSeo({
-    title: "Work — DJ Games",
+    title: "Apps-n-Stuff — DJ Games",
     description:
       "Everything DJ Games builds, by division: iOS apps, mobile games, PC games and web work — live titles, builds with Apple, and early concepts.",
   });
@@ -75,7 +75,7 @@ const Games = () => {
         eyebrow="The library"
         title={
           <>
-            Our <span className="text-signal text-glow">Work</span>
+            Apps-n-<span className="text-signal text-glow">Stuff</span>
           </>
         }
         description="Apps, mobile games, PC games and web work — everything we're building, honest about where each one stands."
