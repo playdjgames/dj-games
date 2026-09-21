@@ -197,7 +197,7 @@ const Donate = () => {
                 $
               </span>
               <label htmlFor="donate-custom-amount" className="sr-only">
-                Custom amount in US dollars, minimum one dollar
+                Custom amount (USD), minimum one dollar
               </label>
               <input
                 id="donate-custom-amount"
