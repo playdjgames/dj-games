@@ -289,3 +289,54 @@
   transition: opacity 2.6s ease-in-out;
   will-change: opacity;
 }
+
+/*
+ * Marketing page (/marketing) background drift. Same trick as the site glow:
+ * a registered custom property animates a low-opacity lime ↔ ember radial
+ * wash over the forest base, stepping every 16s across an 80s loop — the same
+ * rhythm as the site's crossfading backdrop. inherits:true so the page's grid
+ * lines can tint along with it. Reduce-motion collapses it to static lime.
+ */
+@property --mk-glow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c8ff3a;
+}
+
+@keyframes mk-glow-drift {
+  0% {
+    --mk-glow: #c8ff3a;
+  }
+  20% {
+    --mk-glow: #ff6a2a;
+  }
+  40% {
+    --mk-glow: #c8ff3a;
+  }
+  60% {
+    --mk-glow: #ff6a2a;
+  }
+  80% {
+    --mk-glow: #c8ff3a;
+  }
+  100% {
+    --mk-glow: #c8ff3a;
+  }
+}
+
+.mk-page-bg {
+  animation: mk-glow-drift 80s ease-in-out infinite;
+  background-color: #0a0f0d;
+  background-image:
+    radial-gradient(90% 55% at 50% 0%, color-mix(in srgb, var(--mk-glow) 12%, transparent), transparent 60%),
+    radial-gradient(70% 50% at 85% 105%, color-mix(in srgb, var(--mk-glow) 9%, transparent), transparent 70%),
+    radial-gradient(60% 45% at 10% 70%, color-mix(in srgb, var(--mk-glow) 7%, transparent), transparent 72%);
+}
+
+/* Viewport-anchored glow on desktop; iOS Safari treats `fixed` as scroll, so
+   mobile keeps the wash anchored to the document instead. */
+@media (min-width: 768px) {
+  .mk-page-bg {
+    background-attachment: fixed;
+  }
+}

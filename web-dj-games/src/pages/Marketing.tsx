@@ -78,7 +78,7 @@ const GridLayer = ({ className }: { className?: string }) => (
     className={cn("pointer-events-none absolute inset-0", className)}
     style={{
       backgroundImage:
-        "linear-gradient(to right, rgba(200,255,58,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,255,58,0.05) 1px, transparent 1px)",
+        "linear-gradient(to right, color-mix(in srgb, var(--mk-glow, #c8ff3a) 5%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--mk-glow, #c8ff3a) 5%, transparent) 1px, transparent 1px)",
       backgroundSize: "56px 56px",
       maskImage: "radial-gradient(120% 90% at 50% 0%, black, transparent 78%)",
       WebkitMaskImage: "radial-gradient(120% 90% at 50% 0%, black, transparent 78%)",
@@ -136,7 +136,7 @@ const Marketing = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0A0F0D] text-[#E9F0EA] antialiased selection:bg-[#C8FF3A] selection:text-[#0A0F0D]">
+    <div className="mk-page-bg min-h-screen text-[#E9F0EA] antialiased selection:bg-[#C8FF3A] selection:text-[#0A0F0D]">
       {/* ------------------------------- NAV ------------------------------- */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.07] bg-[#0A0F0D]/85 backdrop-blur-xl">
         <nav className="mx-auto flex h-[68px] max-w-6xl items-center justify-between gap-6 px-5 sm:px-8" aria-label="Main">
