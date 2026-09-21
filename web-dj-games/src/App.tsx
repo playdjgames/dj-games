@@ -9,6 +9,7 @@ import { watchForWatermarkBadge } from "@/lib/remove-watermark";
 
 import About from "./pages/About";
 import ComingSoon from "./pages/ComingSoon";
+import Donate from "./pages/Donate";
 import GameDetail from "./pages/GameDetail";
 import Games from "./pages/Games";
 import Home from "./pages/Home";
@@ -32,8 +33,9 @@ const App = () => {
       <Toaster position="bottom-right" />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
-          {/* Standalone campaign page — own chrome, no site Layout. */}
+          {/* Standalone campaign pages — own chrome, no site Layout. */}
           <Route path="/marketing" element={<Marketing />} />
+          <Route path="/donate" element={<Donate />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />

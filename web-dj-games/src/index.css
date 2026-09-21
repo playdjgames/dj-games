@@ -340,3 +340,18 @@
     background-attachment: fixed;
   }
 }
+
+/*
+ * Donate screen (/donate) — scoped nightlife palette, deliberately its own
+ * tokens, not the site's: near-black #0B0B0F canvas, card #14141C, border
+ * #2A2A36, bone #F4F1EA text, muted taupe #9A958B, lime #E8FF47 accent, hot
+ * pink #FF4D8D glow. Bebas Neue display + DM Sans body (loaded in index.html).
+ */
+.donate-root {
+  font-family: "DM Sans", "Outfit", system-ui, sans-serif;
+}
+
+.dj-display {
+  font-family: "Bebas Neue", "Archivo", "Arial Narrow", sans-serif;
+  letter-spacing: 0.01em;
+}
