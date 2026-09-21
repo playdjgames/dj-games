@@ -43,7 +43,7 @@ const SUBMITTED = [
   { title: "Run Dummy", line: "Run. Remember. Escape.", href: `${SITE_URL}/games/run-dummy` },
   { title: "Vexara", line: "Neon fire, endless waves, one thumb.", href: `${SITE_URL}/games/vexara` },
   { title: "Astronix", line: "One thumb. Endless waves. Everything earned by play.", href: `${SITE_URL}/games/astronix` },
-  { title: "ThinkSort", line: "Dump the chaos. Get one clear next step.", href: `${SITE_URL}/games/thinksort` },
+  { title: "ThinkSort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
 ] as const;
 
 const CONCEPTS = [

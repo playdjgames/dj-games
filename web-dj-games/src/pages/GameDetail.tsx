@@ -130,9 +130,15 @@ const GameDetail = () => {
             <div>
               <StatusBadge status={game.status} label={game.statusLabel} className="mb-3" />
               <h1 className="display-title text-5xl sm:text-6xl lg:text-7xl">{game.title}</h1>
-              <p className="game-accent-text mt-2 font-display text-lg uppercase tracking-[0.22em] sm:text-xl">
-                {game.tagline}
-              </p>
+              {game.taglineStatement ? (
+                <p className="mt-3 max-w-2xl font-display text-2xl font-bold leading-snug text-white sm:text-3xl lg:text-4xl">
+                  {game.tagline}
+                </p>
+              ) : (
+                <p className="game-accent-text mt-2 font-display text-lg uppercase tracking-[0.22em] sm:text-xl">
+                  {game.tagline}
+                </p>
+              )}
             </div>
           </div>
         </div>
