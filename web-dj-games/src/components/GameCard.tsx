@@ -15,22 +15,19 @@ interface GameCardProps {
 
 /**
  * Library card. Each game carries its own accent (`--game-accent`), so the
- * grid reads as a lineup of distinct titles instead of clones. Available apps
- * get a store button; everything else routes to its project page.
+ * grid reads as a lineup of distinct titles instead of clones. The WHOLE card
+ * is a link to the project page (stretched overlay); the action row keeps
+ * `z-20` so its buttons stay tappable above the overlay.
  */
 export const GameCard = ({ game, className }: GameCardProps) => (
   <article
     className={cn(
-      "surface-card game-accent game-accent-glow group flex flex-col overflow-hidden transition-all duration-300",
+      "surface-card game-accent game-accent-glow group relative flex flex-col overflow-hidden transition-all duration-300",
       className,
     )}
     style={{ "--game-accent": game.accent } as CSSProperties}
   >
-    <Link
-      to={`/games/${game.slug}`}
-      className="relative block aspect-[16/9] overflow-hidden"
-      aria-label={`${game.title} — learn more`}
-    >
+    <div className="relative aspect-[16/9] overflow-hidden">
       {game.coverFit === "contain" ? (
         <>
           <img
@@ -60,7 +57,7 @@ export const GameCard = ({ game, className }: GameCardProps) => (
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/10 to-transparent" />
-    </Link>
+    </div>
 
     <div className="flex flex-1 flex-col gap-3 p-5">
       <div className="flex flex-wrap items-center gap-2">
@@ -76,7 +73,7 @@ export const GameCard = ({ game, className }: GameCardProps) => (
       <h3 className="display-title text-xl sm:text-2xl">{game.title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">{game.tagline}</p>
 
-      <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
+      <div className="relative z-20 mt-auto flex flex-wrap items-center gap-3 pt-2">
         <Link
           to={`/games/${game.slug}`}
           className="game-accent-text game-accent-border inline-flex min-h-[44px] items-center gap-2 rounded-md border px-4 font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors duration-300"
@@ -95,5 +92,12 @@ export const GameCard = ({ game, className }: GameCardProps) => (
         ) : null}
       </div>
     </div>
+
+    {/* Whole-card click target — sits above the card, below the action row. */}
+    <Link
+      to={`/games/${game.slug}`}
+      className="absolute inset-0 z-10"
+      aria-label={`${game.title} — learn more`}
+    />
   </article>
 );

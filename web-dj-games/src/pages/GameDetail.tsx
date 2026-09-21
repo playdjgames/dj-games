@@ -114,7 +114,7 @@ const GameDetail = () => {
             className="inline-flex w-fit min-h-[44px] items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-foreground/85 transition-colors hover:text-signal"
           >
             <ArrowLeft size={16} />
-            Back to games
+            Back
           </Link>
 
           <div className="mt-5 flex items-end gap-5">
