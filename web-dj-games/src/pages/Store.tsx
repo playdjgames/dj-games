@@ -1,4 +1,4 @@
-import { ArrowUpRight, Heart, ShoppingBag } from "lucide-react";
+import { ArrowRight, Heart, ShoppingBag } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -71,15 +71,14 @@ const Store = () => {
             ) : null}
           </button>
 
-          <a
-            href={SHOP_HOME_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* In-app: shop.playdjgames.com is dead (Cloudflare 1014). */}
+          <Link
+            to={SHOP_HOME_URL}
             className="inline-flex min-h-[48px] items-center gap-2 rounded-md border border-border px-5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-300 hover:border-signal/45 hover:text-foreground"
           >
             Shop home
-            <ArrowUpRight size={14} />
-          </a>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </Hero>
 

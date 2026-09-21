@@ -15,11 +15,20 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-/** The Rork-hosted shop. Store "back / home" links point here, not to a new app. */
+/**
+ * ⚠️  `shop.playdjgames.com` IS NOT LIVE — it returns Cloudflare 1014 (CNAME
+ *     Cross-User Banned). It must NEVER be used as an href. Every user-facing
+ *     link stays inside this app until that DNS is fixed. This constant is kept
+ *     only to build the catalog FETCH url (a failed fetch degrades to the empty
+ *     state; a dead link would dump visitors on a Cloudflare error page).
+ */
 export const SHOP_ORIGIN = "https://shop.playdjgames.com";
 
-/** Coming-soon home of the shop host. */
-export const SHOP_HOME_URL = SHOP_ORIGIN;
+/** The in-app storefront route. */
+export const STORE_ROUTE = "/store";
+
+/** "Shop home" target — in-app, never the dead host. */
+export const SHOP_HOME_URL = STORE_ROUTE;
 
 /** Catalog feed. Swap this path if PRESS HOUSE serves it elsewhere. */
 export const CATALOG_URL = `${SHOP_ORIGIN}/api/catalog`;
@@ -68,7 +77,7 @@ export interface StoreProduct {
   status: ProductStatus;
   statusLabel: string;
   options: ProductOptionGroup[];
-  /** Product page on the shop host, used as the checkout hand-off. */
+  /** External product page, only if the feed supplied a live one. */
   url?: string;
 }
 
@@ -153,6 +162,16 @@ const asOptions = (raw: Record<string, unknown>): ProductOptionGroup[] => {
     .filter((group): group is ProductOptionGroup => group !== null);
 };
 
+/**
+ * Product link, only when the feed supplies a usable one. Anything on the dead
+ * shop host is dropped so it can never become an href.
+ */
+const asProductUrl = (value: unknown): string | undefined => {
+  const url = asString(value);
+  if (!url || url.includes("shop.playdjgames.com")) return undefined;
+  return url;
+};
+
 /** Turns one catalog record into a product, or null when it is unusable. */
 const toProduct = (raw: unknown, index: number): StoreProduct | null => {
   if (!isRecord(raw)) return null;
@@ -177,7 +196,7 @@ const toProduct = (raw: unknown, index: number): StoreProduct | null => {
     status,
     statusLabel: asString(raw.statusLabel) ?? STATUS_LABELS[status],
     options: asOptions(raw),
-    url: asString(raw.url) ?? (handle ? `${SHOP_ORIGIN}/products/${handle}` : undefined),
+    url: asProductUrl(raw.url),
   };
 };
 
@@ -286,22 +305,8 @@ export const cartCount = (lines: CartLine[]): number =>
   lines.reduce((total, line) => total + line.quantity, 0);
 
 /**
- * Checkout hand-off. Payment always happens on the shop host — this site never
- * takes card details. Single line item goes straight to its product page;
- * multi-item carts open the shop cart with the items encoded.
+ * Checkout destination. There is no real checkout yet and the shop host is
+ * dead, so this keeps people in the app instead of sending them off-domain to a
+ * Cloudflare error page. Point it at the real checkout once one exists.
  */
-export const checkoutUrl = (lines: CartLine[]): string => {
-  if (lines.length === 0) return SHOP_HOME_URL;
-  if (lines.length === 1 && lines[0].url) {
-    const only = lines[0];
-    const url = new URL(only.url);
-    url.searchParams.set("quantity", String(only.quantity));
-    only.selections.forEach((selection, index) => {
-      url.searchParams.set(`option${index + 1}`, selection);
-    });
-    return url.toString();
-  }
-
-  const items = lines.map((line) => `${line.productId}:${line.quantity}`).join(",");
-  return `${SHOP_ORIGIN}/cart?items=${encodeURIComponent(items)}`;
-};
+export const checkoutUrl = (): string => STORE_ROUTE;

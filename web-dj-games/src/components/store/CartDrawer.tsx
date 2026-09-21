@@ -1,4 +1,7 @@
-import { ArrowUpRight, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 
 import { cartSubtotal, checkoutUrl, formatPrice, type CartLine } from "@/data/store";
 import { cn } from "@/lib/utils";
@@ -12,19 +15,44 @@ interface CartDrawerProps {
 }
 
 /**
- * Slide-in bag. Quantity edits and removal live here; the checkout button hands
- * off to the shop host, which owns payment.
+ * Slide-in bag. Quantity edits and removal live here.
+ *
+ * Rendered through a portal on `document.body`: the page's `<main>` is
+ * `relative z-10`, which creates a stacking context, so a drawer rendered
+ * inside it could never rise above the `z-50` navbar no matter how high its own
+ * z-index was set — the header overlapped the panel and swallowed clicks on the
+ * close button. Portalling escapes that context entirely.
  */
 export const CartDrawer = ({ open, lines, onClose, onQuantity, onRemove }: CartDrawerProps) => {
   const subtotal = cartSubtotal(lines);
 
-  return (
+  // Escape closes the bag, and the page behind it must not scroll while open.
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open, onClose]);
+
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <>
       <div
         aria-hidden="true"
         onClick={onClose}
         className={cn(
-          "fixed inset-0 z-[60] bg-background/70 backdrop-blur-sm transition-opacity duration-300",
+          "fixed inset-0 z-[100] bg-background/70 backdrop-blur-sm transition-opacity duration-300",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       />
@@ -33,7 +61,8 @@ export const CartDrawer = ({ open, lines, onClose, onQuantity, onRemove }: CartD
         aria-label="Shopping bag"
         aria-hidden={!open}
         className={cn(
-          "fixed inset-y-0 right-0 z-[61] flex w-full max-w-[400px] flex-col border-l border-border bg-surface transition-transform duration-300 ease-out",
+          "fixed inset-y-0 right-0 z-[101] flex w-full max-w-[400px] flex-col border-l border-border bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 ease-out",
+          "pt-[env(safe-area-inset-top)]",
           open ? "translate-x-0" : "pointer-events-none translate-x-full",
         )}
       >
@@ -126,13 +155,16 @@ export const CartDrawer = ({ open, lines, onClose, onQuantity, onRemove }: CartD
           </div>
           <p className="mt-1 text-[0.72rem] text-muted-foreground">Shipping and tax calculated at checkout.</p>
 
-          <a
-            href={checkoutUrl(lines)}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Stays in-app: there is no real checkout yet, and the shop host is dead. */}
+          <Link
+            to={checkoutUrl()}
             aria-disabled={lines.length === 0}
             onClick={(event) => {
-              if (lines.length === 0) event.preventDefault();
+              if (lines.length === 0) {
+                event.preventDefault();
+                return;
+              }
+              onClose();
             }}
             className={cn(
               "mt-4 inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-md font-mono text-[0.74rem] font-bold uppercase tracking-[0.18em] transition-all duration-300",
@@ -142,10 +174,11 @@ export const CartDrawer = ({ open, lines, onClose, onQuantity, onRemove }: CartD
             )}
           >
             Checkout
-            <ArrowUpRight size={15} />
-          </a>
+            <ArrowRight size={15} />
+          </Link>
         </footer>
       </aside>
-    </>
+    </>,
+    document.body,
   );
 };
