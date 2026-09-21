@@ -73,9 +73,6 @@ export const Footer = () => {
           <p className="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
             DJ Games LLC
           </p>
-          <p className="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
-            DJ Games LLC — veteran owned, independently operated.
-          </p>
 
           {isLive(SITE.email) ? (
             <a
@@ -160,7 +157,7 @@ export const Footer = () => {
       <div className="border-t border-border/60">
         <div className="container flex flex-wrap items-center justify-between gap-3 py-6">
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
-            © {SITE.copyrightYear} DJ Games LLC. All rights reserved.
+            © {SITE.copyrightYear} DJ Games LLC. All rights reserved. Veteran owned, independently operated.
           </p>
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
             Original iOS games <span className="text-ember">/</span> Built to play
