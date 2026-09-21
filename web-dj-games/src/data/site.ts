@@ -98,6 +98,7 @@ export const NAV_LINKS: { label: string; to: string; accent?: "ember" }[] = [
   { label: "About", to: "/about" },
   { label: "News", to: "/news" },
   { label: "Support", to: "/support", accent: "ember" },
+  { label: "Donate", to: "/donate", accent: "ember" },
 ];
 
 /** The one live app, used by the sticky mobile CTA and anywhere an install link is needed. */
