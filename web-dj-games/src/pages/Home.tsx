@@ -46,11 +46,12 @@ const Home = () => {
         <div className="grid-backdrop pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
         <ParticleField className="-z-10" count={22} />
 
-        <div className="container grid items-center gap-10 py-12 sm:py-16 lg:min-h-[calc(100vh-68px)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-10">
-          <div className="max-w-xl animate-fade-up">
+        {/* One centred column: with the phone gone, the type IS the hero. */}
+        <div className="container flex min-h-[78vh] flex-col items-center justify-center py-16 text-center sm:py-20 lg:min-h-[calc(100vh-68px)]">
+          <div className="animate-fade-up flex w-full max-w-3xl flex-col items-center">
             <p className="eyebrow">Games and apps for a brighter tomorrow</p>
 
-            <h1 className="display-title mt-4 text-6xl tracking-tight sm:text-7xl lg:text-8xl">
+            <h1 className="display-title mt-4 text-7xl tracking-tight sm:text-8xl lg:text-9xl">
               DJ&nbsp;<span className="text-signal text-glow">Games</span>
             </h1>
 
@@ -60,7 +61,7 @@ const Home = () => {
 
             {live ? (
               <>
-                <p className="status-chip mt-6 border-signal/50 bg-signal/10 text-signal">
+                <p className="status-chip mt-7 border-signal/50 bg-signal/10 text-signal">
                   <span className="relative inline-flex h-2 w-2" aria-hidden="true">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
@@ -68,22 +69,22 @@ const Home = () => {
                   Live now · {live.price ?? "FREE"}
                 </p>
 
-                <p className="mt-5 max-w-md text-[1.02rem] leading-relaxed text-muted-foreground">
+                <p className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">
                   Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
                   <a
                     href={live.appStoreUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-md bg-signal px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.98]"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-md bg-signal px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.98] sm:w-auto"
                   >
                     Download on the App Store
                   </a>
                   <Link
                     to="/coming-soon"
-                    className="inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-md border border-ember/60 px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-ember transition-all duration-300 hover:bg-ember hover:text-primary-foreground hover:shadow-ember active:scale-[0.98]"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-md border border-ember/60 px-7 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-ember transition-all duration-300 hover:bg-ember hover:text-primary-foreground hover:shadow-ember active:scale-[0.98] sm:w-auto"
                   >
                     See what's coming
                     <ArrowRight size={16} />
@@ -92,29 +93,6 @@ const Home = () => {
               </>
             ) : null}
           </div>
-
-          {/* PRODUCT — a real app in a phone frame, not atmosphere */}
-          {live ? (
-            <Reveal className="relative mx-auto w-full max-w-[300px] lg:max-w-[330px]">
-              <div
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal/20 blur-[100px]"
-                aria-hidden="true"
-              />
-              <div className="relative overflow-hidden rounded-[2.4rem] border border-white/15 bg-[#070a09] p-2.5 shadow-2xl shadow-black/60">
-                <div className="absolute left-1/2 top-4 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-black/80" aria-hidden="true" />
-                <img
-                  src="/apps/everything-diy-1.png"
-                  alt="Everything DIY running on iPhone"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="aspect-[9/19.5] w-full rounded-[1.9rem] object-cover object-top"
-                />
-              </div>
-              <p className="mt-4 text-center font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
-                {live.title} — live on the App Store
-              </p>
-            </Reveal>
-          ) : null}
         </div>
       </section>
 
