@@ -63,7 +63,7 @@ const Home = () => {
         {/* One centred column: with the phone gone, the type IS the hero. */}
         <div className="container flex min-h-[78vh] flex-col items-center justify-center py-16 text-center sm:py-20 lg:min-h-[calc(100vh-68px)]">
           <div className="animate-fade-up flex w-full max-w-3xl flex-col items-center">
-            <p className="eyebrow">Games and apps for a brighter tomorrow</p>
+            <p className="eyebrow">Games, apps and websites for a brighter tomorrow</p>
 
             <h1 className="display-title mt-4 text-7xl tracking-tight sm:text-8xl lg:text-9xl">
               DJ&nbsp;<span className="text-signal text-glow">Games</span>
@@ -71,6 +71,17 @@ const Home = () => {
 
             <p className="mt-4 text-xl font-light text-foreground/90 sm:text-2xl">
               Original iOS games and apps. Built to play.
+            </p>
+
+            {/* Web design lives right under the title — the studio's quiet second trade. */}
+            <p className="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-muted-foreground">
+              We also design + build{" "}
+              <Link
+                to="/games?division=web"
+                className="text-ember transition-colors hover:text-foreground"
+              >
+                websites
+              </Link>
             </p>
           </div>
         </div>
