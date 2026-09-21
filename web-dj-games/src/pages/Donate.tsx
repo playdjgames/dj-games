@@ -19,6 +19,13 @@ const SectionLabel = ({ children }: { children: string }) => (
   </h2>
 );
 
+/**
+ * Group-label style, shared by AMOUNT and CUSTOM so they can never drift apart
+ * in size or weight — same classes as SectionLabel, without the margin.
+ */
+const GROUP_LABEL_CLASS =
+  "font-mono text-[0.68rem] font-bold uppercase tracking-[0.28em] text-[#8BE1FF]";
+
 /* --------------------------------- page ----------------------------------- */
 
 /**
@@ -176,35 +183,42 @@ const Donate = () => {
           </div>
         </section>
 
-        {/* AMOUNT */}
+        {/* AMOUNT — two labeled groups on one aligned row: preset chips left,
+            custom input right. Labels share one style and sit the same distance
+            above their controls; every control is the same 48px height, bottoms
+            locked to one line. */}
         <section className="mt-9" aria-labelledby="amount-label">
-          <SectionLabel>Amount</SectionLabel>
-          <div className="flex flex-wrap items-center gap-2.5">
-            {AMOUNT_CHIPS.map((chip) => {
-              const isPicked = numericAmount === chip;
-              return (
-                <button
-                  key={chip}
-                  type="button"
-                  aria-pressed={isPicked}
-                  onClick={() => setAmount(String(chip))}
-                  className={[
-                    "inline-flex min-h-[48px] min-w-[72px] items-center justify-center rounded-full border px-6 font-mono text-[0.9rem] font-bold transition-all duration-200 active:scale-[0.96]",
-                    isPicked
-                      ? "border-[#8BE1FF] bg-[#8BE1FF]/[0.08] text-[#8BE1FF] shadow-[0_0_20px_-6px_#8BE1FF66]"
-                      : "border-[#263444] bg-[#131A24] text-[#8FA3B4] hover:border-[#33475C] hover:text-[#EDF5FB]",
-                  ].join(" ")}
-                >
-                  ${chip}
-                </button>
-              );
-            })}
-            {/* Custom USD input — integers, min 1, labeled above the field */}
-            <div className="ml-auto flex flex-col items-end gap-1.5">
-              <span
-                aria-hidden="true"
-                className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.22em] text-[#8BE1FF]"
-              >
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+            <div className="flex flex-col gap-2.5">
+              <span id="amount-label" className={GROUP_LABEL_CLASS}>
+                Amount
+              </span>
+              <div className="flex flex-wrap items-center gap-2.5">
+                {AMOUNT_CHIPS.map((chip) => {
+                  const isPicked = numericAmount === chip;
+                  return (
+                    <button
+                      key={chip}
+                      type="button"
+                      aria-pressed={isPicked}
+                      onClick={() => setAmount(String(chip))}
+                      className={[
+                        "inline-flex min-h-[48px] min-w-[72px] items-center justify-center rounded-full border px-6 font-mono text-[0.9rem] font-bold transition-all duration-200 active:scale-[0.96]",
+                        isPicked
+                          ? "border-[#8BE1FF] bg-[#8BE1FF]/[0.08] text-[#8BE1FF] shadow-[0_0_20px_-6px_#8BE1FF66]"
+                          : "border-[#263444] bg-[#131A24] text-[#8FA3B4] hover:border-[#33475C] hover:text-[#EDF5FB]",
+                      ].join(" ")}
+                    >
+                      ${chip}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Custom USD input — integers, min 1, labeled exactly like AMOUNT */}
+            <div className="ml-auto flex flex-col items-end gap-2.5">
+              <span aria-hidden="true" className={GROUP_LABEL_CLASS}>
                 Custom
               </span>
               <div
