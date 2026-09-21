@@ -4,8 +4,11 @@
  * UI changes.
  */
 
-/** PayPal.me username — the only live provider today. */
+/** PayPal.me username. */
 export const PAYPAL_ME = "dutt1";
+
+/** Venmo handle (without the @). */
+export const VENMO_ME = "destin-mitchell-1";
 
 export interface PaymentMethod {
   id: string;
@@ -48,10 +51,10 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: "venmo",
     name: "Venmo",
-    meta: "Coming soon",
-    live: false,
+    meta: "Live now",
+    live: true,
     cta: "Pay with Venmo",
-    url: (amount) => `https://venmo.com/YOUR_VENMO?txn=pay&amount=${amount}`,
+    url: (amount) => `https://venmo.com/${VENMO_ME}?txn=pay&amount=${amount}`,
     theme: { bg: "#3D95CE", text: "#FFFFFF" },
     badge: { bg: "#3D95CE", text: "#FFFFFF", glyph: "V" },
   },
