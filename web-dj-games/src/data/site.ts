@@ -93,7 +93,9 @@ export const activeSocials = (): { key: SocialKey; label: string; url: string }[
 
 export const NAV_LINKS: { label: string; to: string; accent?: "ember" }[] = [
   { label: "Home", to: "/" },
-  { label: "Games", to: "/games" },
+  // The studio is no longer games-only — the library holds apps, mobile games,
+  // PC games and web work. The route stays /games so old links keep working.
+  { label: "Work", to: "/games" },
   { label: "Coming Soon", to: "/coming-soon" },
   { label: "About", to: "/about" },
   { label: "News", to: "/news" },

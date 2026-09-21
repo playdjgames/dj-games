@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { ConceptCard } from "@/components/ConceptCard";
 import { GameCard } from "@/components/GameCard";
@@ -6,22 +7,13 @@ import { Hero } from "@/components/Hero";
 import { LiveSyncNote } from "@/components/LiveSyncNote";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { DIVISIONS, divisionById, type Division, type DivisionId } from "@/data/divisions";
 import { useGameLibrary } from "@/data/library";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 
-type Filter = "all" | "available" | "submitted" | "concepts" | "utilities" | "arcade" | "maze" | "productivity";
-
-const FILTERS: { id: Filter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "available", label: "Available" },
-  { id: "submitted", label: "Submitted" },
-  { id: "concepts", label: "Concepts" },
-  { id: "utilities", label: "Utilities" },
-  { id: "arcade", label: "Arcade" },
-  { id: "maze", label: "Maze" },
-  { id: "productivity", label: "Productivity" },
-];
+const ALL = "all" as const;
+type Active = DivisionId | typeof ALL;
 
 const GROUP_META = {
   available: { eyebrow: "Available now", title: "Live on the App Store" },
@@ -31,22 +23,34 @@ const GROUP_META = {
 
 const Games = () => {
   useSeo({
-    title: "Games — DJ Games",
+    title: "Work — DJ Games",
     description:
-      "Every game and app from DJ Games: Everything DIY, live on the App Store, plus titles submitted to Apple and early concepts in development.",
+      "Everything DJ Games builds, by division: iOS apps, mobile games, PC games and web work — live titles, builds with Apple, and early concepts.",
   });
 
-  const { released, submitted, concepts, isSyncing } = useGameLibrary();
-  const [filter, setFilter] = useState<Filter>("all");
+  const { games, released, submitted, concepts, isSyncing } = useGameLibrary();
 
-  const matches = (status: "available" | "submitted" | "concept", category: string): boolean => {
-    if (filter === "all") return true;
-    if (filter === "available" || filter === "submitted" || filter === "concepts") {
-      return filter === (status === "concept" ? "concepts" : status);
-    }
-    // Genre chips cut across tiers — a category match shows it wherever it sits.
-    return filter === category;
-  };
+  // The division lives in the URL, so the home strip can deep-link straight
+  // into a filtered library and a filtered view stays shareable.
+  const [params, setParams] = useSearchParams();
+  const raw = params.get("division");
+  const active: Active = DIVISIONS.some((division) => division.id === raw) ? (raw as DivisionId) : ALL;
+
+  const select = useCallback(
+    (id: Active): void => {
+      const next = new URLSearchParams(params);
+      if (id === ALL) next.delete("division");
+      else next.set("division", id);
+      setParams(next, { replace: true });
+    },
+    [params, setParams],
+  );
+
+  /** Only offer a division that actually holds something. */
+  const offered = useMemo<Division[]>(
+    () => DIVISIONS.filter((division) => games.some((game) => game.division === division.id)),
+    [games],
+  );
 
   const groups = useMemo(
     () =>
@@ -56,13 +60,13 @@ const Games = () => {
         { tier: "concepts" as const, games: concepts },
       ].map((group) => ({
         ...group,
-        visible: group.games.filter((game) => matches(game.status, game.category)),
+        visible: active === ALL ? group.games : group.games.filter((game) => game.division === active),
       })),
-    // `matches` closes over `filter`; listing it keeps the memo honest.
-    [filter, released, submitted, concepts], // eslint-disable-line react-hooks/exhaustive-deps
+    [active, released, submitted, concepts],
   );
 
   const anyVisible = groups.some((group) => group.visible.length > 0);
+  const activeNote = active === ALL ? null : divisionById(active)?.note;
 
   return (
     <>
@@ -71,28 +75,30 @@ const Games = () => {
         eyebrow="The library"
         title={
           <>
-            Our <span className="text-signal text-glow">Games</span>
+            Our <span className="text-signal text-glow">Work</span>
           </>
         }
-        description="One app live, four in review, three early concepts. Everything we're building, honest about where each one stands."
-        stamp={["Play", "Every", "World"]}
+        description="Apps, mobile games, PC games and web work — everything we're building, honest about where each one stands."
+        stamp={["Apps", "Games", "Web"]}
       />
 
       <section className="container py-14 sm:py-16">
         <Reveal>
           <LiveSyncNote isSyncing={isSyncing} />
-          <ul className="no-scrollbar mt-5 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
-            {FILTERS.map((item) => (
+
+          {/* Divisions — quiet underline tabs, never blocky chips. */}
+          <ul className="no-scrollbar mt-5 flex gap-6 overflow-x-auto border-b border-border/70 sm:gap-8">
+            {([{ id: ALL, label: "All" }, ...offered] as { id: Active; label: string }[]).map((item) => (
               <li key={item.id}>
                 <button
                   type="button"
-                  onClick={() => setFilter(item.id)}
-                  aria-pressed={filter === item.id}
+                  onClick={() => select(item.id)}
+                  aria-pressed={active === item.id}
                   className={cn(
-                    "min-h-[40px] whitespace-nowrap rounded-full border px-4 font-mono text-[0.64rem] uppercase tracking-[0.14em] transition-all duration-300",
-                    filter === item.id
-                      ? "border-signal bg-signal/15 text-signal"
-                      : "border-border bg-surface text-muted-foreground hover:border-signal/40 hover:text-foreground",
+                    "-mb-px min-h-[44px] whitespace-nowrap border-b-2 pb-2.5 font-mono text-[0.66rem] uppercase tracking-[0.18em] transition-colors duration-300",
+                    active === item.id
+                      ? "border-signal text-signal"
+                      : "border-transparent text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -100,6 +106,12 @@ const Games = () => {
               </li>
             ))}
           </ul>
+
+          {activeNote ? (
+            <p className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
+              {activeNote}
+            </p>
+          ) : null}
         </Reveal>
 
         {anyVisible ? (
@@ -108,17 +120,15 @@ const Games = () => {
               (group) =>
                 group.visible.length > 0 ? (
                   <div key={group.tier}>
-                    {filter === "all" || group.visible.length !== group.games.length ? (
-                      <Reveal>
-                        <SectionHeading
-                          eyebrow={GROUP_META[group.tier].eyebrow}
-                          title={GROUP_META[group.tier].title}
-                        />
-                      </Reveal>
-                    ) : null}
+                    <Reveal>
+                      <SectionHeading
+                        eyebrow={GROUP_META[group.tier].eyebrow}
+                        title={GROUP_META[group.tier].title}
+                      />
+                    </Reveal>
 
                     {group.tier === "concepts" ? (
-                      <ul className={cn("space-y-3", filter === "all" && "mt-6")}>
+                      <ul className="mt-6 space-y-3">
                         {group.visible.map((game, index) => (
                           <Reveal key={game.slug} as="li" delay={index * 70}>
                             <ConceptCard game={game} />
@@ -126,7 +136,7 @@ const Games = () => {
                         ))}
                       </ul>
                     ) : (
-                      <div className={cn("grid gap-6 md:grid-cols-2", filter === "all" && "mt-6")}>
+                      <div className="mt-6 grid gap-6 md:grid-cols-2">
                         {group.visible.map((game, index) => (
                           <Reveal key={game.slug} delay={index * 80}>
                             <GameCard game={game} className="h-full" />
@@ -140,7 +150,7 @@ const Games = () => {
           </div>
         ) : (
           <p className="mt-10 font-mono text-sm uppercase tracking-[0.16em] text-muted-foreground">
-            Nothing in this category yet — new games are always in the works.
+            Nothing here yet — this side of the studio is just getting started.
           </p>
         )}
       </section>

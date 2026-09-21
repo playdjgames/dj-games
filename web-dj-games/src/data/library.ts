@@ -90,6 +90,9 @@ const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   status: "available",
   statusLabel: "Available now",
   category: "utilities",
+  // Discovered straight from Apple: anything Apple files under Games is a
+  // mobile game, everything else is an app.
+  division: /game/i.test(app.primaryGenreName) ? "mobile-games" : "apps",
   accent: "#8BE1FF",
   platforms: ["iOS"],
   featured: true,

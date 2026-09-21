@@ -2,6 +2,7 @@ import { ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
+import { divisionLabel } from "@/data/divisions";
 import type { LibraryGame } from "@/data/library";
 import { cn } from "@/lib/utils";
 
@@ -35,11 +36,16 @@ export const ConceptCard = ({ game, className }: ConceptCardProps) => (
     </div>
 
     <div className="min-w-0 flex-1">
-      <h3 className="display-title text-base sm:text-lg">{game.title}</h3>
+      <div className="flex items-center gap-2">
+        <h3 className="display-title truncate text-base sm:text-lg">{game.title}</h3>
+        <span className="game-accent-text shrink-0 font-mono text-[0.55rem] uppercase tracking-[0.16em]">
+          {divisionLabel(game.division)}
+        </span>
+      </div>
       <p className="mt-0.5 truncate text-[0.82rem] text-muted-foreground">{game.tagline}</p>
     </div>
 
-    <span className="hidden shrink-0 rounded-full border border-border bg-surface-raised px-3 py-1 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted-foreground sm:inline-flex">
+    <span className="hidden shrink-0 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted-foreground sm:inline-flex">
       In development
     </span>
 

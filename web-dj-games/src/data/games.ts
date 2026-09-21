@@ -14,6 +14,8 @@
  * ============================================================================
  */
 
+import type { DivisionId } from "@/data/divisions";
+
 export type GameStatus = "available" | "submitted" | "concept";
 export type GameCategory = "utilities" | "maze" | "arcade" | "productivity" | "concept";
 export type Platform = "iOS" | "Android" | "Web";
@@ -58,6 +60,11 @@ export interface Game {
   statusLabel: string;
   /** Coarse bucket used by the /games filter chips. */
   category: GameCategory;
+  /**
+   * Which side of the studio this belongs to — apps, mobile games, PC games or
+   * web work. This is the primary separation across the whole site.
+   */
+  division: DivisionId;
   /** Per-game accent (hex) — keeps cards from all looking identical. */
   accent: string;
   platforms: Platform[];
@@ -106,6 +113,7 @@ export interface Game {
 export const GAMES: Game[] = [
   {
     slug: "everything-diy",
+    division: "apps",
     title: "Everything DIY",
     tagline: "Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.",
     description:
@@ -173,6 +181,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "run-dummy",
+    division: "mobile-games",
     title: "Run Dummy",
     tagline: "Run. Remember. Escape.",
     description:
@@ -217,6 +226,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "vexara",
+    division: "mobile-games",
     title: "Vexara",
     tagline: "Neon fire, endless waves, one thumb.",
     description:
@@ -261,6 +271,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "astronix",
+    division: "mobile-games",
     /** App Store Connect record confirmed as "Astronix" — title matches the store. */
     title: "Astronix",
     tagline: "One thumb. Endless waves. Everything earned by play.",
@@ -306,6 +317,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "thinksort",
+    division: "apps",
     title: "Thinksort",
     tagline: "Dump the chaos. Get one clear next step.",
     // Apple's store copy opens with an older line; the site shows the hook above.
@@ -350,6 +362,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "valiant-kingdoms",
+    division: "mobile-games",
     title: "Valiant Kingdoms",
     tagline: "Banners on the ridge. A crown that won't hold itself.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
@@ -378,6 +391,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "neon-world",
+    division: "mobile-games",
     title: "Neon World",
     tagline: "An unmapped planet, glowing in the dark.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
@@ -406,6 +420,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "neon-city-underground",
+    division: "mobile-games",
     title: "Neon City: Underground",
     tagline: "Rain, neon, and whatever runs beneath the city.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
@@ -434,6 +449,7 @@ export const GAMES: Game[] = [
   },
   {
     slug: "blood-war",
+    division: "pc-games",
     title: "Blood War",
     tagline: "Two sides. One field. No truce.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */

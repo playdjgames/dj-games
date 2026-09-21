@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { StatusBadge } from "@/components/StatusBadge";
 import { StoreButtons } from "@/components/StoreButtons";
+import { divisionLabel } from "@/data/divisions";
 import type { Game } from "@/data/games";
 import { cn } from "@/lib/utils";
 
@@ -64,7 +65,10 @@ export const GameCard = ({ game, className }: GameCardProps) => (
     <div className="flex flex-1 flex-col gap-3 p-5">
       <div className="flex flex-wrap items-center gap-2">
         <StatusBadge status={game.status} label={game.statusLabel} />
-        <span className="rounded-full border border-border bg-surface-raised px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground">
+        {/* Division then genre, separated by a hairline — one quiet line, no extra chips. */}
+        <span className="inline-flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground">
+          <span className="game-accent-text">{divisionLabel(game.division)}</span>
+          <span aria-hidden="true" className="h-3 w-px bg-border" />
           {game.genre}
         </span>
       </div>

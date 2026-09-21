@@ -1,4 +1,5 @@
 import { ArrowRight, Camera, Tag, Wrench } from "lucide-react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { ConceptCard } from "@/components/ConceptCard";
@@ -9,6 +10,7 @@ import { PressHouseAd } from "@/components/PressHouseAd";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StoreButtons } from "@/components/StoreButtons";
+import { DIVISIONS } from "@/data/divisions";
 import { formatPostDate, sortedPosts } from "@/data/news";
 import { useGameLibrary } from "@/data/library";
 import { SITE } from "@/data/site";
@@ -35,9 +37,20 @@ const Home = () => {
     description: SITE.description,
   });
 
-  const { released, submitted, concepts } = useGameLibrary();
+  const { games, released, submitted, concepts } = useGameLibrary();
   const live = released.find((game) => game.slug === LIVE_APP) ?? released[0];
   const posts = sortedPosts().slice(0, 3);
+
+  // What the studio makes, counted from the real library — a division with
+  // nothing in it never appears.
+  const divisions = useMemo(
+    () =>
+      DIVISIONS.map((division) => ({
+        ...division,
+        count: games.filter((game) => game.division === division.id).length,
+      })).filter((division) => division.count > 0),
+    [games],
+  );
 
   return (
     <>
@@ -61,6 +74,29 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* WHAT WE MAKE — one thin line of divisions, straight into the library */}
+      {divisions.length > 0 ? (
+        <section className="container">
+          <Reveal>
+            <ul className="no-scrollbar flex gap-6 overflow-x-auto border-y border-border/60 py-4 sm:justify-center sm:gap-10">
+              {divisions.map((division) => (
+                <li key={division.id}>
+                  <Link
+                    to={`/games?division=${division.id}`}
+                    className="group inline-flex items-baseline gap-2 whitespace-nowrap font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:text-signal"
+                  >
+                    {division.label}
+                    <span className="text-[0.6rem] text-muted-foreground/60 transition-colors group-hover:text-signal/70">
+                      {division.count}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </section>
+      ) : null}
 
       {/* PRESS HOUSE — platform promo, directly under the hero */}
       <section className="container pb-2 pt-4 sm:pt-6">

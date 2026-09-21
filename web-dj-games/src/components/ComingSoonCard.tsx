@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
 import { StatusBadge } from "@/components/StatusBadge";
+import { divisionLabel } from "@/data/divisions";
 import type { LibraryGame } from "@/data/library";
 import { cn } from "@/lib/utils";
 
@@ -45,8 +46,8 @@ export const ComingSoonCard = ({ game, className }: ComingSoonCardProps) => (
         <p className="text-sm leading-relaxed text-muted-foreground">{game.tagline}</p>
 
         <div className="mt-auto flex flex-wrap items-center gap-2.5 pt-2">
-          <span className="rounded-full border border-border bg-surface-raised px-2.5 py-1 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted-foreground">
-            iOS
+          <span className="game-accent-text font-mono text-[0.58rem] uppercase tracking-[0.14em]">
+            {divisionLabel(game.division)}
           </span>
           {game.ageRating ? (
             <span className="rounded-full border border-border bg-surface-raised px-2.5 py-1 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted-foreground">

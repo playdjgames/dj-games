@@ -29,6 +29,7 @@ import { LiveSyncNote, PrereleaseSyncNote } from "@/components/LiveSyncNote";
 import { Reveal } from "@/components/Reveal";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StoreButtons } from "@/components/StoreButtons";
+import { divisionLabel } from "@/data/divisions";
 import type { GameFeature } from "@/data/games";
 import { formatSyncDate, useGameLibrary } from "@/data/library";
 import { canonicalUrl } from "@/data/site";
@@ -143,6 +144,10 @@ const GameDetail = () => {
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
             <div>
               <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-[0.7rem] uppercase tracking-[0.14em]">
+                <div>
+                  <dt className="text-muted-foreground">Division</dt>
+                  <dd className="game-accent-text mt-1">{divisionLabel(game.division)}</dd>
+                </div>
                 <div>
                   <dt className="text-muted-foreground">Platform</dt>
                   <dd className="mt-1 text-foreground">{game.platforms.join(", ")}</dd>
