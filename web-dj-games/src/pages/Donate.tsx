@@ -36,7 +36,7 @@ const Donate = () => {
   useSeo({
     title: "Support DJ Games — Donate",
     description:
-      "Tips keep LAST CALL moving. Support DJ Games with a tip via PayPal — more payment options coming soon.",
+      "Tips keep LAST CALL moving. Support DJ Games with a tip via PayPal or Venmo — more payment options coming soon.",
   });
 
   const numericAmount = Number.parseInt(amount, 10);
@@ -116,11 +116,12 @@ const Donate = () => {
                   role="radio"
                   aria-checked={isSelected}
                   aria-disabled={!selectable}
+                  disabled={!selectable}
                   onClick={() => selectMethod(method.id, method.live)}
                   className={[
                     "flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200",
                     selectable
-                      ? "cursor-pointer active:scale-[0.99]"
+                      ? "cursor-pointer hover:-translate-y-0.5 active:scale-[0.99]"
                       : "cursor-not-allowed opacity-40",
                     isSelected
                       ? "border-[#8BE1FF] bg-[#8BE1FF]/[0.06] shadow-[0_0_24px_-8px_#8BE1FF66]"
@@ -141,7 +142,18 @@ const Donate = () => {
                     <span className="block text-[1.02rem] font-bold leading-tight text-[#EDF5FB]">
                       {method.name}
                     </span>
-                    <span className="mt-0.5 block font-mono text-[0.66rem] font-medium uppercase tracking-[0.16em] text-[#8FA3B4]">
+                    <span
+                      className={[
+                        "mt-1 inline-flex items-center gap-1.5 font-mono text-[0.66rem] font-bold uppercase tracking-[0.16em]",
+                        selectable ? "text-[#8BE1FF]" : "text-[#8FA3B4]",
+                      ].join(" ")}
+                    >
+                      {selectable ? (
+                        <span aria-hidden="true" className="relative inline-flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#8BE1FF] opacity-70" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#8BE1FF]" />
+                        </span>
+                      ) : null}
                       {method.meta}
                     </span>
                   </span>
