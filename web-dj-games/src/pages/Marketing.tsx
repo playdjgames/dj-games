@@ -543,6 +543,7 @@ const Marketing = () => {
             <div>
               <Wordmark />
               <p className="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-[#9FB6C6]">DJ Games LLC</p>
+              <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-[#9FB6C6]">DJ Games LLC — veteran owned, independently operated.</p>
               <p className="mt-3 space-y-1 text-[0.9rem] text-[#9FB6C6]">
                 <a href="mailto:hello@playdjgames.com" className="block transition-colors hover:text-[#8BE1FF]">
                   hello@playdjgames.com

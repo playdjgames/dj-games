@@ -73,6 +73,9 @@ export const Footer = () => {
           <p className="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
             DJ Games LLC
           </p>
+          <p className="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
+            DJ Games LLC — veteran owned, independently operated.
+          </p>
 
           {isLive(SITE.email) ? (
             <a
