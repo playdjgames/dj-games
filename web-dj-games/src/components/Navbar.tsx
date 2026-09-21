@@ -42,7 +42,7 @@ export const Navbar = () => {
       <nav className="container flex h-[68px] items-center justify-between gap-6" aria-label="Main">
         <Logo />
 
-        <ul className="hidden items-center gap-7 lg:flex">
+        <ul className="hidden items-center gap-8 lg:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.to}>
               <NavLink
@@ -73,25 +73,16 @@ export const Navbar = () => {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
-          <Link
-            to="/games"
-            className="hidden min-h-[40px] items-center rounded-md border border-signal/50 px-4 font-mono text-[0.66rem] font-medium uppercase tracking-[0.16em] text-signal transition-all duration-300 hover:bg-signal hover:text-primary-foreground hover:shadow-glow sm:inline-flex"
-          >
-            Explore Games
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition-colors duration-300 hover:border-signal/50 hover:text-signal lg:hidden"
-          >
-            {open ? <Menu size={20} className="hidden" /> : null}
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
+        {/* Menu only — the nav links carry navigation on their own. */}
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          className="-mr-1 inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition-colors duration-300 hover:border-signal/50 hover:text-signal lg:hidden"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </nav>
 
       <div
@@ -100,7 +91,7 @@ export const Navbar = () => {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
         )}
       >
-        <ul className="container flex flex-col gap-1 py-6">
+        <ul className="container flex flex-col gap-1 py-6 pb-10">
           {NAV_LINKS.map((link, index) => (
             <li key={link.to}>
               <NavLink
@@ -125,15 +116,6 @@ export const Navbar = () => {
               </NavLink>
             </li>
           ))}
-          <li className="pt-5">
-            <Link
-              to="/games"
-              onClick={close}
-              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-md bg-signal px-6 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground"
-            >
-              Explore Games
-            </Link>
-          </li>
         </ul>
       </div>
     </header>

@@ -1,9 +1,9 @@
-import { Apple, Bell, Mail, ShieldCheck, type LucideIcon } from "lucide-react";
+import { Bell, Mail, ShieldCheck, type LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
-import { FEATURED_APP_URL, SITE } from "@/data/site";
+import { SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
 
 interface SupportEntry {
@@ -15,15 +15,6 @@ interface SupportEntry {
 }
 
 const ENTRIES: SupportEntry[] = [
-  {
-    icon: Apple,
-    question: "How do I get Everything DIY?",
-    answer: [
-      "Everything DIY is on the Apple App Store for iPhone. It's free — no subscription, no ads.",
-      "Search \"Everything DIY\" in the App Store, or tap the button here. Once it's installed, type in any project — replace a faucet, mount a TV — and the app walks you through it step by step, with the tools, prices, and where to get them.",
-    ],
-    link: { label: "Open the App Store", href: FEATURED_APP_URL, external: true },
-  },
   {
     icon: Bell,
     question: "When do the submitted games launch?",
@@ -57,7 +48,7 @@ const Support = () => {
   useSeo({
     title: "Support — DJ Games",
     description:
-      "Real answers about DJ Games apps: getting Everything DIY, when submitted games launch, deleting your data, and contacting support@playdjgames.com.",
+      "Real answers about DJ Games apps: when submitted games launch, deleting your data, and contacting support@playdjgames.com.",
   });
 
   return (

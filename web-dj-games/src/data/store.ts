@@ -57,7 +57,7 @@ export interface StoreProduct {
 const STATUS_LABELS: Record<ProductStatus, string> = {
   available: "In stock",
   coming_soon: "Drop locked",
-  sold_out: "Sold out",
+  sold_out: "Out of stock",
 };
 
 const sizes = (...labels: string[]): ProductOptionGroup => ({
@@ -73,6 +73,14 @@ const colors = (...labels: string[]): ProductOptionGroup => ({
 });
 
 /* ------------------------------ the house rack ---------------------------- */
+
+/**
+ * Printing runs through PRESS HOUSE, which is still in development, so nothing
+ * can actually be made yet. While this is true every card on the rack reads
+ * "Out of stock" and cannot be added to the bag. Flip to true when PRESS HOUSE
+ * ships and the whole rack opens up — no other change needed.
+ */
+export const STORE_IS_STOCKED = false;
 
 /**
  * The first house rack. Real UI, real add-to-bag — placeholder art renders as a
@@ -138,6 +146,20 @@ export const HOUSE_PRODUCTS: StoreProduct[] = [
   },
 ];
 
+/**
+ * The rack as the page should show it. Until PRESS HOUSE can print, every item
+ * is forced to "Out of stock" — the products themselves stay exactly as written
+ * above, so the rack returns in full the moment STORE_IS_STOCKED flips.
+ */
+export const rackProducts = (): StoreProduct[] =>
+  STORE_IS_STOCKED
+    ? HOUSE_PRODUCTS
+    : HOUSE_PRODUCTS.map((product) => ({
+        ...product,
+        status: "sold_out" as const,
+        statusLabel: STATUS_LABELS.sold_out,
+      }));
+
 /** First available label of every variant axis — used by the one-tap card add. */
 export const defaultSelections = (product: StoreProduct): string[] =>
   product.options
@@ -156,7 +178,7 @@ export interface StoreCatalog {
 
 /** Single source of truth for the storefront. The rack IS the page — no fetch. */
 export const useStoreCatalog = (): StoreCatalog => {
-  const products = HOUSE_PRODUCTS;
+  const products = rackProducts();
 
   return {
     products,

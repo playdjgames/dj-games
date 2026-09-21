@@ -66,6 +66,20 @@ const matchesApp = (game: Game, app: AppStoreApp): boolean => {
   return slugify(game.title) === slugify(app.trackName);
 };
 
+/**
+ * Apple's store copy often opens with an older one-line hook written before the
+ * site had its own. The tagline is the line we show everywhere else, so it also
+ * replaces that opening line here — the rest of the App Store Connect copy is
+ * left exactly as written.
+ */
+const withSiteHook = (description: string, tagline: string): string => {
+  const blocks = description.split("\n\n");
+  const opener = blocks[0]?.trim() ?? "";
+  const isShortHook = opener.length > 0 && opener.length <= 90 && !opener.includes("\n");
+  if (!isShortHook || opener === tagline) return description;
+  return [tagline, ...blocks.slice(1)].join("\n\n");
+};
+
 /** Builds an entry for an app that is live on the App Store but not yet in `games.ts`. */
 const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   slug: slugify(app.trackName),
@@ -109,7 +123,7 @@ const enrichPrerelease = (game: Game, app: PrereleaseApp): LibraryGame => ({
   // The site's own hook line always wins — it is written to sell the game on
   // cards. Apple's description (real store copy) still wins below.
   tagline: game.tagline,
-  description: app.description ?? game.description,
+  description: app.description ? withSiteHook(app.description, game.tagline) : game.description,
   // Early concepts must always read as early: never let a review state like
   // "Preparing for submission" make a concept look close to launching.
   statusLabel: game.status === "concept" ? game.statusLabel : app.reviewStateLabel,

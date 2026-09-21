@@ -308,6 +308,7 @@ export const GAMES: Game[] = [
     slug: "thinksort",
     title: "Thinksort",
     tagline: "Dump the chaos. Get one clear next step.",
+    // Apple's store copy opens with an older line; the site shows the hook above.
     description:
       "Thinksort is an offline productivity app for iPhone that gives your daily chaos one place to land. Speak or type one long, messy ramble and it sorts it into dated tasks, prep items, shopping and ideas — showing a confirm screen before anything is saved.\n\nThe organizer is rule-based and runs entirely on your device: it never invents dates, times or places. The Today screen shows a single NEXT UP card with a plain-language reason why it's next, One Thing Mode hides everything else when a list feels like too much, and 'I am Stuck' hands back one tiny first step when a task has you frozen.\n\nA built-in focus timer, store-grouped shopping lists, Siri and Shortcuts capture — and no account, no cloud, no analytics, no ads, no subscriptions. Everything stays on your device.",
     genre: "Productivity",

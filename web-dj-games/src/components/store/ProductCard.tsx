@@ -1,4 +1,4 @@
-import { Lock, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { formatPrice, type StoreProduct } from "@/data/store";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,10 @@ interface ProductCardProps {
 /**
  * Catalog card: image, name, price, pitch, and an on-card ADD TO BAG that
  * feeds the page's bag directly. The artwork itself still opens the detail
- * sheet. Items that are not on the rack yet keep the "drop locked" treatment
- * — desaturated art, lock badge, no add. Missing art renders a clearly-labeled
- * dark placeholder with the product name; the item stays fully addable.
+ * sheet. Items that are not buyable yet — out of stock, drop locked — wear
+ * their status on the badge and on the button instead of the add action, with
+ * the art dimmed. Missing art renders a clearly-labeled dark placeholder with
+ * the product name.
  */
 export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCardProps) => {
   const isLocked = product.status !== "available";
@@ -67,13 +68,12 @@ export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCard
 
         <span
           className={cn(
-            "absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.16em] backdrop-blur-md",
+            "absolute left-3 top-3 inline-flex items-center rounded-full border px-2.5 py-1 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.16em] backdrop-blur-md",
             isLocked
               ? "border-ember/50 bg-background/80 text-ember"
               : "border-signal/50 bg-background/80 text-signal",
           )}
         >
-          {isLocked ? <Lock size={10} /> : null}
           {product.statusLabel}
         </span>
       </button>
@@ -109,16 +109,20 @@ export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCard
             disabled={isLocked}
             aria-label={isLocked ? `${product.name} — ${product.statusLabel}` : `Add ${product.name} to bag`}
             className={cn(
-              "inline-flex min-h-[40px] items-center gap-1.5 rounded-md border px-3.5 font-mono text-[0.64rem] font-semibold uppercase tracking-[0.14em] transition-all duration-300",
+              "inline-flex min-h-[40px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] transition-all duration-300",
               isLocked
-                ? "cursor-not-allowed border-border bg-surface-raised text-muted-foreground opacity-60"
-                : "border-signal/50 text-signal hover:bg-signal hover:text-primary-foreground active:scale-[0.97]",
+                ? "cursor-not-allowed border-border bg-surface-raised px-3 text-muted-foreground opacity-70"
+                : "border-signal/50 px-3.5 text-signal hover:bg-signal hover:text-primary-foreground active:scale-[0.97]",
             )}
           >
-            {isLocked ? "Locked" : <>
-              <Plus size={13} />
-              Add to bag
-            </>}
+            {isLocked ? (
+              product.statusLabel
+            ) : (
+              <>
+                <Plus size={13} />
+                Add to bag
+              </>
+            )}
           </button>
         </div>
       </div>

@@ -142,7 +142,7 @@ const Marketing = () => {
         <nav className="mx-auto flex h-[68px] max-w-6xl items-center justify-between gap-6 px-5 sm:px-8" aria-label="Main">
           <Wordmark />
 
-          <ul className="hidden items-center gap-7 lg:flex">
+          <ul className="hidden items-center gap-8 lg:flex">
             {NAV.map(({ label, href, ember }) => (
               <li key={label}>
                 <a
@@ -158,23 +158,16 @@ const Marketing = () => {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2.5">
-            <a
-              href={`${SITE_URL}/games`}
-              className="hidden min-h-[42px] items-center rounded-full border border-[#FFB020]/70 px-5 font-mono text-[0.64rem] font-bold uppercase tracking-[0.16em] text-[#FFB020] transition-all duration-200 hover:bg-[#FFB020] hover:text-[#0A0E14] active:scale-[0.97] sm:inline-flex"
-            >
-              Explore Games
-            </a>
-            <button
-              type="button"
-              onClick={() => setMenuOpen((open) => !open)}
-              aria-expanded={menuOpen}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-[#8BE1FF]/50 hover:text-[#8BE1FF] lg:hidden"
-            >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+          {/* Menu only — the nav links carry navigation on their own. */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="-mr-1 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-[#8BE1FF]/50 hover:text-[#8BE1FF] lg:hidden"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </nav>
 
         {/* Mobile sheet */}
@@ -184,7 +177,7 @@ const Marketing = () => {
             menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
           )}
         >
-          <ul className="flex flex-col px-6 py-6">
+          <ul className="flex flex-col px-6 py-6 pb-10">
             {NAV.map(({ label, href, ember }) => (
               <li key={label}>
                 <a
@@ -199,16 +192,6 @@ const Marketing = () => {
                 </a>
               </li>
             ))}
-            <li className="pt-6">
-              <a
-                href={`${SITE_URL}/games`}
-                onClick={() => setMenuOpen(false)}
-                className={cn(secondaryBtn, "w-full")}
-              >
-                Explore Games
-                <ArrowUpRight size={16} />
-              </a>
-            </li>
           </ul>
         </div>
       </header>
