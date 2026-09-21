@@ -85,10 +85,21 @@ interface PressHouseAdProps {
    * `quiet`  — muted text + link (Donate, under the fine print).
    */
   variant?: PressHouseAdVariant;
+  /**
+   * PRESS HOUSE is still in development — when true the module renders as a
+   * non-linking card (identical visuals, no navigation) marked "UNDER
+   * CONSTRUCTION". Used by the Store strip for now; drop the prop to re-open
+   * the link when the platform ships.
+   */
+  disabled?: boolean;
   className?: string;
 }
 
-export const PressHouseAd = ({ variant = "banner", className }: PressHouseAdProps) => {
+export const PressHouseAd = ({
+  variant = "banner",
+  disabled = false,
+  className,
+}: PressHouseAdProps) => {
   if (variant === "quiet") {
     return (
       <p className={cn("text-center text-[0.78rem] leading-relaxed", className)} style={{ color: MUTED }}>
@@ -102,13 +113,8 @@ export const PressHouseAd = ({ variant = "banner", className }: PressHouseAdProp
   }
 
   if (variant === "strip") {
-    return (
-      <AdLink
-        className={cn(
-          "group relative flex min-h-[44px] flex-col items-center gap-3 overflow-hidden rounded-2xl border p-4 transition-all duration-300 hover:-translate-y-0.5 sm:flex-row sm:justify-between sm:gap-5 sm:px-6",
-          className,
-        )}
-      >
+    const body = (
+      <>
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 rounded-2xl border transition-colors duration-300"
@@ -134,7 +140,42 @@ export const PressHouseAd = ({ variant = "banner", className }: PressHouseAdProp
 
         <span className="relative w-full sm:w-auto sm:shrink-0">
           <AdButton />
+          {disabled && (
+            <span className="mt-2 flex items-center justify-center gap-1.5 font-mono text-[0.58rem] font-bold uppercase tracking-[0.22em] sm:justify-end">
+              <span
+                aria-hidden="true"
+                className="inline-block h-1.5 w-1.5 rounded-full"
+                style={{ backgroundColor: "#FFB020" }}
+              />
+              <span style={{ color: "#FFB020" }}>Under construction</span>
+            </span>
+          )}
         </span>
+      </>
+    );
+
+    // PRESS HOUSE in dev — same card, but it navigates nowhere and is marked.
+    if (disabled) {
+      return (
+        <div
+          className={cn(
+            "relative flex min-h-[44px] flex-col items-center gap-3 overflow-hidden rounded-2xl border p-4 sm:flex-row sm:justify-between sm:gap-5 sm:px-6",
+            className,
+          )}
+        >
+          {body}
+        </div>
+      );
+    }
+
+    return (
+      <AdLink
+        className={cn(
+          "group relative flex min-h-[44px] flex-col items-center gap-3 overflow-hidden rounded-2xl border p-4 transition-all duration-300 hover:-translate-y-0.5 sm:flex-row sm:justify-between sm:gap-5 sm:px-6",
+          className,
+        )}
+      >
+        {body}
       </AdLink>
     );
   }

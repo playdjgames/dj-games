@@ -172,8 +172,8 @@ const Store = () => {
           </div>
         )}
 
-        {/* PRESS HOUSE — clickable card below the merch, closing out the rack. */}
-        <PressHouseAd variant="strip" className="mt-14" />
+        {/* PRESS HOUSE — still in dev: card stays, link disabled, marked. */}
+        <PressHouseAd variant="strip" className="mt-14" disabled />
       </section>
 
       <ProductSheet
