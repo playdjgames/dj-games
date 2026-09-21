@@ -137,7 +137,8 @@ const Games = () => {
                         ))}
                       </ul>
                     ) : (
-                      <div className="mt-6 grid gap-6 md:grid-cols-2">
+                      <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        {/* Cards read a touch smaller here: three-up on wide screens. */}
                         {group.visible.map((game, index) => (
                           <Reveal key={game.slug} delay={index * 80}>
                             <GameCard game={game} className="h-full" />

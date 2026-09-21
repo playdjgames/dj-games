@@ -59,7 +59,7 @@ export const GameCard = ({ game, className }: GameCardProps) => (
       <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/10 to-transparent" />
     </div>
 
-    <div className="flex flex-1 flex-col gap-3 p-5">
+    <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
       <div className="flex flex-wrap items-center gap-2">
         <StatusBadge status={game.status} label={game.statusLabel} />
         {/* Division then genre, separated by a hairline — one quiet line, no extra chips. */}
@@ -70,7 +70,7 @@ export const GameCard = ({ game, className }: GameCardProps) => (
         </span>
       </div>
 
-      <h3 className="display-title text-xl sm:text-2xl">{game.title}</h3>
+      <h3 className="display-title text-lg sm:text-xl">{game.title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">{game.tagline}</p>
 
       <div className="relative z-20 mt-auto flex flex-wrap items-center gap-3 pt-2">
