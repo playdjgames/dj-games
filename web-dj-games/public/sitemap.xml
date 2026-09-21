@@ -17,6 +17,8 @@
   <url><loc>https://playdjgames.com/news/run-dummy-first-look</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://playdjgames.com/news/realmforge-and-whats-ahead</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://playdjgames.com/support</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://playdjgames.com/store</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://playdjgames.com/donate</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://playdjgames.com/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://playdjgames.com/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

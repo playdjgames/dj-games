@@ -19,6 +19,7 @@ import MediaLibrary from "./pages/MediaLibrary";
 import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
 import NotFound from "./pages/NotFound";
+import Store from "./pages/Store";
 import Subscribers from "./pages/Subscribers";
 import Support from "./pages/Support";
 
@@ -44,6 +45,9 @@ const App = () => {
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/store" element={<Store />} />
+            {/* /shop is an alias so either address reaches the storefront. */}
+            <Route path="/shop" element={<Store />} />
             <Route path="/donate" element={<Donate />} />
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />
