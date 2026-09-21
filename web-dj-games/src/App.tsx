@@ -19,6 +19,7 @@ import MediaLibrary from "./pages/MediaLibrary";
 import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
 import NotFound from "./pages/NotFound";
+import PressHouse from "./pages/PressHouse";
 import Store from "./pages/Store";
 import Subscribers from "./pages/Subscribers";
 import Support from "./pages/Support";
@@ -45,6 +46,8 @@ const App = () => {
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
             <Route path="/support" element={<Support />} />
+            {/* Fallback landing while presshouse.playdjgames.com has no origin (522). */}
+            <Route path="/press-house" element={<PressHouse />} />
             <Route path="/store" element={<Store />} />
             {/* /shop is an alias so either address reaches the storefront. */}
             <Route path="/shop" element={<Store />} />

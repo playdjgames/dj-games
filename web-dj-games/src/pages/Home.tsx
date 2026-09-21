@@ -5,6 +5,7 @@ import { ConceptCard } from "@/components/ConceptCard";
 import { GameCard } from "@/components/GameCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ParticleField } from "@/components/ParticleField";
+import { PressHouseAd } from "@/components/PressHouseAd";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StoreButtons } from "@/components/StoreButtons";
@@ -115,6 +116,11 @@ const Home = () => {
             </Reveal>
           ) : null}
         </div>
+      </section>
+
+      {/* PRESS HOUSE — platform promo, directly under the hero */}
+      <section className="container pb-2 pt-4 sm:pt-6">
+        <PressHouseAd />
       </section>
 
       {/* AVAILABLE NOW — exactly one product, no competition for attention */}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { CartDrawer } from "@/components/store/CartDrawer";
+import { PressHouseAd } from "@/components/PressHouseAd";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
 import {
@@ -81,6 +82,11 @@ const Store = () => {
           </a>
         </div>
       </Hero>
+
+      {/* PRESS HOUSE — platform banner above the grid. Shows even when the drop is empty. */}
+      <section className="container pt-10 sm:pt-12">
+        <PressHouseAd />
+      </section>
 
       <section className="container py-14 sm:py-16">
         {/* Filters — only meaningful once the drop has more than one category. */}
@@ -166,6 +172,9 @@ const Store = () => {
             ))}
           </div>
         )}
+
+        {/* PRESS HOUSE — compact strip closing out the storefront. */}
+        <PressHouseAd variant="strip" className="mt-14" />
       </section>
 
       <ProductSheet

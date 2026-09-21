@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { useCallback, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PressHouseAd } from "@/components/PressHouseAd";
 import { AMOUNT_CHIPS, DEFAULT_AMOUNT, PAYMENT_METHODS } from "@/data/payments";
 import { useSeo } from "@/hooks/use-seo";
 
@@ -263,6 +264,11 @@ const Donate = () => {
           You’ll finish checkout on the provider. We never see your card details.
           Not tax-deductible.
         </p>
+
+        {/* PRESS HOUSE — quiet text link, deliberately not competing with the CTA. */}
+        <div className="mt-8 border-t border-[#263444] pt-6">
+          <PressHouseAd variant="quiet" />
+        </div>
       </main>
     </div>
   );
