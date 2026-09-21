@@ -20,6 +20,14 @@ import { cn } from "@/lib/utils";
  */
 export const PRESS_HOUSE_URL = "/press-house";
 
+/**
+ * PRESS HOUSE is still being built. While this is true EVERY instance of the ad
+ * (Home banner, Store strip, Donate text link) renders with identical visuals
+ * but no navigation, plus an "UNDER CONSTRUCTION" marker. Flip to false when
+ * the platform ships and all three links go live again — nothing else changes.
+ */
+export const PRESS_HOUSE_IN_DEV = true;
+
 /** Accessible name for every instance of the ad. */
 const LINK_LABEL = "PRESS HOUSE — open the print-on-demand platform";
 
@@ -39,6 +47,8 @@ const TEXT = "#F4F1EA";
 const MUTED = "#9A958B";
 const LIME = "#E8FF47";
 const PINK = "#FF4D8D";
+/** Site status color, borrowed for the in-dev marker. */
+const AMBER = "#FFB020";
 
 const isInternal = PRESS_HOUSE_URL.startsWith("/");
 
@@ -61,6 +71,23 @@ const AdLink = ({ className, children }: AdLinkProps) =>
       {children}
     </a>
   );
+
+/** Amber "in dev" marker, matching the site's status-badge language. */
+const UnderConstruction = ({ className }: { className?: string }) => (
+  <span
+    className={cn(
+      "flex items-center gap-1.5 font-mono text-[0.58rem] font-bold uppercase tracking-[0.22em]",
+      className,
+    )}
+  >
+    <span
+      aria-hidden="true"
+      className="inline-block h-1.5 w-1.5 rounded-full"
+      style={{ backgroundColor: AMBER }}
+    />
+    <span style={{ color: AMBER }}>Under construction</span>
+  </span>
+);
 
 /** Lime pill. A span, not a button — it lives inside the card-wide link. */
 const AdButton = ({ full = false }: { full?: boolean }) => (
@@ -86,10 +113,9 @@ interface PressHouseAdProps {
    */
   variant?: PressHouseAdVariant;
   /**
-   * PRESS HOUSE is still in development — when true the module renders as a
-   * non-linking card (identical visuals, no navigation) marked "UNDER
-   * CONSTRUCTION". Used by the Store strip for now; drop the prop to re-open
-   * the link when the platform ships.
+   * Renders the module with identical visuals but no navigation, marked "UNDER
+   * CONSTRUCTION". Defaults to PRESS_HOUSE_IN_DEV so every instance across the
+   * site is disabled from one switch.
    */
   disabled?: boolean;
   className?: string;
@@ -97,17 +123,24 @@ interface PressHouseAdProps {
 
 export const PressHouseAd = ({
   variant = "banner",
-  disabled = false,
+  disabled = PRESS_HOUSE_IN_DEV,
   className,
 }: PressHouseAdProps) => {
   if (variant === "quiet") {
     return (
       <p className={cn("text-center text-[0.78rem] leading-relaxed", className)} style={{ color: MUTED }}>
         Selling your own designs?{" "}
-        <AdLink className="font-semibold underline decoration-dotted underline-offset-4 transition-colors duration-200 hover:opacity-80">
-          <span style={{ color: LIME }}>PRESS HOUSE</span>
-        </AdLink>{" "}
+        {disabled ? (
+          <span className="font-semibold underline decoration-dotted underline-offset-4">
+            <span style={{ color: LIME }}>PRESS HOUSE</span>
+          </span>
+        ) : (
+          <AdLink className="font-semibold underline decoration-dotted underline-offset-4 transition-colors duration-200 hover:opacity-80">
+            <span style={{ color: LIME }}>PRESS HOUSE</span>
+          </AdLink>
+        )}{" "}
         is the print-on-demand platform behind DJ Games. {COPY.fine}
+        {disabled && <UnderConstruction className="mt-2 justify-center" />}
       </p>
     );
   }
@@ -140,16 +173,7 @@ export const PressHouseAd = ({
 
         <span className="relative w-full sm:w-auto sm:shrink-0">
           <AdButton />
-          {disabled && (
-            <span className="mt-2 flex items-center justify-center gap-1.5 font-mono text-[0.58rem] font-bold uppercase tracking-[0.22em] sm:justify-end">
-              <span
-                aria-hidden="true"
-                className="inline-block h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: "#FFB020" }}
-              />
-              <span style={{ color: "#FFB020" }}>Under construction</span>
-            </span>
-          )}
+          {disabled && <UnderConstruction className="mt-2 justify-center sm:justify-end" />}
         </span>
       </>
     );
@@ -180,13 +204,8 @@ export const PressHouseAd = ({
     );
   }
 
-  return (
-    <AdLink
-      className={cn(
-        "press-house-ad group relative block overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8",
-        className,
-      )}
-    >
+  const bannerBody = (
+    <>
       {/* Faint lime + pink wash so the module reads as a paid slot, not chrome. */}
       <span
         aria-hidden="true"
@@ -224,11 +243,37 @@ export const PressHouseAd = ({
 
         <div className="shrink-0 lg:text-right">
           <AdButton />
+          {disabled && <UnderConstruction className="mt-2.5 justify-start lg:justify-end" />}
           <p className="mt-2.5 font-mono text-[0.6rem] uppercase tracking-[0.16em]" style={{ color: MUTED }}>
             {COPY.fine}
           </p>
         </div>
       </div>
+    </>
+  );
+
+  // PRESS HOUSE in dev — same card, navigates nowhere.
+  if (disabled) {
+    return (
+      <div
+        className={cn(
+          "press-house-ad relative block overflow-hidden rounded-2xl border p-6 sm:p-8",
+          className,
+        )}
+      >
+        {bannerBody}
+      </div>
+    );
+  }
+
+  return (
+    <AdLink
+      className={cn(
+        "press-house-ad group relative block overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8",
+        className,
+      )}
+    >
+      {bannerBody}
     </AdLink>
   );
 };

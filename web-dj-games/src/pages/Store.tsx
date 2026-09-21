@@ -172,8 +172,8 @@ const Store = () => {
           </div>
         )}
 
-        {/* PRESS HOUSE — still in dev: card stays, link disabled, marked. */}
-        <PressHouseAd variant="strip" className="mt-14" disabled />
+        {/* PRESS HOUSE — card stays; the link is disabled site-wide while in dev. */}
+        <PressHouseAd variant="strip" className="mt-14" />
       </section>
 
       <ProductSheet
