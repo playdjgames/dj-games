@@ -14,7 +14,11 @@
   "compatibility_date": "2026-09-18",
   "routes": [
     { "pattern": "playdjgames.com/*", "zone_name": "playdjgames.com" },
-    { "pattern": "www.playdjgames.com/*", "zone_name": "playdjgames.com" }
+    { "pattern": "www.playdjgames.com/*", "zone_name": "playdjgames.com" },
+    // worker.js already handles this hostname (it rewrites requests onto the
+    // backend's /media/ prefix). Without this route the Worker would never run
+    // for it, so the DNS record alone would not be enough.
+    { "pattern": "media.playdjgames.com/*", "zone_name": "playdjgames.com" }
   ],
   "observability": {
     "enabled": true

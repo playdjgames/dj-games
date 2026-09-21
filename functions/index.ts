@@ -118,23 +118,70 @@ const jsonBody = async <T>(request: Request): Promise<T | null> => {
   }
 };
 
+/** The short, canonical public hostname for media once its DNS is live. */
+const MEDIA_HOST_BASE = "https://media.playdjgames.com";
+
+/** How long a host liveness result is trusted before being re-probed. */
+const HOST_PROBE_TTL_MS = 5 * 60_000;
+
+/** Cached liveness of the short media host, so we probe once per 5 minutes. */
+let mediaHostProbe: { live: boolean; checkedAt: number } | null = null;
+
 /**
- * The permanent public base for media URLs. Prefers the custom hostname when
- * one is configured, and otherwise serves through this Worker's own /media
- * route — both forms are unauthenticated and stable.
+ * Is the short media hostname actually serving?
+ *
+ * This is the dynamic part: no hardcoded "the subdomain works now" flag to flip
+ * by hand. A missing DNS record makes `fetch` throw, and a hostname that
+ * resolves but has no origin behind it answers 5xx (Cloudflare 522/1014) — both
+ * count as dead. Anything else (including a 404 for the probe path, which is the
+ * correct answer for a key that doesn't exist) proves the host is reachable.
  */
-const publicBase = (env: Env, request: Request): string => {
-  const custom = env.R2_PUBLIC_BASE_URL?.trim().replace(/\/+$/, "");
-  if (custom && custom.length > 0) return custom;
+const isMediaHostLive = async (): Promise<boolean> => {
+  const now = Date.now();
+  if (mediaHostProbe && now - mediaHostProbe.checkedAt < HOST_PROBE_TTL_MS) {
+    return mediaHostProbe.live;
+  }
+
+  let live = false;
+  try {
+    const probe = await fetch(`${MEDIA_HOST_BASE}/__host-probe`, {
+      method: "HEAD",
+      redirect: "manual",
+    });
+    live = probe.status < 500;
+  } catch {
+    // Unresolvable hostname or TLS failure — treat as not live.
+    live = false;
+  }
+
+  mediaHostProbe = { live, checkedAt: now };
+  return live;
+};
+
+/**
+ * The public base for media URLs, resolved per request.
+ *
+ * Order matters: the short host wins as soon as it genuinely answers, so links
+ * upgrade themselves the moment the DNS record exists — nothing to redeploy.
+ * Until then it falls back to an explicitly configured base, and finally to this
+ * Worker's own `/media` route. Every form is unauthenticated and stable, and
+ * because stored records keep only the storage key, existing files pick up the
+ * new hostname automatically too.
+ */
+const resolveMediaBase = async (env: Env, request: Request): Promise<string> => {
+  if (await isMediaHostLive()) return MEDIA_HOST_BASE;
+
+  const configured = env.R2_PUBLIC_BASE_URL?.trim().replace(/\/+$/, "");
+  if (configured && configured.length > 0) return configured;
+
   return `${new URL(request.url).origin}/media`;
 };
 
-const publicUrlFor = (env: Env, request: Request, storageKey: string): string =>
-  `${publicBase(env, request)}/${storageKey}`;
+const publicUrlFor = (base: string, storageKey: string): string => `${base}/${storageKey}`;
 
-const decorate = (env: Env, request: Request, row: MediaRow): MediaRow & { url: string } => ({
+const decorate = (base: string, row: MediaRow): MediaRow & { url: string } => ({
   ...row,
-  url: publicUrlFor(env, request, row.storage_key),
+  url: publicUrlFor(base, row.storage_key),
 });
 
 /**
@@ -188,13 +235,16 @@ const servePublicMedia = async (
 
 const handleMediaAdmin = async (path: string, request: Request, env: Env): Promise<Response> => {
   const config = readR2Config(env as unknown as Record<string, unknown>);
+  const base = await resolveMediaBase(env, request);
+  const workerBase = `${new URL(request.url).origin}/media`;
 
   if (path === "/media-admin/config" && request.method === "GET") {
     return Response.json({
       ok: true,
       storageReady: config !== null,
-      publicBase: publicBase(env, request),
-      usingCustomDomain: Boolean(env.R2_PUBLIC_BASE_URL?.trim()),
+      publicBase: base,
+      usingCustomDomain: base !== workerBase,
+      shortHostLive: base === MEDIA_HOST_BASE,
     });
   }
 
@@ -229,9 +279,9 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
     const data = (await response.json()) as { media: MediaRow[]; folders: { slug: string; label: string }[] };
     return Response.json({
       ok: true,
-      media: data.media.map((row) => decorate(env, request, row)),
+      media: data.media.map((row) => decorate(base, row)),
       folders: data.folders,
-      publicBase: publicBase(env, request),
+      publicBase: base,
     });
   }
 
@@ -270,7 +320,7 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
       folder,
       filename,
       contentType: spec.contentType,
-      publicUrl: publicUrlFor(env, request, storageKey),
+      publicUrl: publicUrlFor(base, storageKey),
     });
   }
 
@@ -339,7 +389,7 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
     });
     const data = (await response.json()) as { ok: boolean; item?: MediaRow };
     if (!data.ok || !data.item) return Response.json(data, { status: response.status });
-    return Response.json({ ok: true, item: decorate(env, request, data.item) });
+    return Response.json({ ok: true, item: decorate(base, data.item) });
   }
 
   if (path === "/media-admin/folder" && request.method === "POST") {
@@ -381,7 +431,7 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
     const nextKey = `${row.folder}/${nextFilename}`;
 
     if (nextKey === row.storage_key) {
-      return Response.json({ ok: true, item: decorate(env, request, row) });
+      return Response.json({ ok: true, item: decorate(base, row) });
     }
     if (media.some((item) => item.storage_key === nextKey)) {
       return Response.json({ ok: false, error: "already_exists" }, { status: 409 });
@@ -409,7 +459,7 @@ const handleMediaAdmin = async (path: string, request: Request, env: Env): Promi
       console.warn("r2 delete of old key failed", { key: row.storage_key, status: removed.status });
     }
 
-    return Response.json({ ok: true, item: decorate(env, request, updatedData.item) });
+    return Response.json({ ok: true, item: decorate(base, updatedData.item) });
   }
 
   if (path === "/media-admin/remove" && request.method === "POST") {

@@ -41,8 +41,11 @@ export interface MediaLibrarySnapshot {
 
 export interface StorageStatus {
   storageReady: boolean;
+  /** Resolved per request by the backend — upgrades itself when DNS goes live. */
   publicBase: string;
   usingCustomDomain: boolean;
+  /** True once media.playdjgames.com genuinely answers. */
+  shortHostLive?: boolean;
 }
 
 export class MediaAuthError extends Error {}
