@@ -36,8 +36,8 @@ export interface Cart {
 }
 
 /**
- * Store cart, persisted so a refresh (or a bounce to the shop host and back)
- * never loses what someone picked. Checkout itself happens on the shop host.
+ * Store cart, persisted so a refresh never loses what someone picked. The bag
+ * lives on /store; checkout stays disabled until payments are wired.
  */
 export const useCart = (): Cart => {
   const [lines, setLines] = useState<CartLine[]>([]);
@@ -76,7 +76,6 @@ export const useCart = (): Cart => {
           price: product.price,
           quantity,
           selections,
-          url: product.url,
         },
       ];
     });

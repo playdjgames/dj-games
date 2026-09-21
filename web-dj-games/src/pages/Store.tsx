@@ -1,5 +1,5 @@
-import { ArrowRight, Heart, ShoppingBag } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Heart, ShoppingBag } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Hero } from "@/components/Hero";
@@ -10,8 +10,8 @@ import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
 import {
   cartCount,
+  defaultSelections,
   DROP_NAME,
-  SHOP_HOME_URL,
   useStoreCatalog,
   type StoreProduct,
 } from "@/data/store";
@@ -25,7 +25,7 @@ const Store = () => {
   useSeo({
     title: "Store — DJ Games",
     description:
-      `${DROP_NAME} merch from DJ Games. Tees, caps and drop-day extras from the house — shipped from the DJ Games shop.`,
+      `${DROP_NAME} merch from DJ Games. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.`,
   });
 
   const { products, categories, isLoading, isEmpty } = useStoreCatalog();
@@ -42,6 +42,15 @@ const Store = () => {
   );
 
   const count = cartCount(cart.lines);
+
+  // One tap on the card: default size/color in, bag open, no detour.
+  const addToBag = useCallback(
+    (product: StoreProduct) => {
+      cart.add(product, defaultSelections(product), 1);
+      setBagOpen(true);
+    },
+    [cart],
+  );
 
   return (
     <>
@@ -70,22 +79,9 @@ const Store = () => {
               </span>
             ) : null}
           </button>
-
-          {/* In-app: shop.playdjgames.com is dead (Cloudflare 1014). */}
-          <Link
-            to={SHOP_HOME_URL}
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-md border border-border px-5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-300 hover:border-signal/45 hover:text-foreground"
-          >
-            Shop home
-            <ArrowRight size={14} />
-          </Link>
+          {/* In-page only: the rack IS the page, so there is no second shop button. */}
         </div>
       </Hero>
-
-      {/* PRESS HOUSE — platform banner above the grid. Shows even when the drop is empty. */}
-      <section className="container pt-10 sm:pt-12">
-        <PressHouseAd />
-      </section>
 
       <section className="container py-14 sm:py-16">
         {/* Filters — only meaningful once the drop has more than one category. */}
@@ -166,13 +162,18 @@ const Store = () => {
           <div className={cn("grid gap-5 sm:grid-cols-2 lg:grid-cols-3", filters.length > 2 && "mt-8")}>
             {visible.map((product, index) => (
               <Reveal key={product.id} delay={index * 60}>
-                <ProductCard product={product} onSelect={setActive} className="h-full" />
+                <ProductCard
+                  product={product}
+                  onSelect={setActive}
+                  onAdd={addToBag}
+                  className="h-full"
+                />
               </Reveal>
             ))}
           </div>
         )}
 
-        {/* PRESS HOUSE — compact strip closing out the storefront. */}
+        {/* PRESS HOUSE — clickable card below the merch, closing out the rack. */}
         <PressHouseAd variant="strip" className="mt-14" />
       </section>
 

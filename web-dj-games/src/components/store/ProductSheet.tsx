@@ -50,7 +50,14 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
         <div className="relative aspect-square w-full overflow-hidden bg-surface-raised">
           {image ? (
             <img src={image} alt={product.name} decoding="async" className="h-full w-full object-cover" />
-          ) : null}
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-6 text-center">
+              <span className="display-title text-2xl text-foreground/85">{product.name}</span>
+              <span className="font-mono text-[0.6rem] uppercase tracking-[0.22em] text-muted-foreground">
+                Art pending
+              </span>
+            </div>
+          )}
         </div>
 
         {product.images.length > 1 ? (
@@ -174,7 +181,7 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
           </button>
 
           <p className="mt-3 text-center text-[0.75rem] leading-relaxed text-muted-foreground">
-            Checkout finishes on the shop. We never see your card details.
+            Your bag lives on this page. Nothing is charged yet.
           </p>
         </div>
       </DialogContent>

@@ -2,49 +2,22 @@
  * ============================================================================
  * DJ GAMES STORE — CATALOG SOURCE
  * ============================================================================
- * The storefront UI is a faithful port of the PRESS HOUSE (POD) store page:
- * catalog grid → product card → product detail with variants → cart →
- * checkout hand-off. Only the skin is DJ Games / LAST CALL.
- *
- * This file is the ONLY place that knows where products come from. Point
- * `CATALOG_URL` at the PRESS HOUSE catalog endpoint and the page binds to it
- * with no UI changes. Until that endpoint answers with real products, the page
- * shows its empty state — it NEVER invents placeholder merch.
+ * The Store page IS the merch catalog. /store shows the LAST CALL rack directly
+ * — no shop home, no external product host, no checkout hand-off. The house
+ * products below are the catalog's source of truth; the bag lives on the page
+ * and checkout stays disabled until payments are actually wired.
  * ============================================================================
  */
-
-import { useQuery } from "@tanstack/react-query";
-
-/**
- * ⚠️  `shop.playdjgames.com` IS NOT LIVE — it returns Cloudflare 1014 (CNAME
- *     Cross-User Banned). It must NEVER be used as an href. Every user-facing
- *     link stays inside this app until that DNS is fixed. This constant is kept
- *     only to build the catalog FETCH url (a failed fetch degrades to the empty
- *     state; a dead link would dump visitors on a Cloudflare error page).
- */
-export const SHOP_ORIGIN = "https://shop.playdjgames.com";
-
-/** The in-app storefront route. */
-export const STORE_ROUTE = "/store";
-
-/** "Shop home" target — in-app, never the dead host. */
-export const SHOP_HOME_URL = STORE_ROUTE;
-
-/** Catalog feed. Swap this path if PRESS HOUSE serves it elsewhere. */
-export const CATALOG_URL = `${SHOP_ORIGIN}/api/catalog`;
 
 /** Current drop / product line. */
 export const DROP_NAME = "LAST CALL";
 
-const REQUEST_TIMEOUT_MS = 8000;
-
-/** Refetch cadence — a drop can go live at any moment. */
-export const CATALOG_STALE_MS = 120_000;
-export const CATALOG_POLL_MS = 300_000;
+/** The in-app storefront route. */
+export const STORE_ROUTE = "/store";
 
 /* --------------------------------- types ---------------------------------- */
 
-/** Mirrors the POD store's item states, including "drop locked". */
+/** Item states, including "drop locked" for anything not addable yet. */
 export type ProductStatus = "available" | "coming_soon" | "sold_out";
 
 export interface ProductOptionValue {
@@ -72,44 +45,17 @@ export interface StoreProduct {
   /** Original price, when the item is discounted. */
   compareAtPrice?: number;
   currency: string;
+  /**
+   * Artwork URLs. Empty when art hasn't been produced yet — the card then
+   * renders a clearly-labeled dark placeholder with the product name, and the
+   * item stays fully add-to-bag.
+   */
   images: string[];
   category: string;
   status: ProductStatus;
   statusLabel: string;
   options: ProductOptionGroup[];
-  /** External product page, only if the feed supplied a live one. */
-  url?: string;
 }
-
-/* ------------------------------ normalisation ------------------------------ */
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null;
-
-const asString = (value: unknown): string | undefined => {
-  if (typeof value === "string" && value.trim().length > 0) return value.trim();
-  if (typeof value === "number" && Number.isFinite(value)) return String(value);
-  return undefined;
-};
-
-/** Accepts dollars (12.5) or integer cents (1250) and always returns dollars. */
-const asPrice = (value: unknown, centsValue: unknown): number | undefined => {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string") {
-    const parsed = Number.parseFloat(value.replace(/[^0-9.]/g, ""));
-    if (Number.isFinite(parsed)) return parsed;
-  }
-  if (typeof centsValue === "number" && Number.isFinite(centsValue)) return centsValue / 100;
-  return undefined;
-};
-
-const asStatus = (value: unknown, available: unknown): ProductStatus => {
-  const raw = asString(value)?.toLowerCase() ?? "";
-  if (raw.includes("sold")) return "sold_out";
-  if (raw.includes("soon") || raw.includes("lock") || raw.includes("draft")) return "coming_soon";
-  if (available === false) return "sold_out";
-  return "available";
-};
 
 const STATUS_LABELS: Record<ProductStatus, string> = {
   available: "In stock",
@@ -117,167 +63,113 @@ const STATUS_LABELS: Record<ProductStatus, string> = {
   sold_out: "Sold out",
 };
 
-const asImages = (raw: Record<string, unknown>): string[] => {
-  const list = raw.images ?? raw.photos;
-  if (Array.isArray(list)) {
-    const urls = list
-      .map((item) => (isRecord(item) ? asString(item.url ?? item.src) : asString(item)))
-      .filter((url): url is string => Boolean(url));
-    if (urls.length > 0) return urls;
-  }
-  const single = asString(raw.image ?? raw.imageUrl ?? raw.thumbnail);
-  return single ? [single] : [];
-};
+const sizes = (...labels: string[]): ProductOptionGroup => ({
+  id: "size",
+  name: "Size",
+  values: labels.map((label, index) => ({ id: `size-${index}`, label, available: true })),
+});
 
-const asOptions = (raw: Record<string, unknown>): ProductOptionGroup[] => {
-  const groups = raw.options ?? raw.variants ?? raw.variantGroups;
-  if (!Array.isArray(groups)) return [];
+const colors = (...labels: string[]): ProductOptionGroup => ({
+  id: "color",
+  name: "Color",
+  values: labels.map((label, index) => ({ id: `color-${index}`, label, available: true })),
+});
 
-  return groups
-    .map((group, groupIndex): ProductOptionGroup | null => {
-      if (!isRecord(group)) return null;
-      const name = asString(group.name ?? group.title ?? group.label);
-      const rawValues = group.values ?? group.options ?? group.choices;
-      if (!name || !Array.isArray(rawValues)) return null;
-
-      const values = rawValues
-        .map((value, valueIndex): ProductOptionValue | null => {
-          if (isRecord(value)) {
-            const label = asString(value.label ?? value.name ?? value.value);
-            if (!label) return null;
-            return {
-              id: asString(value.id) ?? `${name}-${valueIndex}`,
-              label,
-              available: value.available !== false && value.inStock !== false,
-            };
-          }
-          const label = asString(value);
-          return label ? { id: `${name}-${valueIndex}`, label, available: true } : null;
-        })
-        .filter((value): value is ProductOptionValue => value !== null);
-
-      if (values.length === 0) return null;
-      return { id: asString(group.id) ?? `group-${groupIndex}`, name, values };
-    })
-    .filter((group): group is ProductOptionGroup => group !== null);
-};
+/* ------------------------------ the LAST CALL rack ------------------------ */
 
 /**
- * Product link, only when the feed supplies a usable one. Anything on the dead
- * shop host is dropped so it can never become an href.
+ * The first house rack. Real UI, real add-to-bag — placeholder art renders as a
+ * labeled dark panel until photography exists. Add to this list to put a new
+ * item on the rack; nothing else needs to change.
  */
-const asProductUrl = (value: unknown): string | undefined => {
-  const url = asString(value);
-  if (!url || url.includes("shop.playdjgames.com")) return undefined;
-  return url;
-};
+export const HOUSE_PRODUCTS: StoreProduct[] = [
+  {
+    id: "last-call-tee",
+    name: "LAST CALL tee",
+    tagline: "Nights don\u2019t end. They fade.",
+    description:
+      "Heavyweight cotton tee with the LAST CALL mark across the chest. Cut for the hours after the set.",
+    price: 32,
+    currency: "USD",
+    images: [],
+    category: "Tee",
+    status: "available",
+    statusLabel: STATUS_LABELS.available,
+    options: [sizes("S", "M", "L", "XL", "XXL"), colors("Black", "Ice")],
+  },
+  {
+    id: "last-call-hoodie",
+    name: "LAST CALL hoodie",
+    tagline: "House merch. Loud on purpose.",
+    description:
+      "Fleece-lined hoodie, boxy fit, big LAST CALL print. The one you reach for when the night runs long.",
+    price: 58,
+    currency: "USD",
+    images: [],
+    category: "Hoodie",
+    status: "available",
+    statusLabel: STATUS_LABELS.available,
+    options: [sizes("S", "M", "L", "XL", "XXL"), colors("Black", "Ice")],
+  },
+  {
+    id: "press-house-cap",
+    name: "PRESS HOUSE cap",
+    tagline: "Print it. Drop it.",
+    description:
+      "Six-panel cap with the PRESS HOUSE wordmark. Adjustable strap, one size fits the whole crew.",
+    price: 28,
+    currency: "USD",
+    images: [],
+    category: "Cap",
+    status: "available",
+    statusLabel: STATUS_LABELS.available,
+    options: [colors("Black", "Ice")],
+  },
+  {
+    id: "dj-games-tote",
+    name: "DJ GAMES mark tote",
+    tagline: "Built to play. Built to wear.",
+    description:
+      "Heavy canvas tote with the DJ GAMES mark. Records, cables, groceries — it carries all of it.",
+    price: 24,
+    currency: "USD",
+    images: [],
+    category: "Tote",
+    status: "available",
+    statusLabel: STATUS_LABELS.available,
+    options: [colors("Natural", "Black")],
+  },
+];
 
-/** Turns one catalog record into a product, or null when it is unusable. */
-const toProduct = (raw: unknown, index: number): StoreProduct | null => {
-  if (!isRecord(raw)) return null;
+/** First available label of every variant axis — used by the one-tap card add. */
+export const defaultSelections = (product: StoreProduct): string[] =>
+  product.options
+    .map((group) => group.values.find((value) => value.available)?.label)
+    .filter((label): label is string => Boolean(label));
 
-  const name = asString(raw.name ?? raw.title);
-  const price = asPrice(raw.price ?? raw.amount, raw.priceCents ?? raw.price_cents);
-  if (!name || price === undefined) return null;
-
-  const status = asStatus(raw.status ?? raw.state, raw.available);
-  const handle = asString(raw.handle ?? raw.slug);
-
-  return {
-    id: asString(raw.id ?? raw.productId) ?? handle ?? `product-${index}`,
-    name,
-    tagline: asString(raw.tagline ?? raw.subtitle),
-    description: asString(raw.description ?? raw.body),
-    price,
-    compareAtPrice: asPrice(raw.compareAtPrice ?? raw.compare_at_price, raw.compareAtPriceCents),
-    currency: asString(raw.currency) ?? "USD",
-    images: asImages(raw),
-    category: asString(raw.category ?? raw.collection ?? raw.productType) ?? "Merch",
-    status,
-    statusLabel: asString(raw.statusLabel) ?? STATUS_LABELS[status],
-    options: asOptions(raw),
-    url: asProductUrl(raw.url),
-  };
-};
-
-/** Unwraps the common response envelopes before normalising. */
-const extractList = (payload: unknown): unknown[] => {
-  if (Array.isArray(payload)) return payload;
-  if (isRecord(payload)) {
-    for (const key of ["products", "items", "data", "results"]) {
-      const value = payload[key];
-      if (Array.isArray(value)) return value;
-    }
-  }
-  return [];
-};
-
-/* -------------------------------- fetching -------------------------------- */
-
-/**
- * Reads the PRESS HOUSE catalog. A missing, unreachable, or non-JSON endpoint
- * resolves to an empty catalog so the page falls back to its empty state
- * instead of an error screen — the shop host may not be connected yet.
- */
-export const fetchCatalog = async (): Promise<StoreProduct[]> => {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-  try {
-    const response = await fetch(CATALOG_URL, {
-      signal: controller.signal,
-      headers: { Accept: "application/json" },
-    });
-    if (!response.ok) return [];
-
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!contentType.includes("json")) return [];
-
-    const payload: unknown = await response.json();
-    return extractList(payload)
-      .map(toProduct)
-      .filter((product): product is StoreProduct => product !== null);
-  } catch (error: unknown) {
-    // Silent + non-blocking, exactly like the App Store sync.
-    console.warn("store catalog unavailable", error);
-    return [];
-  } finally {
-    window.clearTimeout(timeout);
-  }
-};
+/* --------------------------------- catalog -------------------------------- */
 
 export interface StoreCatalog {
   products: StoreProduct[];
   categories: string[];
   isLoading: boolean;
-  /** True once a check finished and the shop returned nothing. */
+  /** True once a check finished and the rack came back genuinely empty. */
   isEmpty: boolean;
 }
 
-/** Single source of truth for the storefront. */
+/** Single source of truth for the storefront. The rack IS the page — no fetch. */
 export const useStoreCatalog = (): StoreCatalog => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["store-catalog"],
-    queryFn: fetchCatalog,
-    staleTime: CATALOG_STALE_MS,
-    gcTime: CATALOG_STALE_MS * 4,
-    refetchOnWindowFocus: true,
-    refetchInterval: CATALOG_POLL_MS,
-    retry: 1,
-    initialData: [] as StoreProduct[],
-  });
-
-  const products = data ?? [];
+  const products = HOUSE_PRODUCTS;
 
   return {
     products,
     categories: Array.from(new Set(products.map((product) => product.category))),
-    isLoading,
-    isEmpty: !isLoading && products.length === 0,
+    isLoading: false,
+    isEmpty: products.length === 0,
   };
 };
 
-/* -------------------------------- checkout -------------------------------- */
+/* ----------------------------------- bag ---------------------------------- */
 
 export interface CartLine {
   productId: string;
@@ -303,10 +195,3 @@ export const cartSubtotal = (lines: CartLine[]): number =>
 
 export const cartCount = (lines: CartLine[]): number =>
   lines.reduce((total, line) => total + line.quantity, 0);
-
-/**
- * Checkout destination. There is no real checkout yet and the shop host is
- * dead, so this keeps people in the app instead of sending them off-domain to a
- * Cloudflare error page. Point it at the real checkout once one exists.
- */
-export const checkoutUrl = (): string => STORE_ROUTE;

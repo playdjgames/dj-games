@@ -5,16 +5,21 @@ import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
   product: StoreProduct;
+  /** Opens the detail sheet (size/color picker). The image tap does this. */
   onSelect: (product: StoreProduct) => void;
+  /** One-tap add with default variants — the card's own ADD TO BAG. */
+  onAdd: (product: StoreProduct) => void;
   className?: string;
 }
 
 /**
- * Catalog card: image, name, variant hint, price, CTA. Items that are not on
- * the rack yet keep the POD "drop locked" treatment — desaturated art, lock
- * badge, and no way to add them to a cart.
+ * Catalog card: image, name, price, pitch, and an on-card ADD TO BAG that
+ * feeds the page's bag directly. The artwork itself still opens the detail
+ * sheet. Items that are not on the rack yet keep the "drop locked" treatment
+ * — desaturated art, lock badge, no add. Missing art renders a clearly-labeled
+ * dark placeholder with the product name; the item stays fully addable.
  */
-export const ProductCard = ({ product, onSelect, className }: ProductCardProps) => {
+export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCardProps) => {
   const isLocked = product.status !== "available";
   const cover = product.images[0];
   const variantHint = product.options
@@ -52,8 +57,11 @@ export const ProductCard = ({ product, onSelect, className }: ProductCardProps) 
             )}
           />
         ) : (
-          <span className="flex h-full w-full items-center justify-center font-mono text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
-            No image
+          <span className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center">
+            <span className="display-title text-lg text-foreground/85 sm:text-xl">{product.name}</span>
+            <span className="font-mono text-[0.55rem] uppercase tracking-[0.22em] text-muted-foreground/80">
+              Art pending
+            </span>
           </span>
         )}
 
@@ -97,18 +105,19 @@ export const ProductCard = ({ product, onSelect, className }: ProductCardProps) 
 
           <button
             type="button"
-            onClick={() => onSelect(product)}
+            onClick={() => (isLocked ? undefined : onAdd(product))}
             disabled={isLocked}
+            aria-label={isLocked ? `${product.name} — ${product.statusLabel}` : `Add ${product.name} to bag`}
             className={cn(
               "inline-flex min-h-[40px] items-center gap-1.5 rounded-md border px-3.5 font-mono text-[0.64rem] font-semibold uppercase tracking-[0.14em] transition-all duration-300",
               isLocked
                 ? "cursor-not-allowed border-border bg-surface-raised text-muted-foreground opacity-60"
-                : "border-signal/50 text-signal hover:bg-signal hover:text-primary-foreground",
+                : "border-signal/50 text-signal hover:bg-signal hover:text-primary-foreground active:scale-[0.97]",
             )}
           >
             {isLocked ? "Locked" : <>
               <Plus size={13} />
-              Add
+              Add to bag
             </>}
           </button>
         </div>

@@ -1,9 +1,8 @@
-import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
 
-import { cartSubtotal, checkoutUrl, formatPrice, type CartLine } from "@/data/store";
+import { cartSubtotal, formatPrice, type CartLine } from "@/data/store";
 import { cn } from "@/lib/utils";
 
 interface CartDrawerProps {
@@ -153,29 +152,20 @@ export const CartDrawer = ({ open, lines, onClose, onQuantity, onRemove }: CartD
             </span>
             <span className="font-mono text-lg font-bold text-foreground">{formatPrice(subtotal)}</span>
           </div>
-          <p className="mt-1 text-[0.72rem] text-muted-foreground">Shipping and tax calculated at checkout.</p>
+          <p className="mt-1 text-[0.72rem] text-muted-foreground">Free pickup from the house for now.</p>
 
-          {/* Stays in-app: there is no real checkout yet, and the shop host is dead. */}
-          <Link
-            to={checkoutUrl()}
-            aria-disabled={lines.length === 0}
-            onClick={(event) => {
-              if (lines.length === 0) {
-                event.preventDefault();
-                return;
-              }
-              onClose();
-            }}
-            className={cn(
-              "mt-4 inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-md font-mono text-[0.74rem] font-bold uppercase tracking-[0.18em] transition-all duration-300",
-              lines.length === 0
-                ? "pointer-events-none bg-surface-raised text-muted-foreground"
-                : "bg-signal text-primary-foreground hover:shadow-glow active:scale-[0.99]",
-            )}
+          {/* Checkout is not wired yet — the bag stays on this page, on this domain. */}
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="mt-4 inline-flex min-h-[52px] w-full cursor-not-allowed items-center justify-center rounded-md bg-surface-raised font-mono text-[0.74rem] font-bold uppercase tracking-[0.18em] text-muted-foreground opacity-70"
           >
             Checkout
-            <ArrowRight size={15} />
-          </Link>
+          </button>
+          <p className="mt-2 text-center text-[0.72rem] text-muted-foreground">
+            Bag only for now — payments aren&rsquo;t wired yet. Your bag is saved on this device.
+          </p>
         </footer>
       </aside>
     </>,
