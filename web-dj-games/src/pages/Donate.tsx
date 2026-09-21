@@ -44,7 +44,7 @@ const Donate = () => {
   useSeo({
     title: "Support DJ Games — Donate",
     description:
-      "Tips keep LAST CALL moving. Support DJ Games with a tip via PayPal or Venmo — more payment options coming soon.",
+      "Tips keep the house moving. Support DJ Games with a tip via PayPal or Venmo — more payment options coming soon.",
   });
 
   const numericAmount = Number.parseInt(amount, 10);
@@ -105,7 +105,7 @@ const Donate = () => {
             Support the house
           </h1>
           <p className="mt-4 text-[0.98rem] leading-relaxed text-[#8FA3B4]">
-            Tips keep LAST CALL moving. Pick a method, pick an amount. More payment
+            Tips keep the house moving. Pick a method, pick an amount. More payment
             options will show up here as they go live.
           </p>
         </header>
