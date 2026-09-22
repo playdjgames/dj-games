@@ -26,6 +26,22 @@ export interface NewsPost {
 
 export const POSTS: NewsPost[] = [
   {
+    slug: "everything-diy-camera-measure",
+    title: "Everything DIY 2.1.4 — your camera is now a tape measure",
+    date: "2026-09-22",
+    category: "Release",
+    excerpt: "Point, tap two points, get a length. Measure live in front of the job or on a photo you already took.",
+    image: "/apps/everything-diy-1.png",
+    gameSlug: "everything-diy",
+    body: [
+      "Everybody knows the moment. You're halfway into a job, you need one number — the width of that opening, the length of that board — and the tape measure is somewhere between the garage and the trunk of the car. Version 2.1.4 fixes that. Everything DIY can now measure with the camera.",
+      "Point the phone at a shelf, a doorway, a board or an opening, tap two points, and you get a length. Save it straight to the project you're working on so it lives next to the steps and the shopping list instead of on the back of a receipt you're going to lose.",
+      "There are two ways to use it. Live measure is for when you're standing in front of the job — raise the phone, tap, done. Set scale on a photo is for everything else: got a picture of the wall from last week, or a shot your contractor sent you? Drop the scale on something of a known size in the frame and measure the rest of the picture after the fact. That second one quietly solves a problem a laser measure can't touch — you can measure a room you're not standing in.",
+      "One honest note, and it's in the app too: the numbers are approximate. They're right for planning — how wide that shelf run is, how much board to buy, whether the fridge fits through the door. For a cut you can't take back, confirm it with a real tape.",
+      "Everything DIY stays free on iPhone. Update from the App Store and the measure tool is waiting in your next project.",
+    ],
+  },
+  {
     slug: "everything-diy-is-live",
     title: "Everything DIY is live on the App Store",
     date: "2026-09-10",

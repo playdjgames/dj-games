@@ -9,6 +9,7 @@ import {
   Link2,
   Map,
   Music,
+  Ruler,
   Search,
   Shield,
   Sparkles,
@@ -51,6 +52,7 @@ const FEATURE_ICONS: Record<GameFeature["icon"], LucideIcon> = {
   wrench: Wrench,
   search: Search,
   tag: Tag,
+  ruler: Ruler,
 };
 
 const GameDetail = () => {
@@ -258,6 +260,36 @@ const GameDetail = () => {
                 </li>
               ))}
             </ul>
+          </Reveal>
+        </section>
+      ) : null}
+
+      {/* WHAT'S NEW — Apple's own release notes for the current version */}
+      {game.live?.releaseNotes ? (
+        <section className="container pb-12 sm:pb-14">
+          <Reveal>
+            <p className="eyebrow mb-5">
+              <span className="text-ember">//</span> What&rsquo;s new in {game.live.version}
+            </p>
+          </Reveal>
+
+          <Reveal delay={60}>
+            <article className="game-accent surface-card p-6 sm:p-8" style={accentStyle}>
+              <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+                Released {formatSyncDate(game.live.currentVersionReleaseDate)} · pulled live from the App Store
+              </p>
+              <div className="mt-4 space-y-3 text-[0.98rem] leading-relaxed text-muted-foreground">
+                {game.live.releaseNotes
+                  .split("\n")
+                  .map((line) => line.trim())
+                  .filter((line) => line.length > 0)
+                  .map((line, index) => (
+                    <p key={line.slice(0, 40)} className={index === 0 ? "font-display text-lg font-bold text-foreground" : undefined}>
+                      {line}
+                    </p>
+                  ))}
+              </div>
+            </article>
           </Reveal>
         </section>
       ) : null}

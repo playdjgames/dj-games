@@ -44,6 +44,8 @@ export interface AppStoreApp {
   screenshotUrls: string[];
   currentVersionReleaseDate: string;
   releaseDate: string;
+  /** Apple's "What's New" text for the current version, straight from the store. */
+  releaseNotes: string | null;
   trackViewUrl: string;
   averageUserRating: number | null;
   userRatingCount: number;
@@ -64,6 +66,7 @@ interface RawLookupResult {
   screenshotUrls?: string[];
   currentVersionReleaseDate?: string;
   releaseDate?: string;
+  releaseNotes?: string;
   trackViewUrl?: string;
   averageUserRating?: number;
   userRatingCount?: number;
@@ -93,6 +96,7 @@ const normalize = (raw: RawLookupResult): AppStoreApp | null => {
     screenshotUrls: (raw.screenshotUrls ?? []).map(upscaleScreenshot),
     currentVersionReleaseDate: raw.currentVersionReleaseDate ?? raw.releaseDate ?? "",
     releaseDate: raw.releaseDate ?? "",
+    releaseNotes: raw.releaseNotes?.trim() ? raw.releaseNotes.trim() : null,
     trackViewUrl: (raw.trackViewUrl ?? "").split("?")[0],
     averageUserRating: typeof raw.averageUserRating === "number" ? raw.averageUserRating : null,
     userRatingCount: raw.userRatingCount ?? 0,

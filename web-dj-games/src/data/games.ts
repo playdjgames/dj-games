@@ -26,7 +26,7 @@ export interface GameFaq {
 }
 
 export interface GameFeature {
-  /** Icon name — one of: flag, brush, trophy, swords, shield, zap, map, users, music, sparkles, camera, wrench, search, tag */
+  /** Icon name — one of: flag, brush, trophy, swords, shield, zap, map, users, music, sparkles, camera, wrench, search, tag, ruler */
   icon:
     | "flag"
     | "brush"
@@ -41,7 +41,8 @@ export interface GameFeature {
     | "camera"
     | "wrench"
     | "search"
-    | "tag";
+    | "tag"
+    | "ruler";
   title: string;
   description: string;
 }
@@ -117,9 +118,9 @@ export const GAMES: Game[] = [
     slug: "everything-diy",
     division: "apps",
     title: "Everything DIY",
-    tagline: "Every DIY project, explained step by step — tools, where to get them, and a camera that helps identify what you're looking at.",
+    tagline: "Every DIY project, explained step by step — and now your camera is a tape measure.",
     description:
-      "Everything DIY is a free iOS app from DJ Games. Get step-by-step instructions for everyday projects, see the tools you need and where to get them, and use the camera to help identify tools and materials.",
+      "Everything DIY is a free iOS app from DJ Games. Get step-by-step instructions for everyday projects, see the tools you need and where to get them, and use the camera to identify tools and materials.\n\nNew in 2.1.4: measure with your camera. Point the phone at a shelf, a doorway, a board or an opening, tap two points, and get a length you can save straight to the project you're working on. Standing in front of the job? Use live measure. Already have a photo? Set the scale on the picture and measure it after the fact — useful for the wall you're not standing next to anymore.\n\nNo more hunting for a tape measure that's somewhere in the garage, and no more writing numbers on the back of a receipt. Measurements live with the project, next to the steps and the shopping list. Numbers are approximate, so confirm critical cuts with a real tape.",
     genre: "DIY & Utilities",
     status: "available",
     statusLabel: "Available now",
@@ -130,7 +131,7 @@ export const GAMES: Game[] = [
     releaseDate: "2026-09-10",
     seoTitle: "Everything DIY — Step-by-Step DIY Projects for iPhone | DJ Games",
     seoDescription:
-      "Everything DIY for iPhone: step-by-step project guides, camera tool identification, where to get tools and materials. Free on the App Store.",
+      "Everything DIY for iPhone: measure with your camera, step-by-step project guides, camera tool identification, and where to get tools and materials. Free on the App Store.",
     coverImage: "/apps/everything-diy-icon.png",
     coverFit: "contain",
     screenshots: [
@@ -146,6 +147,12 @@ export const GAMES: Game[] = [
         description: "Clear, ordered instructions for the project you're actually trying to do — plus video walkthroughs.",
       },
       {
+        icon: "ruler",
+        title: "Measure with your camera",
+        description:
+          "Tap two points on a shelf, doorway or board and get a length you can save to the project. Live in front of the job, or on a photo you already took.",
+      },
+      {
         icon: "camera",
         title: "Identify tools with your camera",
         description: "Point your camera at a tool or part and the app helps work out what it is and what it's for.",
@@ -156,7 +163,7 @@ export const GAMES: Game[] = [
         description: "Find out where to get what you need and roughly what the job is going to cost before you start.",
       },
     ],
-    jobs: ["Replace a faucet.", "Mount a TV.", "Identify this tool."],
+    jobs: ["Measure a doorway.", "Replace a faucet.", "Mount a TV.", "Identify this tool."],
     faq: [
       {
         question: "Does it work offline?",
@@ -169,9 +176,14 @@ export const GAMES: Game[] = [
           "No. Everything DIY is free. No subscription, no ads.",
       },
       {
+        question: "How accurate is camera measuring?",
+        answer:
+          "Close enough to plan with — shelf widths, doorways, rough openings, how much board you need. It is not a laser: confirm critical cuts with a real tape before you commit.",
+      },
+      {
         question: "What's included?",
         answer:
-          "Step-by-step project guides with video walkthroughs, camera-based tool and material identification, price estimates, and where-to-buy info for everything a job needs.",
+          "Camera measuring (live or on a saved photo), step-by-step project guides with video walkthroughs, camera-based tool and material identification, price estimates, and where-to-buy info for everything a job needs.",
       },
     ],
     price: "FREE",
