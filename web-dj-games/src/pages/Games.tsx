@@ -79,7 +79,7 @@ const Games = () => {
             Apps-n-<span className="text-signal text-glow">Stuff</span>
           </>
         }
-        description="Apps, mobile games, PC games and web work — everything we're building, honest about where each one stands."
+        description="Apps, mobile games, PC games and web work — live ones, waiting-on-Apple ones, and the ones we won’t pretend are done."
         stamp={["Apps", "Games", "Web"]}
       />
 
