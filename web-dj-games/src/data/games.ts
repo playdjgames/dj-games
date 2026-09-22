@@ -425,7 +425,7 @@ export const GAMES: Game[] = [
     slug: "blood-war",
     division: "mobile-games",
     title: "Blood War",
-    tagline: "It's the cost of the crown — you want gold first, you bleed.",
+    tagline: "It's the cost of the crown — you want gold-first — you bleed.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
     description:
       "Blood War is an upcoming iOS game from DJ Games, in development now.\n\nTwo war banners on two ridges, and a field between them that nobody means to share. It's early — too early to show how it plays — but the first battles are already being fought in prototypes.\n\nScreenshots, features and a release window will show up here first — the newsletter gets them before anyone else.",
@@ -439,7 +439,7 @@ export const GAMES: Game[] = [
     releaseDate: "TBA",
     seoTitle: "Blood War — Upcoming iOS Game | DJ Games",
     seoDescription:
-      "Blood War is an upcoming iOS game from DJ Games — it's the cost of the crown: you want gold first, you bleed. In development; follow along for the first look.",
+      "Blood War is an upcoming iOS game from DJ Games — it's the cost of the crown: you want gold-first — you bleed. In development; follow along for the first look.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
     coverFit: "cover",
     screenshots: [],
