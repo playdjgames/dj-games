@@ -98,14 +98,12 @@ const Home = () => {
                     to={`/games?division=${division.id}`}
                     className="group inline-flex items-baseline gap-2 whitespace-nowrap font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:text-signal"
                   >
-                    {division.label}
+                    {division.id === "web" ? "Created Sites" : division.label}
                     {division.count > 0 ? (
                       <span className="text-[0.6rem] text-muted-foreground/60 transition-colors group-hover:text-signal/70">
                         {division.count}
                       </span>
-                    ) : (
-                      <span className="text-ember text-[0.6rem]">available</span>
-                    )}
+                    ) : null}
                   </Link>
                 </li>
               ))}
