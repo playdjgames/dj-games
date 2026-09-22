@@ -73,15 +73,9 @@ const Home = () => {
               Original iOS games and apps. Built to play.
             </p>
 
-            {/* Web design lives right under the title — the studio's quiet second trade. */}
+            {/* Web design lives right under the title — the studio's quiet second trade. Plain text, NOT a link. */}
             <p className="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-muted-foreground">
-              We also design + build{" "}
-              <Link
-                to="/games?division=web"
-                className="text-ember transition-colors hover:text-foreground"
-              >
-                websites
-              </Link>
+              We also design + build <span className="text-ember">websites</span>
             </p>
           </div>
         </div>
