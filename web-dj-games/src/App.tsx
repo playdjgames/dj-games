@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Layout } from "@/components/Layout";
 import { Toaster } from "@/components/ui/sonner";
@@ -46,6 +46,10 @@ const App = () => {
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
             <Route path="/support" element={<Support />} />
+            {/* Everything DIY's LIVE App Store listing points its support URL at /contact.
+                That field is frozen while the version is READY_FOR_SALE, so the link has to
+                work from this side — otherwise players tapping "App Support" hit a 404. */}
+            <Route path="/contact" element={<Navigate to="/support" replace />} />
             {/* Fallback landing while presshouse.playdjgames.com has no origin (522). */}
             <Route path="/press-house" element={<PressHouse />} />
             <Route path="/store" element={<Store />} />
