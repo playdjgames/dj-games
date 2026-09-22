@@ -83,6 +83,7 @@ export const POSTS: NewsPost[] = [
       "Studio update time. We've been quiet on here, but behind the scenes there's a lot in motion — and for the first time we can put a name to the next project.",
       "Blood War is the newest thing on the slate. It's early — too early to share screens or even say much about what it is — but it's been eating most of our prototype time lately and we're excited about where it's heading. We'll reveal more once it's further along.",
       "In the meantime, Run Dummy, Vexara, Astronix and Thinksort are all moving through Apple review, and Everything DIY keeps getting refined based on the feedback coming in. Thanks for following along — 2026 is shaping up to be our busiest year yet.",
+      "Update: Vexara and Astronix have both since launched — free on the App Store.",
     ],
   },
 ];

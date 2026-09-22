@@ -9,37 +9,9 @@
 
 import type { PrereleaseApp } from "@/data/prerelease";
 
-export const PRERELEASE_SYNCED_AT = "2026-09-22T12:50:06.600Z";
+export const PRERELEASE_SYNCED_AT = "2026-09-22T14:47:43.690Z";
 
 export const PRERELEASE_APPS: PrereleaseApp[] = [
-  {
-    "appStoreId": 6811472188,
-    "name": "Astronix",
-    "nameIsPlaceholder": false,
-    "subtitle": "Neon One-Thumb Shooter",
-    "description": "One thumb. Endless neon. Infinite waves of enemies between you and the top of the leaderboard.\n\nStarfall Squadron is a portrait-first arcade space shooter built for real play sessions — drag to fly, flick to dodge, and let optional auto-fire keep your bolts flowing while you focus on survival. Every wave hits harder, every fifth wave puts a boss in your path.\n\nSKILL-BASED SCORING\nChain combos, land dive-kill bonus takedowns, and keep your streak alive to multiply your score. There's no luck to lean on here — your run is only as good as your reflexes.\n\nTHE HANGAR LOOP\nCredits are earned purely through play. Bank them and unlock six starfighter hulls with genuinely different stats: faster fire rate, twin-bolt volleys, heavier bolt damage, higher speed, bonus lives, and deployable shields. Choose the ship that fits your style, then push further than you did last run.\n\nSEVEN POWER-UPS, LIVE TIMERS\nRapid fire, triple shot, shield, laser, invincibility, score multiplier, and extra life — each with an on-screen countdown so you always know exactly how long your edge lasts. Catching the right pickup at the right moment is the difference between a good run and a great one.\n\nFIVE ENEMY CLASSES, SIX FORMATIONS\nScouts, Strikers, Phantoms, Guardians, and Elite Commanders sweep in across shifting formation patterns. Learn the attack rhythms, then break them.\n\nDAILY GLOBAL CHALLENGE\nOne fixed-length wave set, identical for every player worldwide, resetting at 00:00 UTC. Same enemies, same order, no excuses — just you against the planet. Climb the Game Center leaderboards for classic and daily runs, and earn six cosmetic paint schemes through your lifetime fleet score.\n\nFREE, WITH NOTHING ATTACHED\nNo ads. No in-app purchases. No energy meters, no paywalled ships, no nagging. Every hull, paint scheme, and upgrade is earned by flying. All artwork, ship names, and sounds are original.\n\nPull up the synthwave, pick your hull, and see how deep into the starfall you can get. Download Starfall Squadron and start your first run now.",
-    "keywords": [
-      "space",
-      "shooter",
-      "arcade",
-      "retro",
-      "neon",
-      "synthwave",
-      "shmup",
-      "bullet",
-      "offline",
-      "free",
-      "galaxy",
-      "alien",
-      "ship",
-      "score"
-    ],
-    "version": "1.1.4",
-    "reviewState": "READY_FOR_SALE",
-    "reviewStateLabel": "Approved — releasing soon",
-    "reviewStage": "approved",
-    "ageRating": "4+"
-  },
   {
     "appStoreId": 6812587639,
     "name": "Thinksort",

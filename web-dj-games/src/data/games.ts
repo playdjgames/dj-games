@@ -292,13 +292,13 @@ export const GAMES: Game[] = [
     description:
       "Astronix is a one-thumb space shooter for iPhone built for real play sessions — drag to fly, flick to dodge, and let optional auto-fire keep your bolts flowing while you focus on survival. Every wave hits harder, every fifth wave puts a boss in your path.\n\nCredits are earned purely through play. Bank them in the hangar to unlock six starfighter hulls with genuinely different stats, catch seven power-ups with live on-screen timers, and chain combos for skill-based scoring. One fixed-length Daily Global Challenge — identical for every player worldwide, resetting at 00:00 UTC — puts you on the Game Center leaderboards.\n\nFree. No ads, no in-app purchases, no energy meters — every hull and paint scheme is earned by flying.",
     genre: "Arcade Shooter",
-    status: "submitted",
     /**
-     * Apple approved 1.1.4 (READY_FOR_SALE) and all 175 territories are now set to
-     * available. Stays on the "submitted" tier until the public store page actually
-     * resolves — we never show "Live now" without a working App Store link.
+     * Live on the App Store since 2026-09-22 — verified by the public iTunes
+     * lookup resolving in the US, CA and GB storefronts, which is the bar for
+     * "Available now" on this site (never just READY_FOR_SALE in ASC).
      */
-    statusLabel: "Approved — going live",
+    status: "available",
+    statusLabel: "Available now",
     category: "arcade",
     accent: "#FFC93C",
     platforms: ["iOS"],
@@ -307,7 +307,7 @@ export const GAMES: Game[] = [
     ageRating: "4+",
     seoTitle: "Astronix — One-Thumb Space Shooter for iPhone | DJ Games",
     seoDescription:
-      "Astronix is a one-thumb endless-wave space shooter for iPhone: hangar unlocks earned by play and a daily global challenge. Approved by Apple — releasing soon.",
+      "Astronix is a one-thumb endless-wave space shooter for iPhone: hangar unlocks earned by play and a daily global challenge. Free — no ads, no in-app purchases. Available now on the App Store.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/52916db6-85d5-4918-8f4b-4f0d7d4cbe9d.png",
     coverFit: "cover",
     screenshots: [],
@@ -329,7 +329,7 @@ export const GAMES: Game[] = [
       },
     ],
     appStoreId: 6811472188,
-    appStoreUrl: "[APP_STORE_URL]",
+    appStoreUrl: "https://apps.apple.com/us/app/astronix/id6811472188",
     googlePlayUrl: "[GOOGLE_PLAY_URL]",
     websiteUrl: "[GAME_WEBSITE_URL]",
     trailerUrl: "[TRAILER_URL]",

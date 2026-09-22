@@ -39,11 +39,37 @@ const NAV: MkNavLink[] = [
   { label: "Support", href: `${SITE_URL}/support`, ember: true },
 ];
 
-const SUBMITTED = [
+interface MkTitle {
+  title: string;
+  line: string;
+  href: string;
+  /** Public App Store link — only set once the title is actually live. */
+  store?: string;
+}
+
+/**
+ * Live on the App Store alongside Everything DIY (the hero of the section
+ * above). A title only moves here once its public store page resolves.
+ */
+const ALSO_LIVE: MkTitle[] = [
+  {
+    title: "Vexara",
+    line: "One thumb. Neon arcade space shooter.",
+    href: `${SITE_URL}/games/vexara`,
+    store: "https://apps.apple.com/us/app/vexara/id6812449073",
+  },
+  {
+    title: "Astronix",
+    line: "One thumb. Endless waves. Everything earned by play.",
+    href: `${SITE_URL}/games/astronix`,
+    store: "https://apps.apple.com/us/app/astronix/id6811472188",
+  },
+];
+
+const SUBMITTED: MkTitle[] = [
   { title: "Run Dummy", line: "Run. Remember. Escape.", href: `${SITE_URL}/games/run-dummy` },
-  { title: "Astronix", line: "One thumb. Endless waves. Everything earned by play.", href: `${SITE_URL}/games/astronix` },
   { title: "ThinkSort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
-] as const;
+];
 
 const CONCEPTS = [
   { title: "Neon World", line: "An unmapped planet, glowing in the dark.", href: `${SITE_URL}/games/neon-world` },
@@ -315,6 +341,46 @@ const Marketing = () => {
                 </a>
               </div>
             </Reveal>
+
+            <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+              {ALSO_LIVE.map(({ title, line, href, store }, index) => (
+                <Reveal as="li" key={title} delay={index * 70}>
+                  <div className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-200 hover:border-[#8BE1FF]/40 sm:p-7">
+                    <div>
+                      <span className="inline-flex items-center gap-2 rounded-full border border-[#8BE1FF]/45 bg-[#8BE1FF]/10 px-3 py-1 font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-[#8BE1FF]">
+                        <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[#8BE1FF]" aria-hidden="true" />
+                        Live now · Free
+                      </span>
+                      <h3
+                        className="mt-4 font-display text-2xl font-black uppercase text-white"
+                        style={{ fontVariationSettings: '"wdth" 78' }}
+                      >
+                        {title}
+                      </h3>
+                      <p className="mt-2 text-[0.95rem] leading-relaxed text-[#9FB6C6]">{line}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                      <a
+                        href={store}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-[44px] items-center gap-2 font-mono text-[0.64rem] font-bold uppercase tracking-[0.18em] text-[#FFB020] transition-colors hover:text-[#FFC24B]"
+                      >
+                        <Apple size={15} className="fill-current" strokeWidth={0} />
+                        App Store
+                      </a>
+                      <a
+                        href={href}
+                        className="group inline-flex min-h-[44px] items-center gap-2 font-mono text-[0.64rem] font-bold uppercase tracking-[0.18em] text-[#8BE1FF] opacity-80 transition-opacity hover:opacity-100"
+                      >
+                        View game
+                        <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
+                      </a>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -327,7 +393,8 @@ const Marketing = () => {
                 Next through the door
               </h2>
               <p className="mt-4 max-w-2xl text-[0.98rem] leading-relaxed text-[#9FB6C6]">
-                Four titles in Apple review. No fake dates. Launch dates go on the news page and by email first.
+                {SUBMITTED.length === 1 ? "One title" : `${SUBMITTED.length} titles`} in Apple review. No fake dates.
+                Launch dates go on the news page and by email first.
               </p>
             </Reveal>
 
