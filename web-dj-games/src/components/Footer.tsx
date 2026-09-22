@@ -10,7 +10,7 @@ import { isNewsletterConnected, subscribeEmail } from "@/lib/newsletter";
 
 const FOOTER_LINKS: { label: string; to: string }[] = [
   { label: "Apps-n-Stuff", to: "/games" },
-  { label: "Coming Soon", to: "/coming-soon" },
+  { label: "The Lab", to: "/coming-soon" },
   { label: "About", to: "/about" },
   { label: "News", to: "/news" },
   { label: "Support", to: "/support" },

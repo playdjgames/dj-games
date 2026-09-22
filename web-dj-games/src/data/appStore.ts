@@ -8,7 +8,7 @@
  *   • Publish a NEW app  → it appears on the site by itself.
  *   • Ship an update     → new version, price, screenshots and description
  *                          are picked up automatically.
- *   • An app goes live   → it moves itself out of "Coming Soon" and into
+ *   • An app goes live   → it moves itself out of "The Lab" and into
  *                          "Released", with real store buttons.
  *
  * You never have to edit this file. The only number that matters is your

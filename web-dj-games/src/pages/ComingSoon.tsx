@@ -12,7 +12,7 @@ import { useSeo } from "@/hooks/use-seo";
 
 const ComingSoon = () => {
   useSeo({
-    title: "Coming Soon — DJ Games",
+    title: "The Lab — DJ Games",
     description:
       "See what DJ Games is building next: titles submitted to Apple and early concepts in development. Get notified when a game goes live.",
   });
@@ -26,7 +26,7 @@ const ComingSoon = () => {
         eyebrow="In the pipeline"
         title={
           <>
-            Coming <span className="text-signal text-glow">Soon</span>
+            The <span className="text-signal text-glow">Lab</span>
           </>
         }
         description="Submitted to Apple up top — those are next through the door. Early concepts below: first looks, not release dates."
