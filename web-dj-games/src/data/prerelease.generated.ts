@@ -9,9 +9,48 @@
 
 import type { PrereleaseApp } from "@/data/prerelease";
 
-export const PRERELEASE_SYNCED_AT = "2026-09-22T15:19:57.792Z";
+export const PRERELEASE_SYNCED_AT = "2026-09-22T17:17:01.153Z";
 
 export const PRERELEASE_APPS: PrereleaseApp[] = [
+  {
+    "appStoreId": 6814184644,
+    "name": "DJ This",
+    "nameIsPlaceholder": false,
+    "subtitle": "imagine it, make it",
+    "description": null,
+    "keywords": [],
+    "version": "1.0.1",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": "4+"
+  },
+  {
+    "appStoreId": 6814600752,
+    "name": "City Limits",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.0",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
+  {
+    "appStoreId": 6814688740,
+    "name": "Order in the Court",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.0",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
   {
     "appStoreId": 6812587639,
     "name": "Thinksort",
@@ -45,7 +84,7 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
     "name": "Run Dummy",
     "nameIsPlaceholder": false,
     "subtitle": "Run. Remember. Escape.",
-    "description": "Run Dummy is a 3D maze runner starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nTHE LAB IS BOOBY-TRAPPED\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, one-way doors, teleporters, and pressure switches that open gates across the maze. The walls can't hurt you — the traps will.\n\nRUN. REMEMBER. ESCAPE.\n- 35 trials across 5 chapters, from gentle warm-up lattices to the deep lab\n- A chase camera with a rear-view mirror, so nothing sneaks up behind you\n- Tactile haptics, footstep audio, and a moody synth soundtrack\n- Up to 3 stars per trial: finish the run, beat the target time, stay nearly untouched\n- Chase camera tuned for long corridors and split-second turns\n\nUNLOCK THE CREW\nChain wall streaks — clean runs without kissing the walls — to unlock new runners, each with its own look: Dummy, Bolt, Bulwark, Wraith, and Gilded. Star collectors can earn fresh ball-skin finishes too.\n\nSTOCK UP BEFORE THE RUN\nGrab power-ups from the workshop before a big attempt: Speed Boost, Shield, Long Jump, Time Freeze, and Extra Hearts. Or pick up the Ultimate Power Pack and carry 10 of each into the maze.\n\nOnly the traps can stop you. How far can you run?\n\nRun Dummy is a DJ Games LLC production. © 2026 DJ Games LLC.",
+    "description": "Run Dummy is a 3D maze runner starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nTHE LAB IS BOOBY-TRAPPED\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, one-way doors, teleporters, and pressure switches that open gates across the maze. The walls can't hurt you — the traps will.\n\nRUN. REMEMBER. ESCAPE.\n- 35 trials across 5 chapters, from gentle warm-up lattices to the deep lab\n- A chase camera with a rear-view mirror, so nothing sneaks up behind you\n- Tactile haptics, footstep audio, and a moody synth soundtrack\n- Up to 3 stars per trial: finish the run, beat the target time, stay nearly untouched\n- Chase camera tuned for long corridors and split-second turns\n\nUNLOCK THE CREW\nChain wall streaks — clean runs without kissing the walls — to unlock new runners, each with its own look: Dummy, Bolt, Bulwark, Wraith, and Gilded. Star collectors can earn fresh ball-skin finishes too.\n\nFREE POWER-UPS\nGrab power-ups from the Power-Ups screen before a big attempt: Speed Boost, Shield, Long Jump, Time Freeze, and Extra Hearts. Every power-up is included free — equip as many as you like. There are no purchases, no subscriptions, and no ads anywhere in the game.\n\nOnly the traps can stop you. How far can you run?\n\nRun Dummy is a DJ Games LLC production. © 2026 DJ Games LLC.",
     "keywords": [
       "maze",
       "runner",
@@ -57,10 +96,10 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
       "dummy",
       "traps"
     ],
-    "version": "2.2.4",
-    "reviewState": "REJECTED",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
+    "version": "2.3.1",
+    "reviewState": "WAITING_FOR_REVIEW",
+    "reviewStateLabel": "Submitted to Apple",
+    "reviewStage": "submitted",
     "ageRating": "12+"
   },
   {
@@ -92,32 +131,6 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
     "ageRating": "9+"
   },
   {
-    "appStoreId": 6814688740,
-    "name": "Order in the Court",
-    "nameIsPlaceholder": false,
-    "subtitle": null,
-    "description": null,
-    "keywords": [],
-    "version": "1.0",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": null
-  },
-  {
-    "appStoreId": 6814600752,
-    "name": "City Limits",
-    "nameIsPlaceholder": false,
-    "subtitle": null,
-    "description": null,
-    "keywords": [],
-    "version": "1.0",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": null
-  },
-  {
     "appStoreId": 6813953306,
     "name": "Neon Evolution",
     "nameIsPlaceholder": false,
@@ -125,19 +138,6 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
     "description": null,
     "keywords": [],
     "version": "1.0.3",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": "4+"
-  },
-  {
-    "appStoreId": 6814184644,
-    "name": "DJ This",
-    "nameIsPlaceholder": false,
-    "subtitle": "imagine it, make it",
-    "description": null,
-    "keywords": [],
-    "version": "1.0.1",
     "reviewState": "PREPARE_FOR_SUBMISSION",
     "reviewStateLabel": "In development",
     "reviewStage": "building",

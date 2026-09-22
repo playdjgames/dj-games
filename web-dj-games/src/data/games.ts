@@ -199,7 +199,7 @@ export const GAMES: Game[] = [
     title: "Run Dummy",
     tagline: "Run. Remember. Escape.",
     description:
-      "Run Dummy is a 3D maze runner for iPhone starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, teleporters and pressure switches. Chain clean wall streaks to unlock new runners, stock power-ups before a run, and chase up to 3 stars per trial for speed and flawless runs.\n\nEvery runner and every star is earned by playing. The Ultimate Power Pack — 10 of each power-up — is an optional one-time purchase if you want a head start.\n\nOnly the traps can stop you. How far can you run?",
+      "Run Dummy is a 3D maze runner for iPhone starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, teleporters and pressure switches. Chain clean wall streaks to unlock new runners, stock power-ups before a run, and chase up to 3 stars per trial for speed and flawless runs.\n\nEvery runner and every star is earned by playing. Every power-up is included free — no purchases, no subscriptions and no ads anywhere in the game.\n\nOnly the traps can stop you. How far can you run?",
     genre: "Maze Runner",
     status: "submitted",
     statusLabel: "Submitted to Apple",
