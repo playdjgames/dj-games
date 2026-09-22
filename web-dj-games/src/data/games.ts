@@ -342,7 +342,7 @@ export const GAMES: Game[] = [
     taglineStatement: true,
     // Apple's store copy opens with an older line; the site shows the hook above.
     description:
-      "Thinksort is an offline productivity app for iPhone that gives your daily chaos one place to land. Speak or type one long, messy ramble and it sorts it into dated tasks, prep items, shopping and ideas — showing a confirm screen before anything is saved.\n\nThe organizer is rule-based and runs entirely on your device: it never invents dates, times or places. The Today screen shows a single NEXT UP card with a plain-language reason why it's next, One Thing Mode hides everything else when a list feels like too much, and 'I am Stuck' hands back one tiny first step when a task has you frozen.\n\nA built-in focus timer, store-grouped shopping lists, Siri and Shortcuts capture — and no account, no cloud, no analytics, no ads, no subscriptions. Everything stays on your device.",
+      "Thinksort is an offline productivity app for iPhone that gives your daily chaos one place to land. Speak or type one long, messy ramble and it sorts it into dated tasks, prep items, shopping and ideas — showing a confirm screen before anything is saved.\n\nThe organizer is rule-based and runs entirely on your device: it never invents dates, times or places. The Today screen shows a single NEXT UP card with a plain-language reason why it's next, One Thing Mode hides everything else when a list feels like too much, and 'I am Stuck' hands back one tiny first step when a task has you frozen.\n\nA built-in focus timer, store-grouped shopping lists, Siri and Shortcuts capture — and no account, no cloud, no analytics, no ads. Everything stays on your device.\n\nFree for the first 7 days, then one purchase unlocks it for good. No subscription, no monthly fee.",
     genre: "Productivity",
     status: "submitted",
     statusLabel: "Submitted to Apple",
@@ -353,7 +353,7 @@ export const GAMES: Game[] = [
     releaseDate: "2026",
     seoTitle: "ThinkSort — Offline Productivity, One Next Step | DJ Games",
     seoDescription:
-      "ThinkSort is an offline productivity app for iPhone: brain-dump sorting, one clear next step, no account and no cloud. Submitted to Apple — coming soon.",
+      "ThinkSort is an offline productivity app for iPhone: brain-dump sorting, one clear next step, no account and no cloud. Free for 7 days, then a one-time purchase — no subscription. Submitted to Apple.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/a654c904-58c9-4da5-8c3d-14e94603fa80.png",
     coverFit: "cover",
     screenshots: [],
@@ -372,6 +372,11 @@ export const GAMES: Game[] = [
         icon: "shield",
         title: "It never guesses",
         description: "Rule-based and fully on-device: ambiguous thoughts become short clarifications, and nothing ever leaves your phone.",
+      },
+      {
+        icon: "tag",
+        title: "Buy it once",
+        description: "Free for 7 days with nothing locked off, then a single purchase keeps it forever — no subscription and no monthly fee.",
       },
     ],
     appStoreId: 6812587639,
