@@ -41,14 +41,15 @@ const NAV: MkNavLink[] = [
 
 const SUBMITTED = [
   { title: "Run Dummy", line: "Run. Remember. Escape.", href: `${SITE_URL}/games/run-dummy` },
-  { title: "Vexara", line: "Neon fire, endless waves, one thumb.", href: `${SITE_URL}/games/vexara` },
   { title: "Astronix", line: "One thumb. Endless waves. Everything earned by play.", href: `${SITE_URL}/games/astronix` },
   { title: "ThinkSort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
 ] as const;
 
 const CONCEPTS = [
   { title: "Neon World", line: "An unmapped planet, glowing in the dark.", href: `${SITE_URL}/games/neon-world` },
-  { title: "Neon City: Underground", line: "Rain, neon, and whatever runs beneath the city.", href: `${SITE_URL}/games/neon-city-underground` },
+  { title: "Order in the Court", line: "First look coming soon.", href: `${SITE_URL}/games/order-in-the-court` },
+  { title: "City Limits", line: "First look coming soon.", href: `${SITE_URL}/games/city-limits` },
+  { title: "DJ This", line: "Imagine it, make it.", href: `${SITE_URL}/games/dj-this` },
 ] as const;
 
 const SOCIALS = [

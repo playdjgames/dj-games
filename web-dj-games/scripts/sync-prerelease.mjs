@@ -79,7 +79,28 @@ const AGE_RATINGS = {
 
 const readJson = (path) => (existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : null);
 
-const collect = () => {
+const PUBLIC_LOOKUP = "https://itunes.apple.com/lookup";
+
+/**
+ * ASC can mark an app READY_FOR_SALE while the storefront still hides it — most
+ * commonly because no territory availability was ever created. The site's live
+ * sync reads the PUBLIC API, so "live" here means publicly listed, not just
+ * READY_FOR_SALE in App Store Connect.
+ */
+const isPubliclyListed = async (appStoreId) => {
+  try {
+    const response = await fetch(`${PUBLIC_LOOKUP}?id=${appStoreId}&country=us&entity=software`);
+    if (!response.ok) return false;
+    const payload = await response.json();
+    return (payload.results ?? []).some((result) => result.wrapperType === "software");
+  } catch {
+    // If the public API is unreachable, trust ASC's state rather than
+    // duplicating an already-live app onto the unreleased board.
+    return true;
+  }
+};
+
+const collect = async () => {
   const apps = listOf(asc(["apps", "list", "--paginate"]));
   const results = [];
 
@@ -90,10 +111,28 @@ const collect = () => {
     const versions = listOf(asc(["versions", "list", "--app", app.id, "--paginate"]));
     // Newest record first; Apple keeps shipped versions in this list too.
     const version = versions.find((v) => v.attributes?.appStoreState !== LIVE_STATE) ?? versions[0];
-    if (!version) continue;
+    if (!version) {
+      // An app record with no App Store version yet has nothing submitted, but it
+      // still belongs on the site's board as plain "In development".
+      const cleaned = cleanName(attrs.name);
+      results.push({
+        appStoreId,
+        name: cleaned.name,
+        nameIsPlaceholder: cleaned.isPlaceholder,
+        subtitle: null,
+        description: null,
+        keywords: [],
+        version: "",
+        reviewState: "PREPARE_FOR_SUBMISSION",
+        reviewStateLabel: "In development",
+        reviewStage: "building",
+        ageRating: null,
+      });
+      continue;
+    }
 
     const state = version.attributes?.appStoreState ?? "PREPARE_FOR_SUBMISSION";
-    if (state === LIVE_STATE) continue; // The public API already covers this one.
+    if (state === LIVE_STATE && (await isPubliclyListed(appStoreId))) continue; // The public API already covers this one.
 
     const versionString = version.attributes?.versionString ?? "";
 
@@ -112,7 +151,13 @@ const collect = () => {
     const ageRaw = appInfos[0]?.attributes?.appStoreAgeRating ?? null;
 
     const { name, isPlaceholder } = cleanName(info.name ?? attrs.name);
-    const review = REVIEW_STATES[state] ?? { label: "In development", stage: "building" };
+    // A READY_FOR_SALE app that failed the public-listing check above is approved
+    // but invisible to visitors — never label it "Available now" with no store
+    // page to back it up.
+    const review =
+      state === LIVE_STATE
+        ? { label: "Approved — releasing soon", stage: "approved" }
+        : (REVIEW_STATES[state] ?? { label: "In development", stage: "building" });
 
     results.push({
       appStoreId,
@@ -148,7 +193,7 @@ export const PRERELEASE_SYNCED_AT = ${JSON.stringify(new Date().toISOString())};
 export const PRERELEASE_APPS: PrereleaseApp[] = ${JSON.stringify(apps, null, 2)};
 `;
 
-const apps = collect();
+const apps = await collect();
 writeFileSync(OUT_FILE, render(apps));
 console.log(`Synced ${apps.length} unreleased app(s) -> src/data/prerelease.generated.ts`);
 for (const a of apps) {

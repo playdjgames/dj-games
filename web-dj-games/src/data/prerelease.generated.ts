@@ -9,86 +9,9 @@
 
 import type { PrereleaseApp } from "@/data/prerelease";
 
-export const PRERELEASE_SYNCED_AT = "2026-09-19T18:07:06.832Z";
+export const PRERELEASE_SYNCED_AT = "2026-09-22T12:50:06.600Z";
 
 export const PRERELEASE_APPS: PrereleaseApp[] = [
-  {
-    "appStoreId": 6813953306,
-    "name": "Neon World",
-    "nameIsPlaceholder": false,
-    "subtitle": null,
-    "description": null,
-    "keywords": [],
-    "version": "1.0.2",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": null
-  },
-  {
-    "appStoreId": 6813958854,
-    "name": "Neon City: Underground",
-    "nameIsPlaceholder": false,
-    "subtitle": null,
-    "description": null,
-    "keywords": [],
-    "version": "1.0",
-    "reviewState": "PREPARE_FOR_SUBMISSION",
-    "reviewStateLabel": "In development",
-    "reviewStage": "building",
-    "ageRating": null
-  },
-  {
-    "appStoreId": 6805272943,
-    "name": "Run Dummy",
-    "nameIsPlaceholder": false,
-    "subtitle": "Run. Remember. Escape.",
-    "description": "Run Dummy is a 3D maze runner starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nTHE LAB IS BOOBY-TRAPPED\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, one-way doors, teleporters, and pressure switches that open gates across the maze. The walls can't hurt you — the traps will.\n\nRUN. REMEMBER. ESCAPE.\n- 35 trials across 5 chapters, from gentle warm-up lattices to the deep lab\n- A chase camera with a rear-view mirror, so nothing sneaks up behind you\n- Tactile haptics, footstep audio, and a moody synth soundtrack\n- Up to 3 stars per trial: finish the run, beat the target time, stay nearly untouched\n- Chase camera tuned for long corridors and split-second turns\n\nUNLOCK THE CREW\nChain wall streaks — clean runs without kissing the walls — to unlock new runners, each with its own look: Dummy, Bolt, Bulwark, Wraith, and Gilded. Star collectors can earn fresh ball-skin finishes too.\n\nSTOCK UP BEFORE THE RUN\nGrab power-ups from the workshop before a big attempt: Speed Boost, Shield, Long Jump, Time Freeze, and Extra Hearts. Or pick up the Ultimate Power Pack and carry 10 of each into the maze.\n\nOnly the traps can stop you. How far can you run?\n\nRun Dummy is a DJ Games LLC production. © 2026 DJ Games LLC.",
-    "keywords": [
-      "maze",
-      "runner",
-      "run",
-      "escape",
-      "labyrinth",
-      "3d",
-      "puzzle",
-      "dummy",
-      "traps"
-    ],
-    "version": "2.2.4",
-    "reviewState": "WAITING_FOR_REVIEW",
-    "reviewStateLabel": "Submitted to Apple",
-    "reviewStage": "submitted",
-    "ageRating": "12+"
-  },
-  {
-    "appStoreId": 6812449073,
-    "name": "Vexara",
-    "nameIsPlaceholder": false,
-    "subtitle": "Neon Arcade Space Shooter",
-    "description": "Neon fire, endless waves, one thumb. Vexara is a pick-up-and-play arcade space shooter built for the reflexes of coin-op veterans and the pace of a mobile commute.\n\nPilot a lone starfighter against descending alien formations that never stop escalating. Relative drag steering keeps your thumb off the ship, auto-fire is on by default, and a tap unleashes a screen-clearing blast charge when the swarm closes in.\n\nSIX ENEMY TYPES, SEVEN DIVE PATTERNS\nAliens lock into tight formations, then peel off into seven distinct dive attacks. Learn the routes, read the chaos, and thread the neon.\n\nBOSS FIGHTS EVERY FIFTH WAVE\nThree unique multi-phase bosses guard the deep sectors, each with glowing weak-point cores that take triple damage. Find the opening, commit, and burn them down.\n\nCHALLENGE WAVES AND BIG PAYOUTS\nEvery fourth wave, the aliens stop shooting and fly elaborate showpiece routes. Clear them all for a massive score bonus and keep your streak alive.\n\nTHE VOID SIPHON\nA warden can snare your ship in a tractor beam. Destroy it and your fighter returns as two escort wing-mates flying beside you with extra guns.\n\nCHAIN KILLS, CHASE SCORE\nStack consecutive kills for a combo multiplier up to x10, then add perfect-wave bonuses for clearing without taking a single hit. Seven collectible power-ups keep the loadout shifting, and four difficulty settings let you set your own pressure.\n\nYour top five runs are saved on device alongside unlockable achievements, so every session is a shot at the board.\n\nNO ADS. NO IN-APP PURCHASES. NO ACCOUNT.\nVexara is free and plays like a premium cabinet. Everything runs offline and on-device, so there is nothing to sign up for, nothing to buy, and nothing to interrupt a run. Play on a plane, on the subway, anywhere.\n\nDrop in, chain your combo, and see how deep the waves go. Download Vexara and take the high score.",
-    "keywords": [
-      "space",
-      "shooter",
-      "arcade",
-      "retro",
-      "neon",
-      "shmup",
-      "alien",
-      "offline",
-      "galaxy",
-      "starship",
-      "bullet",
-      "waves",
-      "boss",
-      "free"
-    ],
-    "version": "1.0.4",
-    "reviewState": "WAITING_FOR_REVIEW",
-    "reviewStateLabel": "Submitted to Apple",
-    "reviewStage": "submitted",
-    "ageRating": "9+"
-  },
   {
     "appStoreId": 6811472188,
     "name": "Astronix",
@@ -112,9 +35,9 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
       "score"
     ],
     "version": "1.1.4",
-    "reviewState": "WAITING_FOR_REVIEW",
-    "reviewStateLabel": "Submitted to Apple",
-    "reviewStage": "submitted",
+    "reviewState": "READY_FOR_SALE",
+    "reviewStateLabel": "Approved — releasing soon",
+    "reviewStage": "approved",
     "ageRating": "4+"
   },
   {
@@ -140,9 +63,112 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
       "list"
     ],
     "version": "1.1.3",
-    "reviewState": "WAITING_FOR_REVIEW",
-    "reviewStateLabel": "Submitted to Apple",
-    "reviewStage": "submitted",
+    "reviewState": "REJECTED",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": "4+"
+  },
+  {
+    "appStoreId": 6805272943,
+    "name": "Run Dummy",
+    "nameIsPlaceholder": false,
+    "subtitle": "Run. Remember. Escape.",
+    "description": "Run Dummy is a 3D maze runner starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nTHE LAB IS BOOBY-TRAPPED\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, one-way doors, teleporters, and pressure switches that open gates across the maze. The walls can't hurt you — the traps will.\n\nRUN. REMEMBER. ESCAPE.\n- 35 trials across 5 chapters, from gentle warm-up lattices to the deep lab\n- A chase camera with a rear-view mirror, so nothing sneaks up behind you\n- Tactile haptics, footstep audio, and a moody synth soundtrack\n- Up to 3 stars per trial: finish the run, beat the target time, stay nearly untouched\n- Chase camera tuned for long corridors and split-second turns\n\nUNLOCK THE CREW\nChain wall streaks — clean runs without kissing the walls — to unlock new runners, each with its own look: Dummy, Bolt, Bulwark, Wraith, and Gilded. Star collectors can earn fresh ball-skin finishes too.\n\nSTOCK UP BEFORE THE RUN\nGrab power-ups from the workshop before a big attempt: Speed Boost, Shield, Long Jump, Time Freeze, and Extra Hearts. Or pick up the Ultimate Power Pack and carry 10 of each into the maze.\n\nOnly the traps can stop you. How far can you run?\n\nRun Dummy is a DJ Games LLC production. © 2026 DJ Games LLC.",
+    "keywords": [
+      "maze",
+      "runner",
+      "run",
+      "escape",
+      "labyrinth",
+      "3d",
+      "puzzle",
+      "dummy",
+      "traps"
+    ],
+    "version": "2.2.4",
+    "reviewState": "REJECTED",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": "12+"
+  },
+  {
+    "appStoreId": 6813098751,
+    "name": "Blood War: The End of You",
+    "nameIsPlaceholder": false,
+    "subtitle": "A crown that won't hold itself",
+    "description": "Blood War: The End of You. Banners on the ridge. A crown that won't hold itself.\n\nThat's the cost of the crown. You want gold, first you bleed.\n\nTake the ground. Pay the cost. Keep the claim long enough to count the gold.\nTHE RIDGE\n\nPlant your banners where the claim is still in doubt. Ground is not a gift. It is taken, then tested. The ridge does not care who shouted first. It cares who is still standing when the dust drops.\nTHE CROWN\n\nThis crown will not hold itself. Keep it and the gold starts to count. Lose the grip and the treasury was only a story you told on the way up. Kingship here is a job you can fail in public.\nTHE COST\n\nYou want gold, first you bleed. That is the promise — not a resource bar. The bill is men, time, and ground you thought was yours. Pay it, or watch the claim slide.\nTHE GOLD\n\nGold is the receipt. It comes after the cost, not before. Hold the ridge long enough and the coffers mean something. Drop the banner and you were never rich. You were briefly loud.\nBlood War: The End of You is a fantasy war for a crown that slips. Take ground. Pay the cost. Keep the claim.",
+    "keywords": [
+      "strategy",
+      "kingdom",
+      "fantasy",
+      "battle",
+      "conquest",
+      "empire",
+      "medieval",
+      "tactics",
+      "gold",
+      "banner",
+      "siege",
+      "throne",
+      "army",
+      "claim"
+    ],
+    "version": "2.0.4",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": "9+"
+  },
+  {
+    "appStoreId": 6814688740,
+    "name": "Order in the Court",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.0",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
+  {
+    "appStoreId": 6814600752,
+    "name": "City Limits",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.0",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
+  {
+    "appStoreId": 6813953306,
+    "name": "Neon Evolution",
+    "nameIsPlaceholder": false,
+    "subtitle": "create, grow , thrive",
+    "description": null,
+    "keywords": [],
+    "version": "1.0.3",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": "4+"
+  },
+  {
+    "appStoreId": 6814184644,
+    "name": "DJ This",
+    "nameIsPlaceholder": false,
+    "subtitle": "imagine it, make it",
+    "description": null,
+    "keywords": [],
+    "version": "1.0.1",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
     "ageRating": "4+"
   }
 ];
