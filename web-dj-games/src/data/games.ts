@@ -293,7 +293,12 @@ export const GAMES: Game[] = [
       "Astronix is a one-thumb space shooter for iPhone built for real play sessions — drag to fly, flick to dodge, and let optional auto-fire keep your bolts flowing while you focus on survival. Every wave hits harder, every fifth wave puts a boss in your path.\n\nCredits are earned purely through play. Bank them in the hangar to unlock six starfighter hulls with genuinely different stats, catch seven power-ups with live on-screen timers, and chain combos for skill-based scoring. One fixed-length Daily Global Challenge — identical for every player worldwide, resetting at 00:00 UTC — puts you on the Game Center leaderboards.\n\nFree. No ads, no in-app purchases, no energy meters — every hull and paint scheme is earned by flying.",
     genre: "Arcade Shooter",
     status: "submitted",
-    statusLabel: "Submitted to Apple",
+    /**
+     * Apple approved 1.1.4 (READY_FOR_SALE) and all 175 territories are now set to
+     * available. Stays on the "submitted" tier until the public store page actually
+     * resolves — we never show "Live now" without a working App Store link.
+     */
+    statusLabel: "Approved — going live",
     category: "arcade",
     accent: "#FFC93C",
     platforms: ["iOS"],
