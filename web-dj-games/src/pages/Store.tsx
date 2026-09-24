@@ -1,11 +1,11 @@
-import { Heart, ShoppingBag } from "lucide-react";
+import { Hammer, Heart, ShoppingBag } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { CartDrawer } from "@/components/store/CartDrawer";
-import { PressHouseAd } from "@/components/PressHouseAd";
+import { PRESS_HOUSE_IN_DEV, PressHouseAd } from "@/components/PressHouseAd";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
 import {
@@ -23,8 +23,9 @@ const ALL = "All";
 const Store = () => {
   useSeo({
     title: "Store — DJ Games",
-    description:
-      "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.",
+    description: PRESS_HOUSE_IN_DEV
+      ? "The DJ Games store is under construction while PRESS HOUSE — our print-on-demand platform — is being built. The first merch drop lands here when it goes live."
+      : "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.",
   });
 
   const { products, categories, isLoading, isEmpty } = useStoreCatalog();
@@ -61,30 +62,72 @@ const Store = () => {
             The <span className="text-signal text-glow">Store</span>
           </>
         }
-        description="Merch from the house. Drops live here."
-        stamp={["Wear", "The", "House"]}
+        description={
+          PRESS_HOUSE_IN_DEV
+            ? "Merch from the house. The print floor is still being built."
+            : "Merch from the house. Drops live here."
+        }
+        stamp={PRESS_HOUSE_IN_DEV ? ["Under", "Construction"] : ["Wear", "The", "House"]}
       >
-        <div className="flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setBagOpen(true)}
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-md bg-signal px-5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
-          >
-            <ShoppingBag size={16} />
-            Your bag
-            {count > 0 ? (
-              <span className="ml-0.5 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-primary-foreground/20 px-1 text-[0.62rem]">
-                {count}
-              </span>
-            ) : null}
-          </button>
-          {/* In-page only: the rack IS the page, so there is no second shop button. */}
-        </div>
+        {PRESS_HOUSE_IN_DEV ? null : (
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setBagOpen(true)}
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-md bg-signal px-5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
+            >
+              <ShoppingBag size={16} />
+              Your bag
+              {count > 0 ? (
+                <span className="ml-0.5 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-primary-foreground/20 px-1 text-[0.62rem]">
+                  {count}
+                </span>
+              ) : null}
+            </button>
+            {/* In-page only: the rack IS the page, so there is no second shop button. */}
+          </div>
+        )}
       </Hero>
 
       <section className="container py-14 sm:py-16">
+        {PRESS_HOUSE_IN_DEV ? (
+          /* Construction state — every item is printed by PRESS HOUSE, so until the
+             platform is online there is nothing to sell and no rack to browse. */
+          <Reveal>
+            <div className="surface-card corner-ticks mx-auto mt-4 max-w-xl p-8 text-center sm:p-12">
+              <p className="eyebrow">
+                <span className="text-ember">//</span> Under construction
+              </p>
+              <h2 className="display-title mt-3 text-3xl sm:text-4xl">
+                The rack is <span className="text-ember">empty on purpose</span>
+              </h2>
+              <p className="mt-4 text-[0.98rem] leading-relaxed text-muted-foreground">
+                Everything in this store is printed by PRESS HOUSE, and the platform
+                is still being built. No fake stock, no dead checkout — when PRESS
+                HOUSE goes live, the first drop opens right here.
+              </p>
+
+              <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                <Link
+                  to="/press-house"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-md bg-signal px-5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.98] sm:w-auto"
+                >
+                  <Hammer size={14} />
+                  Follow the build
+                </Link>
+                <Link
+                  to="/coming-soon#notify"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center rounded-md border border-border px-5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors duration-300 hover:border-signal/45 hover:text-foreground sm:w-auto"
+                >
+                  Tell me when it drops
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        ) : null}
+
         {/* Filters — only meaningful once the drop has more than one category. */}
-        {filters.length > 2 ? (
+        {!PRESS_HOUSE_IN_DEV && filters.length > 2 ? (
           <Reveal>
             <ul className="no-scrollbar flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
               {filters.map((item) => (
@@ -108,7 +151,7 @@ const Store = () => {
           </Reveal>
         ) : null}
 
-        {isLoading ? (
+        {PRESS_HOUSE_IN_DEV ? null : isLoading ? (
           /* Loading state — skeleton rack, same grid rhythm as the real cards. */
           <ul
             aria-busy="true"
@@ -176,22 +219,26 @@ const Store = () => {
         <PressHouseAd variant="strip" className="mt-14" />
       </section>
 
-      <ProductSheet
-        product={active}
-        onClose={() => setActive(null)}
-        onAdd={(product, selections, quantity) => {
-          cart.add(product, selections, quantity);
-          setBagOpen(true);
-        }}
-      />
+      {PRESS_HOUSE_IN_DEV ? null : (
+        <>
+          <ProductSheet
+            product={active}
+            onClose={() => setActive(null)}
+            onAdd={(product, selections, quantity) => {
+              cart.add(product, selections, quantity);
+              setBagOpen(true);
+            }}
+          />
 
-      <CartDrawer
-        open={bagOpen}
-        lines={cart.lines}
-        onClose={() => setBagOpen(false)}
-        onQuantity={cart.setQuantity}
-        onRemove={cart.remove}
-      />
+          <CartDrawer
+            open={bagOpen}
+            lines={cart.lines}
+            onClose={() => setBagOpen(false)}
+            onQuantity={cart.setQuantity}
+            onRemove={cart.remove}
+          />
+        </>
+      )}
     </>
   );
 };
