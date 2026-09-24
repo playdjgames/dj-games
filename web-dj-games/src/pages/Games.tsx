@@ -18,6 +18,8 @@ type Active = DivisionId | typeof ALL;
 
 const GROUP_META = {
   available: { eyebrow: "Available now", title: "Live on the App Store" },
+  // Sites are live on the open web, never the App Store — they get their own heading.
+  sites: { eyebrow: "Live now", title: "Live on the web" },
   submitted: { eyebrow: "Submitted to Apple", title: "Launching next" },
   concepts: { eyebrow: "Early concepts", title: "In development" },
 } as const;
@@ -56,7 +58,8 @@ const Games = () => {
   const groups = useMemo(
     () =>
       [
-        { tier: "available" as const, games: released },
+        { tier: "available" as const, games: released.filter((game) => game.division !== "web") },
+        { tier: "sites" as const, games: released.filter((game) => game.division === "web") },
         { tier: "submitted" as const, games: submitted },
         { tier: "concepts" as const, games: concepts },
       ].map((group) => ({
