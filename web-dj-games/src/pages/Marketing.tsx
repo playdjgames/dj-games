@@ -64,10 +64,15 @@ const ALSO_LIVE: MkTitle[] = [
     href: `${SITE_URL}/games/astronix`,
     store: "https://apps.apple.com/us/app/astronix/id6811472188",
   },
+  {
+    title: "Run Dummy",
+    line: "Run. Remember. Escape.",
+    href: `${SITE_URL}/games/run-dummy`,
+    store: "https://apps.apple.com/us/app/run-dummy/id6805272943",
+  },
 ];
 
 const SUBMITTED: MkTitle[] = [
-  { title: "Run Dummy", line: "Run. Remember. Escape.", href: `${SITE_URL}/games/run-dummy` },
   { title: "ThinkSort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
 ];
 

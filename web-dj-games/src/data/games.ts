@@ -211,8 +211,8 @@ export const GAMES: Game[] = [
     seoTitle: "The DJ Games Website — playdjgames.com | DJ Games",
     seoDescription:
       "playdjgames.com — the DJ Games studio site, designed and built in-house. Game library, studio news, player support and the PRESS HOUSE platform. We build websites too.",
-    coverImage: "/icon.png",
-    coverFit: "contain",
+    coverImage: "/apps/dj-games-website-home.png",
+    coverFit: "cover",
     screenshots: [],
     features: [
       {
@@ -244,8 +244,8 @@ export const GAMES: Game[] = [
     description:
       "Run Dummy is a 3D maze runner for iPhone starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, teleporters and pressure switches. Chain clean wall streaks to unlock new runners, stock power-ups before a run, and chase up to 3 stars per trial for speed and flawless runs.\n\nEvery runner and every star is earned by playing. Every power-up is included free — no purchases, no subscriptions and no ads anywhere in the game.\n\nOnly the traps can stop you. How far can you run?",
     genre: "Maze Runner",
-    status: "submitted",
-    statusLabel: "Submitted to Apple",
+    status: "available",
+    statusLabel: "Available now",
     category: "maze",
     accent: "#FFB020",
     platforms: ["iOS"],
@@ -254,7 +254,7 @@ export const GAMES: Game[] = [
     ageRating: "12+",
     seoTitle: "Run Dummy — 3D Maze Runner for iPhone | DJ Games",
     seoDescription:
-      "Run Dummy is a 3D maze runner for iPhone: 35 trials across 5 chapters, booby-trapped labs, star ratings and crew unlocks. Submitted to Apple — coming soon.",
+      "Run Dummy is a 3D maze runner for iPhone: 35 trials across 5 chapters, booby-trapped labs, star ratings and crew unlocks. Free — no purchases, no ads. Available now on the App Store.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/74b7731b-abaa-4f03-a756-155d3d402b85.png",
     coverFit: "cover",
     screenshots: [],
@@ -276,7 +276,8 @@ export const GAMES: Game[] = [
       },
     ],
     appStoreId: 6805272943,
-    appStoreUrl: "[APP_STORE_URL]",
+    price: "FREE",
+    appStoreUrl: "https://apps.apple.com/us/app/run-dummy/id6805272943",
     googlePlayUrl: "[GOOGLE_PLAY_URL]",
     websiteUrl: "[GAME_WEBSITE_URL]",
     trailerUrl: "[TRAILER_URL]",

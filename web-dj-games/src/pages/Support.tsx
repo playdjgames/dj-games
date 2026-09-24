@@ -19,7 +19,7 @@ const ENTRIES: SupportEntry[] = [
     icon: Bell,
     question: "When do the submitted games launch?",
     answer: [
-      "Vexara and Astronix are out — both free on the App Store right now. Run Dummy and Thinksort are real builds still going through Apple review. Review usually takes a few days, but we don't post a launch date until Apple approves the build — we don't do countdowns that slip.",
+      "Vexara, Astronix and Run Dummy are out — all free on the App Store right now. Thinksort is a real build going through Apple review. Review usually takes a few days, but we don't post a launch date until Apple approves the build — we don't do countdowns that slip.",
       "The moment each game is live it appears on the Games page automatically (the site checks the App Store directly), and we announce it on the news page. Newsletter subscribers get TestFlight invites before launch and exactly one email when a game goes live.",
     ],
     link: { label: "Get notified", href: "/coming-soon#notify" },

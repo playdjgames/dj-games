@@ -69,6 +69,7 @@ export const POSTS: NewsPost[] = [
       "Time to talk about what's next. Run Dummy is a 3D maze runner starring a crash-test dummy loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.",
       "The walls can't hurt you — the traps will. Every trial hides spinning blades, floor spikes, dart launchers, crumbling tiles and pressure switches between you and the exit. Chain clean wall streaks to unlock new runners and chase up to 3 stars per trial.",
       "35 trials across 5 chapters are in and tuned, and the build is now with Apple for review. Watch this space for a release date.",
+      "Update: Run Dummy is out now — free on the App Store, with every power-up included and no purchases or ads.",
     ],
   },
   {
@@ -84,6 +85,7 @@ export const POSTS: NewsPost[] = [
       "Blood War is the newest thing on the slate. It's early — too early to share screens or even say much about what it is — but it's been eating most of our prototype time lately and we're excited about where it's heading. We'll reveal more once it's further along.",
       "In the meantime, Run Dummy, Vexara, Astronix and Thinksort are all moving through Apple review, and Everything DIY keeps getting refined based on the feedback coming in. Thanks for following along — 2026 is shaping up to be our busiest year yet.",
       "Update: Vexara and Astronix have both since launched — free on the App Store.",
+      "Update: Run Dummy has launched too — also free on the App Store.",
     ],
   },
 ];
