@@ -505,7 +505,7 @@ export const GAMES: Game[] = [
     seoTitle: "Order in the Court — Upcoming iOS Game | DJ Games",
     seoDescription:
       "Order in the Court is an upcoming iOS game from DJ Games — in development now. Follow along for the first look.",
-    coverImage: "/placeholder.svg",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/789f71a1-93bb-4816-8cd4-ea178877210c.png",
     coverFit: "cover",
     screenshots: [],
     features: [],
@@ -533,7 +533,7 @@ export const GAMES: Game[] = [
     seoTitle: "City Limits — Upcoming iOS Game | DJ Games",
     seoDescription:
       "City Limits is an upcoming iOS game from DJ Games — in development now. Follow along for the first look.",
-    coverImage: "/placeholder.svg",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/45022b34-70c1-4755-a8af-903433430bbe.png",
     coverFit: "cover",
     screenshots: [],
     features: [],
@@ -561,7 +561,7 @@ export const GAMES: Game[] = [
     seoTitle: "DJ This — Upcoming iOS App | DJ Games",
     seoDescription:
       "DJ This is an upcoming iOS app from DJ Games — imagine it, make it. In development now; follow along for the first look.",
-    coverImage: "/placeholder.svg",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/2d23284c-0a68-41af-81ce-7ac0bd9c25f7.png",
     coverFit: "cover",
     screenshots: [],
     features: [],
