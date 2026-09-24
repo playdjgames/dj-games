@@ -82,7 +82,7 @@ export const GameCard = ({ game, className }: GameCardProps) => (
           <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
         </Link>
 
-        {game.status === "available" ? (
+        {game.status === "available" && game.division !== "web" ? (
           <StoreButtons
             appStoreUrl={game.appStoreUrl}
             googlePlayUrl={game.googlePlayUrl}

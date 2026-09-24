@@ -33,7 +33,7 @@ import { StoreButtons } from "@/components/StoreButtons";
 import { divisionLabel } from "@/data/divisions";
 import type { GameFeature } from "@/data/games";
 import { formatSyncDate, useGameLibrary } from "@/data/library";
-import { canonicalUrl } from "@/data/site";
+import { canonicalUrl, isLive as isLinkLive, SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 
@@ -355,23 +355,44 @@ const GameDetail = () => {
               style={accentStyle}
             >
               <h2 className="display-title text-2xl">
-                {isLive ? `Get ${game.title}` : isConcept ? `Follow ${game.title}` : `${game.title} is coming`}
+                {isLive
+                  ? game.division === "web"
+                    ? "You're standing on it"
+                    : `Get ${game.title}`
+                  : isConcept
+                    ? `Follow ${game.title}`
+                    : `${game.title} is coming`}
               </h2>
               <p className="mt-2.5 max-w-md text-[0.95rem] leading-relaxed text-muted-foreground">
                 {isLive
-                  ? `Available now on the App Store for iPhone${game.price ? ` — ${game.price}` : ""}.`
+                  ? game.division === "web"
+                    ? "This site is the project — designed and built in-house by DJ Games, statuses and all. Need one like it? We build for others too."
+                    : `Available now on the App Store for iPhone${game.price ? ` — ${game.price}` : ""}.`
                   : isConcept
                     ? "Early concept — not launching this week. First looks and the release window land here and in the newsletter first."
                     : "A real build is in review with Apple. Get one email the day it goes live — no spam, no drip campaign."}
               </p>
 
               {isLive ? (
-                <StoreButtons
-                  className="mt-6"
-                  appStoreUrl={game.appStoreUrl}
-                  googlePlayUrl={game.googlePlayUrl}
-                  gameTitle={game.title}
-                />
+                game.division === "web" ? (
+                  isLinkLive(SITE.email) ? (
+                    <a
+                      href={`mailto:${SITE.email}`}
+                      className="game-accent-border mt-6 inline-flex min-h-[52px] items-center gap-2.5 rounded-md border bg-surface-raised px-6 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:bg-signal/10"
+                      style={{ color: game.accent }}
+                    >
+                      Start a project
+                      <ArrowRight size={16} />
+                    </a>
+                  ) : null
+                ) : (
+                  <StoreButtons
+                    className="mt-6"
+                    appStoreUrl={game.appStoreUrl}
+                    googlePlayUrl={game.googlePlayUrl}
+                    gameTitle={game.title}
+                  />
+                )
               ) : (
                 <Link
                   to="/coming-soon#notify"
