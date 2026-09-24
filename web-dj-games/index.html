@@ -19,6 +19,40 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!--
+      Stale-deploy guard. Lives inline (not in the bundle) because the failure it
+      handles is the bundle's own entry chunk 404ing after a redeploy — in that case
+      nothing inside the bundle ever runs. Reloads at most once per 15s per tab.
+    -->
+    <script>
+      (function () {
+        var KEY = "dj-games-entry-reload-at";
+        var STALE = /Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i;
+        function reloadOnce() {
+          try {
+            var last = Number(sessionStorage.getItem(KEY) || 0);
+            if (Date.now() - last < 15000) return;
+            sessionStorage.setItem(KEY, String(Date.now()));
+          } catch (e) {}
+          window.location.reload();
+        }
+        window.addEventListener(
+          "error",
+          function (event) {
+            var el = event.target;
+            if (el && el.tagName === "SCRIPT" && /\/assets\//.test(el.src || "")) reloadOnce();
+            else if (event.message && STALE.test(event.message)) reloadOnce();
+          },
+          true
+        );
+        window.addEventListener("unhandledrejection", function (event) {
+          var r = event.reason;
+          var msg = r && r.message ? r.message : String(r || "");
+          if (STALE.test(msg)) reloadOnce();
+        });
+      })();
+    </script>
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/icon.png" />
 
