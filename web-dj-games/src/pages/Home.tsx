@@ -150,7 +150,7 @@ const Home = () => {
 
               <div className="flex flex-col items-stretch justify-center gap-4 border-t border-border/60 pt-7 lg:items-start lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                 <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
-                  Free · {live.price ?? "FREE"} · iPhone
+                  {live.price ?? "Free"} · iPhone
                 </p>
                 <StoreButtons
                   appStoreUrl={live.appStoreUrl}

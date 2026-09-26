@@ -73,11 +73,12 @@ const ALSO_LIVE: MkTitle[] = [
 ];
 
 const SUBMITTED: MkTitle[] = [
-  { title: "ThinkSort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
+  { title: "Thinksort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
 ];
 
 const CONCEPTS = [
-  { title: "Neon World", line: "An unmapped planet, glowing in the dark.", href: `${SITE_URL}/games/neon-world` },
+  { title: "Blood War", line: "It's the cost of the crown — you want gold — first you bleed.", href: `${SITE_URL}/games/blood-war` },
+  { title: "Neon Evolution", line: "An unmapped planet, glowing in the dark.", href: `${SITE_URL}/games/neon-world` },
   { title: "Order in the Court", line: "First look coming soon.", href: `${SITE_URL}/games/order-in-the-court` },
   { title: "City Limits", line: "First look coming soon.", href: `${SITE_URL}/games/city-limits` },
   { title: "DJ This", line: "Imagine it, make it.", href: `${SITE_URL}/games/dj-this` },
@@ -138,7 +139,7 @@ const Marketing = () => {
   useSeo({
     title: "DJ Games — Marketing",
     description:
-      "DJ Games is an independent iOS studio. Everything DIY is out now on the App Store — more games are on the way.",
+      "DJ Games is an independent iOS studio. Everything DIY, Run Dummy, Vexara and Astronix are out now on the App Store — more on the way.",
   });
 
   useEffect(() => {

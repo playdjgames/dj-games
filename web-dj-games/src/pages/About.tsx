@@ -62,9 +62,9 @@ const About = () => {
                 idea gets to be strange, specific, and actually ours.
               </p>
               <p>
-                We prototype fast and ship games and apps that respect your time. Everything DIY — our step-by-step
-                DIY companion — is live on the App Store today, with more titles in review and in development right
-                now.
+                We prototype fast and ship games and apps that respect your time. Four titles are live on the App
+                Store today — Everything DIY, Run Dummy, Vexara and Astronix, all free — with Thinksort in Apple
+                review and more in development right now.
               </p>
               <p>
                 And it doesn't stop at the App Store: we design and build websites too — including this one. Fast,

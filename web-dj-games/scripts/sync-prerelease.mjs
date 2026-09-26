@@ -109,6 +109,13 @@ const collect = async () => {
     const attrs = app.attributes ?? {};
 
     const versions = listOf(asc(["versions", "list", "--app", app.id, "--paginate"]));
+
+    // An app that has EVER shipped and is publicly listed is live. A newer version
+    // sitting in review is just an update — it must never drag a live app back
+    // onto the unreleased board as "Submitted to Apple".
+    const hasShipped = versions.some((v) => v.attributes?.appStoreState === LIVE_STATE);
+    if (hasShipped && (await isPubliclyListed(appStoreId))) continue;
+
     // Newest record first; Apple keeps shipped versions in this list too.
     const version = versions.find((v) => v.attributes?.appStoreState !== LIVE_STATE) ?? versions[0];
     if (!version) {

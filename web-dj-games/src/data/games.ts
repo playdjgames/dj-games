@@ -395,9 +395,9 @@ export const GAMES: Game[] = [
     platforms: ["iOS"],
     featured: false,
     releaseDate: "2026",
-    seoTitle: "ThinkSort — Offline Productivity, One Next Step | DJ Games",
+    seoTitle: "Thinksort — Offline Productivity, One Next Step | DJ Games",
     seoDescription:
-      "ThinkSort is an offline productivity app for iPhone: brain-dump sorting, one clear next step, no account and no cloud. Free for 7 days, then a one-time purchase — no subscription. Submitted to Apple.",
+      "Thinksort is an offline productivity app for iPhone: brain-dump sorting, one clear next step, no account and no cloud. Free for 7 days, then a one-time purchase — no subscription. In review with Apple.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/a654c904-58c9-4da5-8c3d-14e94603fa80.png",
     coverFit: "cover",
     screenshots: [],
@@ -432,11 +432,11 @@ export const GAMES: Game[] = [
   {
     slug: "neon-world",
     division: "mobile-games",
-    title: "Neon World",
+    title: "Neon Evolution",
     tagline: "An unmapped planet, glowing in the dark.",
     /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
     description:
-      "Neon World is an upcoming iOS game from DJ Games, in development now.\n\nBioluminescent forests wired with green light, rivers running molten under a ringed giant, and one explorer a very long way from home.\n\nWhat happens out there stays under wraps for now. Screenshots, features and a release window will show up here first — the newsletter gets them early.",
+      "Neon Evolution is an upcoming iOS game from DJ Games, in development now.\n\nBioluminescent forests wired with green light, rivers running molten under a ringed giant, and one explorer a very long way from home.\n\nWhat happens out there stays under wraps for now. Screenshots, features and a release window will show up here first — the newsletter gets them early.",
     genre: "Early concept",
     status: "concept",
     statusLabel: "In development",
@@ -445,9 +445,9 @@ export const GAMES: Game[] = [
     platforms: ["iOS"],
     featured: false,
     releaseDate: "TBA",
-    seoTitle: "Neon World — Upcoming iOS Game | DJ Games",
+    seoTitle: "Neon Evolution — Upcoming iOS Game | DJ Games",
     seoDescription:
-      "Neon World is an upcoming iOS game from DJ Games — an unmapped planet, glowing in the dark. In development; follow along for the first look.",
+      "Neon Evolution is an upcoming iOS game from DJ Games — an unmapped planet, glowing in the dark. In development; follow along for the first look.",
     coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/21887f67-a8b2-46ed-930f-264d1a8f005f.png",
     coverFit: "cover",
     screenshots: [],
