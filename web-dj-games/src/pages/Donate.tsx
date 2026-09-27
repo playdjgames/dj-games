@@ -44,7 +44,7 @@ const Donate = () => {
   useSeo({
     title: "Support DJ Games — Donate",
     description:
-      "Tips keep the house moving. Support DJ Games with a tip via PayPal or Venmo — more payment options coming soon.",
+      "Tips keep the house moving. Support DJ Games with a tip via PayPal, Venmo or Cash App ($PlayDJGames).",
   });
 
   const numericAmount = Number.parseInt(amount, 10);

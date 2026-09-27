@@ -10,6 +10,9 @@ export const PAYPAL_ME = "dutt1";
 /** Venmo handle (without the @). */
 export const VENMO_ME = "destin-mitchell-1";
 
+/** Cash App $cashtag (without the $). */
+export const CASHTAG = "PlayDJGames";
+
 export interface PaymentMethod {
   id: string;
   name: string;
@@ -61,10 +64,10 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: "cashapp",
     name: "Cash App",
-    meta: "Coming soon",
-    live: false,
+    meta: "Live now",
+    live: true,
     cta: "Pay with Cash App",
-    url: (amount) => `https://cash.app/$YOUR_CASH_TAG/${amount}`,
+    url: (amount) => `https://cash.app/$${CASHTAG}/${amount}`,
     theme: { bg: "#00D632", text: "#FFFFFF" },
     badge: { bg: "#00D632", text: "#FFFFFF", glyph: "$" },
   },
