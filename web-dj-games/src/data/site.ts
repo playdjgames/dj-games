@@ -44,7 +44,7 @@ export const SITE: SiteConfig = {
     discord: "[DISCORD_URL]",
     youtube: "[YOUTUBE_URL]",
     tiktok: "https://www.tiktok.com/@djgamesgaming",
-    x: "[X_URL]",
+    x: "https://x.com/playdjgames",
     instagram: "https://www.instagram.com/playdjgames/",
     facebook: "https://www.facebook.com/PlayDJGames",
   },
