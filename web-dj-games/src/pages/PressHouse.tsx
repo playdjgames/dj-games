@@ -6,7 +6,7 @@ import { useSeo } from "@/hooks/use-seo";
 
 /**
  * Minimal PRESS HOUSE landing. This exists so the promo link is never dead
- * while `presshouse.playdjgames.com` has no DNS record (NXDOMAIN as of 2026-09-27).
+ * while the platform lives at https://djgamespod.rork.app (separate Rork project).
  * Deliberately bare: no catalog, no seller signup form, no fee calculator,
  * no dashboard — just what the platform is, and a way back to the shop.
  */

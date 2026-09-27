@@ -11,14 +11,12 @@ import { cn } from "@/lib/utils";
  * the PRESS HOUSE print-on-demand PLATFORM — it is not the LAST CALL merch
  * drop and not a product card.
  *
- * `presshouse.playdjgames.com` has no DNS record yet (NXDOMAIN as of
- * 2026-09-27), so the ad points at the on-site landing route instead of a
- * dead host. When the real platform is live, change this one constant to
- * "https://presshouse.playdjgames.com" — the component swaps to a plain <a>
- * on its own.
+ * `PRESS_HOUSE_URL` is the platform's real host, verified live (HTTP 200) before
+ * linking: https://djgamespod.rork.app — a full URL, so the ad renders as a
+ * plain <a> that opens it in the same tab.
  * ============================================================================
  */
-export const PRESS_HOUSE_URL = "/press-house";
+export const PRESS_HOUSE_URL = "https://djgamespod.rork.app";
 
 /**
  * PRESS HOUSE launched 2026-09-27, so this is false and every instance of the
