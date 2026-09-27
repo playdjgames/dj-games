@@ -9,6 +9,7 @@ import { PRESS_HOUSE_IN_DEV, PressHouseAd } from "@/components/PressHouseAd";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
 import {
+  STORE_IS_STOCKED,
   cartCount,
   defaultSelections,
   useStoreCatalog,
@@ -25,7 +26,9 @@ const Store = () => {
     title: "Store — DJ Games",
     description: PRESS_HOUSE_IN_DEV
       ? "The DJ Games store is under construction while PRESS HOUSE — our print-on-demand platform — is being built. The first merch drop lands here when it goes live."
-      : "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page.",
+      : STORE_IS_STOCKED
+        ? "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page."
+        : "The DJ Games store. Tee, hoodie, cap and tote from the house, printed by PRESS HOUSE. Stock opens soon.",
   });
 
   const { products, categories, isLoading, isEmpty } = useStoreCatalog();
@@ -215,7 +218,7 @@ const Store = () => {
           </div>
         )}
 
-        {/* PRESS HOUSE — card stays; the link is disabled site-wide while in dev. */}
+        {/* PRESS HOUSE — shared promo; live or disabled site-wide via PRESS_HOUSE_IN_DEV. */}
         <PressHouseAd variant="strip" className="mt-14" />
       </section>
 

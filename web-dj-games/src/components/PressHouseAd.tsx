@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
  * the PRESS HOUSE print-on-demand PLATFORM — it is not the LAST CALL merch
  * drop and not a product card.
  *
- * `presshouse.playdjgames.com` currently answers HTTP 522 (DNS resolves, no
- * origin attached), so the ad points at the on-site landing route instead of a
+ * `presshouse.playdjgames.com` has no DNS record yet (NXDOMAIN as of
+ * 2026-09-27), so the ad points at the on-site landing route instead of a
  * dead host. When the real platform is live, change this one constant to
  * "https://presshouse.playdjgames.com" — the component swaps to a plain <a>
  * on its own.
@@ -21,12 +21,11 @@ import { cn } from "@/lib/utils";
 export const PRESS_HOUSE_URL = "/press-house";
 
 /**
- * PRESS HOUSE is still being built. While this is true EVERY instance of the ad
- * (Home banner, Store strip, Donate text link) renders with identical visuals
- * but no navigation, plus an "UNDER CONSTRUCTION" marker. Flip to false when
- * the platform ships and all three links go live again — nothing else changes.
+ * PRESS HOUSE launched 2026-09-27, so this is false and every instance of the
+ * ad (Home banner, Store strip, Donate text link) is a live link again. Set it
+ * back to true to disable all three at once and mark them "UNDER CONSTRUCTION".
  */
-export const PRESS_HOUSE_IN_DEV = true;
+export const PRESS_HOUSE_IN_DEV = false;
 
 /** Accessible name for every instance of the ad. */
 const LINK_LABEL = "PRESS HOUSE — open the print-on-demand platform";

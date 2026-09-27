@@ -6,7 +6,7 @@ import { useSeo } from "@/hooks/use-seo";
 
 /**
  * Minimal PRESS HOUSE landing. This exists so the promo link is never dead
- * while `presshouse.playdjgames.com` has no origin attached (it answers 522).
+ * while `presshouse.playdjgames.com` has no DNS record (NXDOMAIN as of 2026-09-27).
  * Deliberately bare: no catalog, no seller signup form, no fee calculator,
  * no dashboard — just what the platform is, and a way back to the shop.
  */
