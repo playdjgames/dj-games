@@ -21,6 +21,10 @@
 //   POST /media-admin/rename        admin  — copy to a new key, drop the old one
 //   POST /media-admin/remove        admin  — delete from R2 and the index
 //
+//   POST /tip/checkout              public — creates a Stripe Checkout session for a
+//                                   card tip; returns { url } to redirect to
+//   GET  /tip/status                public — whether card tips are configured
+//
 // Admin routes require the NEWSLETTER_ADMIN_KEY project env, sent either as
 // `Authorization: Bearer <key>` or a `?key=` query param (needed so a browser
 // download link can carry it). Without the env set, admin routes stay closed.
@@ -56,6 +60,79 @@ type Env = {
   R2_BUCKET?: string;
   /** Optional custom hostname (e.g. media.playdjgames.com) serving the bucket. */
   R2_PUBLIC_BASE_URL?: string;
+  /** Stripe secret key — server-only, used to create card-tip Checkout sessions. */
+  STRIPE_SECRET_KEY?: string;
+};
+
+/** Hosts allowed as Checkout success/cancel return targets. */
+const TIP_RETURN_ORIGINS = new Set<string>([
+  "https://playdjgames.com",
+  "https://www.playdjgames.com",
+  "https://2s7937nfb5j5e0l2chd6r-web-dj-games.rork.live",
+]);
+const TIP_DEFAULT_ORIGIN = "https://playdjgames.com";
+const TIP_MIN_USD = 1;
+const TIP_MAX_USD = 10_000;
+
+/**
+ * Creates a one-off Stripe Checkout session for a USD tip.
+ * The amount is re-validated here; the client value is never trusted.
+ */
+const createTipCheckout = async (request: Request, env: Env): Promise<Response> => {
+  const secret = env.STRIPE_SECRET_KEY?.trim();
+  if (!secret) {
+    return Response.json({ ok: false, error: "card_not_configured" }, { status: 503 });
+  }
+
+  const body = await jsonBody<{ amount?: number; origin?: string }>(request);
+  const amount = Number(body?.amount);
+  if (!Number.isInteger(amount) || amount < TIP_MIN_USD || amount > TIP_MAX_USD) {
+    return Response.json({ ok: false, error: "invalid_amount" }, { status: 400 });
+  }
+
+  const requestedOrigin = String(body?.origin ?? "").replace(/\/+$/, "");
+  const origin = TIP_RETURN_ORIGINS.has(requestedOrigin) ? requestedOrigin : TIP_DEFAULT_ORIGIN;
+
+  const form = new URLSearchParams();
+  form.set("mode", "payment");
+  form.set("submit_type", "donate");
+  form.set("line_items[0][quantity]", "1");
+  form.set("line_items[0][price_data][currency]", "usd");
+  form.set("line_items[0][price_data][unit_amount]", String(amount * 100));
+  form.set("line_items[0][price_data][product_data][name]", "Tip for DJ Games");
+  form.set(
+    "line_items[0][price_data][product_data][description]",
+    "Thanks for keeping the house moving.",
+  );
+  form.set("success_url", `${origin}/donate?tip=thanks`);
+  form.set("cancel_url", `${origin}/donate?tip=cancelled`);
+  form.set("metadata[source]", "playdjgames-donate");
+
+  const stripe = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secret}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: form.toString(),
+  });
+
+  const data = (await stripe.json().catch(() => null)) as
+    | { url?: string; error?: { type?: string; code?: string; message?: string } }
+    | null;
+
+  if (!stripe.ok || !data?.url) {
+    // Log Stripe's error type/code only — never the key or request body.
+    console.error("stripe checkout failed", {
+      status: stripe.status,
+      type: data?.error?.type,
+      code: data?.error?.code,
+      message: data?.error?.message,
+    });
+    return Response.json({ ok: false, error: "checkout_failed" }, { status: 502 });
+  }
+
+  return Response.json({ ok: true, url: data.url });
 };
 
 const CORS: Record<string, string> = {
@@ -509,6 +586,21 @@ export default {
           return new Response("Not found", { status: 404 });
         }
         return servePublicMedia(config, storageKey, request);
+      }
+
+      if (path === "/tip/status" && request.method === "GET") {
+        const key = env.STRIPE_SECRET_KEY?.trim() ?? "";
+        // Reports only the key's mode, never any key material.
+        const mode = key.startsWith("sk_live_") || key.startsWith("rk_live_")
+          ? "live"
+          : key.length > 0
+            ? "test"
+            : "off";
+        return withCors(Response.json({ ok: true, card: mode !== "off", mode }));
+      }
+
+      if (path === "/tip/checkout" && request.method === "POST") {
+        return withCors(await createTipCheckout(request, env));
       }
 
       if (path === "/newsletter/subscribe" && request.method === "POST") {

@@ -28,6 +28,12 @@ export interface PaymentMethod {
   theme?: { bg: string; text: string };
   /** Small square mark shown next to the method name. */
   badge?: { bg: string; text: string; glyph: string };
+  /**
+   * Server-side checkout. When set, the CTA asks the backend for a hosted
+   * checkout URL instead of using `url`, and whether it is live is decided at
+   * runtime from the backend's Stripe key mode.
+   */
+  serverCheckout?: "stripe";
 }
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
@@ -43,11 +49,12 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   },
   {
     id: "card",
-    name: "Card (Stripe)",
+    name: "Card",
     meta: "Coming soon",
     live: false,
     cta: "Pay with card",
-    url: () => "https://buy.stripe.com/YOUR_PAYMENT_LINK",
+    url: () => "",
+    serverCheckout: "stripe",
     theme: { bg: "#635BFF", text: "#FFFFFF" },
     badge: { bg: "#635BFF", text: "#FFFFFF", glyph: "C" },
   },

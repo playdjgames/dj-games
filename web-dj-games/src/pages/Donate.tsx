@@ -1,10 +1,29 @@
-import { ArrowLeft } from "lucide-react";
-import { useCallback, useState, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ArrowLeft, Check, Loader2 } from "lucide-react";
+import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { PressHouseAd } from "@/components/PressHouseAd";
-import { AMOUNT_CHIPS, DEFAULT_AMOUNT, PAYMENT_METHODS } from "@/data/payments";
+import { AMOUNT_CHIPS, DEFAULT_AMOUNT, PAYMENT_METHODS, type PaymentMethod } from "@/data/payments";
 import { useSeo } from "@/hooks/use-seo";
+import { createCardTipCheckout, fetchCardMode, type CardMode } from "@/lib/tips";
+
+/** Preview host where a Stripe test key may be exercised with test cards. */
+const isPreviewHost = (): boolean =>
+  typeof window !== "undefined" &&
+  (window.location.hostname.endsWith(".rork.live") || window.location.hostname === "localhost");
+
+/**
+ * Card is only offered to the public with a LIVE Stripe key. A test key is
+ * usable on the preview host only, clearly labelled, so no visitor ever types
+ * a real card into a checkout that can't charge it.
+ */
+const resolveCard = (method: PaymentMethod, mode: CardMode | undefined): PaymentMethod => {
+  if (method.serverCheckout !== "stripe") return method;
+  if (mode === "live") return { ...method, live: true, meta: "Live now" };
+  if (mode === "test" && isPreviewHost()) return { ...method, live: true, meta: "Test mode · preview only" };
+  return { ...method, live: false, meta: "Coming soon" };
+};
 
 /* ------------------------------- constants -------------------------------- */
 
@@ -35,6 +54,21 @@ const GROUP_LABEL_CLASS =
  */
 const Donate = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const tipResult = searchParams.get("tip");
+
+  const cardModeQuery = useQuery({
+    queryKey: ["tip-card-mode"],
+    queryFn: fetchCardMode,
+    staleTime: 5 * 60_000,
+    retry: 1,
+  });
+
+  const methods = useMemo<PaymentMethod[]>(
+    () => PAYMENT_METHODS.map((m) => resolveCard(m, cardModeQuery.data)),
+    [cardModeQuery.data],
+  );
+
   // Default selection = first live method (PayPal today).
   const [selectedId, setSelectedId] = useState<string>(
     () => PAYMENT_METHODS.find((m) => m.live)?.id ?? "",
@@ -50,8 +84,18 @@ const Donate = () => {
   const numericAmount = Number.parseInt(amount, 10);
   const amountValid = Number.isInteger(numericAmount) && numericAmount >= 1;
 
-  const selected = PAYMENT_METHODS.find((m) => m.id === selectedId) ?? null;
+  const selected = methods.find((m) => m.id === selectedId) ?? null;
   const canPay = Boolean(selected?.live) && amountValid;
+
+  const cardCheckout = useMutation({
+    mutationFn: (value: number) => createCardTipCheckout(value),
+    onSuccess: (url: string) => {
+      window.location.assign(url);
+    },
+    onError: (error: unknown) => {
+      console.error("card tip checkout failed", error instanceof Error ? error.message : error);
+    },
+  });
 
   /** ← Back returns to wherever the user came from (home / coming-soon). */
   const onBack = useCallback(() => {
@@ -110,11 +154,33 @@ const Donate = () => {
           </p>
         </header>
 
+        {tipResult === "thanks" && (
+          <div
+            role="status"
+            className="mt-6 flex items-center gap-3 rounded-2xl border border-[#8BE1FF]/50 bg-[#8BE1FF]/[0.07] px-5 py-4"
+          >
+            <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8BE1FF] text-[#0A0E14]">
+              <Check className="h-4 w-4" aria-hidden="true" />
+            </span>
+            <p className="text-[0.92rem] font-semibold text-[#EDF5FB]">
+              Tip received. Thank you for keeping the house moving.
+            </p>
+          </div>
+        )}
+        {tipResult === "cancelled" && (
+          <p
+            role="status"
+            className="mt-6 rounded-2xl border border-[#263444] bg-[#131A24] px-5 py-4 text-[0.9rem] text-[#8FA3B4]"
+          >
+            Checkout cancelled — nothing was charged.
+          </p>
+        )}
+
         {/* PAY WITH */}
         <section className="mt-10" aria-labelledby="pay-with-label">
           <SectionLabel>Pay with</SectionLabel>
           <div role="radiogroup" aria-label="Payment method" className="grid gap-3">
-            {PAYMENT_METHODS.map((method) => {
+            {methods.map((method) => {
               const isSelected = method.id === selectedId;
               const selectable = method.live;
               return (
@@ -256,7 +322,27 @@ const Donate = () => {
 
         {/* Primary CTA */}
         <div className="mt-9">
-          {canPay && selected ? (
+          {canPay && selected?.serverCheckout === "stripe" ? (
+            <button
+              type="button"
+              disabled={cardCheckout.isPending}
+              onClick={() => cardCheckout.mutate(numericAmount)}
+              style={{
+                backgroundColor: selected.theme?.bg ?? ACCENT,
+                color: selected.theme?.text ?? "#0A0E14",
+              }}
+              className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full font-mono text-[0.82rem] font-bold uppercase tracking-[0.18em] shadow-[0_14px_40px_-14px_rgba(0,0,0,0.8)] transition-all duration-200 hover:brightness-110 active:scale-[0.98] disabled:cursor-wait disabled:opacity-80"
+            >
+              {cardCheckout.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  Opening secure checkout
+                </>
+              ) : (
+                `${selected.cta} · $${numericAmount}`
+              )}
+            </button>
+          ) : canPay && selected ? (
             <a
               href={selected.url(numericAmount)}
               target="_blank"
@@ -278,6 +364,11 @@ const Donate = () => {
             >
               Coming soon
             </button>
+          )}
+          {cardCheckout.isError && (
+            <p role="alert" className="mt-3 text-center font-mono text-[0.7rem] font-medium uppercase tracking-[0.14em] text-[#FFB020]">
+              Card checkout didn’t open. Try again or pick another method.
+            </p>
           )}
         </div>
 
