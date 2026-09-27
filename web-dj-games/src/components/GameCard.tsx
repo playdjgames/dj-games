@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { StoreButtons } from "@/components/StoreButtons";
 import { divisionLabel } from "@/data/divisions";
 import type { Game } from "@/data/games";
+import { isLive } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 interface GameCardProps {
@@ -15,18 +16,25 @@ interface GameCardProps {
 
 /**
  * Library card. Each game carries its own accent (`--game-accent`), so the
- * grid reads as a lineup of distinct titles instead of clones. The WHOLE card
- * is a link to the project page (stretched overlay); the action row keeps
- * `z-20` so its buttons stay tappable above the overlay.
+ * grid reads as a lineup of distinct titles instead of clones.
+ *
+ * Whole-card behaviour: live web projects (division "web") open the REAL site
+ * in a new tab — the preview screenshot IS the site, so tapping it should go
+ * there. Everything else links to the internal project page (stretched
+ * overlay); the action row keeps `z-20` so its buttons stay tappable above it.
  */
-export const GameCard = ({ game, className }: GameCardProps) => (
-  <article
-    className={cn(
-      "surface-card game-accent game-accent-glow group relative flex flex-col overflow-hidden transition-all duration-300",
-      className,
-    )}
-    style={{ "--game-accent": game.accent } as CSSProperties}
-  >
+export const GameCard = ({ game, className }: GameCardProps) => {
+  const isLiveSite =
+    game.division === "web" && game.status === "available" && isLive(game.websiteUrl);
+
+  return (
+    <article
+      className={cn(
+        "surface-card game-accent game-accent-glow group relative flex flex-col overflow-hidden transition-all duration-300",
+        className,
+      )}
+      style={{ "--game-accent": game.accent } as CSSProperties}
+    >
     <div className="relative aspect-[16/9] overflow-hidden">
       {game.coverFit === "contain" ? (
         <>
@@ -56,7 +64,15 @@ export const GameCard = ({ game, className }: GameCardProps) => (
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-surface/40 via-transparent to-transparent" />
+
+      {/* Live-site cue — says what a tap does before you tap. */}
+      {isLiveSite ? (
+        <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-background/85 px-2.5 py-1.5 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-foreground/90 backdrop-blur-md transition-colors duration-300 group-hover:border-signal/50 group-hover:text-signal">
+          Open site
+          <ArrowUpRight size={12} />
+        </span>
+      ) : null}
     </div>
 
     <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
@@ -94,10 +110,21 @@ export const GameCard = ({ game, className }: GameCardProps) => (
     </div>
 
     {/* Whole-card click target — sits above the card, below the action row. */}
-    <Link
-      to={`/games/${game.slug}`}
-      className="absolute inset-0 z-10"
-      aria-label={`${game.title} — learn more`}
-    />
+    {isLiveSite ? (
+      <a
+        href={game.websiteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute inset-0 z-10"
+        aria-label={`${game.title} — open the live site in a new tab`}
+      />
+    ) : (
+      <Link
+        to={`/games/${game.slug}`}
+        className="absolute inset-0 z-10"
+        aria-label={`${game.title} — learn more`}
+      />
+    )}
   </article>
-);
+  );
+};
