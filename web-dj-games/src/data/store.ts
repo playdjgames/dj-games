@@ -2,12 +2,15 @@
  * ============================================================================
  * DJ GAMES STORE — CATALOG SOURCE
  * ============================================================================
- * The Store page IS the merch catalog. /store shows the house rack directly
- * — no shop home, no external product host, no checkout hand-off. The house
- * products below are the catalog's source of truth; the bag lives on the page
- * and checkout stays disabled until payments are actually wired.
+ * The Store page IS the merch catalog, synced from PRESS HOUSE
+ * (https://djgamespod.rork.app) by `scripts/sync-presshouse.mjs` into
+ * `presshouse.generated.ts`. Browsing happens here; buying hands off to the
+ * product's real PRESS HOUSE page, where Stripe checkout + Printify fulfilment
+ * live. Re-run the sync after changing the PRESS HOUSE catalog.
  * ============================================================================
  */
+
+import { PRESS_HOUSE_PRODUCTS } from "./presshouse.generated";
 
 /** The in-app storefront route. */
 export const STORE_ROUTE = "/store";
@@ -22,6 +25,8 @@ export interface ProductOptionValue {
   label: string;
   /** Out-of-stock values render struck through and unselectable. */
   available: boolean;
+  /** Added to the base price when picked (e.g. XXL +$3), mirroring PRESS HOUSE. */
+  priceDelta?: number;
 }
 
 /** A variant axis — Size, Color, etc. */
@@ -52,113 +57,30 @@ export interface StoreProduct {
   status: ProductStatus;
   statusLabel: string;
   options: ProductOptionGroup[];
+  /** Material / construction bullets from PRESS HOUSE. */
+  details?: string[];
+  /** The product's live PRESS HOUSE page — where checkout happens. */
+  url?: string;
+  featured?: boolean;
 }
-
-const STATUS_LABELS: Record<ProductStatus, string> = {
-  available: "In stock",
-  coming_soon: "Drop locked",
-  sold_out: "Out of stock",
-};
-
-const sizes = (...labels: string[]): ProductOptionGroup => ({
-  id: "size",
-  name: "Size",
-  values: labels.map((label, index) => ({ id: `size-${index}`, label, available: true })),
-});
-
-const colors = (...labels: string[]): ProductOptionGroup => ({
-  id: "color",
-  name: "Color",
-  values: labels.map((label, index) => ({ id: `color-${index}`, label, available: true })),
-});
 
 /* ------------------------------ the house rack ---------------------------- */
 
 /**
- * Printing runs through PRESS HOUSE, which is still in development, so nothing
- * can actually be made yet. While this is true every card on the rack reads
- * "Out of stock" and cannot be added to the bag. Flip to true when PRESS HOUSE
- * ships and the whole rack opens up — no other change needed.
+ * PRESS HOUSE is live (Stripe checkout + Printify fulfilment), so the rack is
+ * open. Set to false to force every card back to "Out of stock" in one move.
  */
-export const STORE_IS_STOCKED = false;
+export const STORE_IS_STOCKED = true;
 
-/**
- * The first house rack. Real UI, real add-to-bag — placeholder art renders as a
- * labeled dark panel until photography exists. Add to this list to put a new
- * item on the rack; nothing else needs to change.
- */
-export const HOUSE_PRODUCTS: StoreProduct[] = [
-  {
-    id: "house-tee",
-    name: "House tee",
-    tagline: "Nights don\u2019t end. They fade.",
-    description:
-      "Heavyweight cotton tee with the house mark across the chest. Cut for the hours after the set.",
-    price: 32,
-    currency: "USD",
-    images: [],
-    category: "Tee",
-    status: "available",
-    statusLabel: STATUS_LABELS.available,
-    options: [sizes("S", "M", "L", "XL", "XXL"), colors("Black", "Ice")],
-  },
-  {
-    id: "house-hoodie",
-    name: "House hoodie",
-    tagline: "House merch. Loud on purpose.",
-    description:
-      "Fleece-lined hoodie, boxy fit, big house print. The one you reach for when the night runs long.",
-    price: 58,
-    currency: "USD",
-    images: [],
-    category: "Hoodie",
-    status: "available",
-    statusLabel: STATUS_LABELS.available,
-    options: [sizes("S", "M", "L", "XL", "XXL"), colors("Black", "Ice")],
-  },
-  {
-    id: "press-house-cap",
-    name: "PRESS HOUSE cap",
-    tagline: "Print it. Drop it.",
-    description:
-      "Six-panel cap with the PRESS HOUSE wordmark. Adjustable strap, one size fits the whole crew.",
-    price: 28,
-    currency: "USD",
-    images: [],
-    category: "Cap",
-    status: "available",
-    statusLabel: STATUS_LABELS.available,
-    options: [colors("Black", "Ice")],
-  },
-  {
-    id: "dj-games-tote",
-    name: "DJ GAMES mark tote",
-    tagline: "Built to play. Built to wear.",
-    description:
-      "Heavy canvas tote with the DJ GAMES mark. Records, cables, groceries — it carries all of it.",
-    price: 24,
-    currency: "USD",
-    images: [],
-    category: "Tote",
-    status: "available",
-    statusLabel: STATUS_LABELS.available,
-    options: [colors("Natural", "Black")],
-  },
-];
-
-/**
- * The rack as the page should show it. Until PRESS HOUSE can print, every item
- * is forced to "Out of stock" — the products themselves stay exactly as written
- * above, so the rack returns in full the moment STORE_IS_STOCKED flips.
- */
-export const rackProducts = (): StoreProduct[] =>
-  STORE_IS_STOCKED
-    ? HOUSE_PRODUCTS
-    : HOUSE_PRODUCTS.map((product) => ({
-        ...product,
-        status: "sold_out" as const,
-        statusLabel: STATUS_LABELS.sold_out,
-      }));
+/** The rack as the page shows it — the synced PRESS HOUSE catalog, featured first. */
+export const rackProducts = (): StoreProduct[] => {
+  const ordered = [...PRESS_HOUSE_PRODUCTS].sort(
+    (a, b) => Number(b.featured === true) - Number(a.featured === true),
+  );
+  return STORE_IS_STOCKED
+    ? ordered
+    : ordered.map((product) => ({ ...product, status: "sold_out" as const, statusLabel: "Out of stock" }));
+};
 
 /** First available label of every variant axis — used by the one-tap card add. */
 export const defaultSelections = (product: StoreProduct): string[] =>

@@ -1,21 +1,13 @@
-import { Hammer, Heart, ShoppingBag } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { ArrowUpRight, Hammer, Heart } from "lucide-react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
-import { CartDrawer } from "@/components/store/CartDrawer";
-import { PRESS_HOUSE_IN_DEV, PressHouseAd } from "@/components/PressHouseAd";
+import { PRESS_HOUSE_IN_DEV, PRESS_HOUSE_URL, PressHouseAd } from "@/components/PressHouseAd";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
-import {
-  STORE_IS_STOCKED,
-  cartCount,
-  defaultSelections,
-  useStoreCatalog,
-  type StoreProduct,
-} from "@/data/store";
-import { useCart } from "@/hooks/use-cart";
+import { STORE_IS_STOCKED, useStoreCatalog, type StoreProduct } from "@/data/store";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 
@@ -27,32 +19,19 @@ const Store = () => {
     description: PRESS_HOUSE_IN_DEV
       ? "The DJ Games store is under construction while PRESS HOUSE — our print-on-demand platform — is being built. The first merch drop lands here when it goes live."
       : STORE_IS_STOCKED
-        ? "The DJ Games store. Tee, hoodie, cap and tote — pick your size and add to your bag right on the page."
-        : "The DJ Games store. Tee, hoodie, cap and tote from the house, printed by PRESS HOUSE. Stock opens soon.",
+        ? "The DJ Games store, printed to order by PRESS HOUSE. Tees, hoodies, hats, mugs, stickers and posters from the house."
+        : "The DJ Games store, printed to order by PRESS HOUSE. Stock opens soon.",
   });
 
   const { products, categories, isLoading, isEmpty } = useStoreCatalog();
-  const cart = useCart();
 
   const [filter, setFilter] = useState<string>(ALL);
   const [active, setActive] = useState<StoreProduct | null>(null);
-  const [bagOpen, setBagOpen] = useState<boolean>(false);
 
   const filters = useMemo<string[]>(() => [ALL, ...categories], [categories]);
   const visible = useMemo<StoreProduct[]>(
     () => (filter === ALL ? products : products.filter((product) => product.category === filter)),
     [products, filter],
-  );
-
-  const count = cartCount(cart.lines);
-
-  // One tap on the card: default size/color in, bag open, no detour.
-  const addToBag = useCallback(
-    (product: StoreProduct) => {
-      cart.add(product, defaultSelections(product), 1);
-      setBagOpen(true);
-    },
-    [cart],
   );
 
   return (
@@ -68,26 +47,24 @@ const Store = () => {
         description={
           PRESS_HOUSE_IN_DEV
             ? "Merch from the house. The print floor is still being built."
-            : "Merch from the house. Drops live here."
+            : "Merch from the house, printed to order by PRESS HOUSE."
         }
         stamp={PRESS_HOUSE_IN_DEV ? ["Under", "Construction"] : ["Wear", "The", "House"]}
       >
         {PRESS_HOUSE_IN_DEV ? null : (
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setBagOpen(true)}
+            <a
+              href={PRESS_HOUSE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[48px] items-center gap-2 rounded-md bg-signal px-5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
             >
-              <ShoppingBag size={16} />
-              Your bag
-              {count > 0 ? (
-                <span className="ml-0.5 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-primary-foreground/20 px-1 text-[0.62rem]">
-                  {count}
-                </span>
-              ) : null}
-            </button>
-            {/* In-page only: the rack IS the page, so there is no second shop button. */}
+              Shop on PRESS HOUSE
+              <ArrowUpRight size={16} />
+            </a>
+            <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
+              {products.length} items · checkout on PRESS HOUSE
+            </span>
           </div>
         )}
       </Hero>
@@ -210,7 +187,6 @@ const Store = () => {
                 <ProductCard
                   product={product}
                   onSelect={setActive}
-                  onAdd={addToBag}
                   className="h-full"
                 />
               </Reveal>
@@ -222,26 +198,7 @@ const Store = () => {
         <PressHouseAd variant="strip" className="mt-14" />
       </section>
 
-      {PRESS_HOUSE_IN_DEV ? null : (
-        <>
-          <ProductSheet
-            product={active}
-            onClose={() => setActive(null)}
-            onAdd={(product, selections, quantity) => {
-              cart.add(product, selections, quantity);
-              setBagOpen(true);
-            }}
-          />
-
-          <CartDrawer
-            open={bagOpen}
-            lines={cart.lines}
-            onClose={() => setBagOpen(false)}
-            onQuantity={cart.setQuantity}
-            onRemove={cart.remove}
-          />
-        </>
-      )}
+      {PRESS_HOUSE_IN_DEV ? null : <ProductSheet product={active} onClose={() => setActive(null)} />}
     </>
   );
 };

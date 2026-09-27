@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { formatPrice, type StoreProduct } from "@/data/store";
 import { cn } from "@/lib/utils";
@@ -7,21 +7,19 @@ interface ProductCardProps {
   product: StoreProduct;
   /** Opens the detail sheet (size/color picker). The image tap does this. */
   onSelect: (product: StoreProduct) => void;
-  /** One-tap add with default variants — the card's own ADD TO BAG. */
-  onAdd: (product: StoreProduct) => void;
   className?: string;
 }
 
 /**
- * Catalog card: image, name, price, pitch, and an on-card ADD TO BAG that
- * feeds the page's bag directly. The artwork itself still opens the detail
- * sheet. Items that are not buyable yet — out of stock, drop locked — wear
+ * Catalog card: image, name, price, pitch, and an on-card BUY link to the
+ * product's live PRESS HOUSE page (where checkout happens). The artwork opens
+ * the detail sheet. Items that are not buyable yet — out of stock, drop locked — wear
  * their status on the badge and on the button instead of the add action, with
  * the art dimmed. Missing art renders a clearly-labeled dark placeholder with
  * the product name.
  */
-export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCardProps) => {
-  const isLocked = product.status !== "available";
+export const ProductCard = ({ product, onSelect, className }: ProductCardProps) => {
+  const isLocked = product.status !== "available" || !product.url;
   const cover = product.images[0];
   const variantHint = product.options
     .map((group) => group.name)
@@ -103,27 +101,25 @@ export const ProductCard = ({ product, onSelect, onAdd, className }: ProductCard
             ) : null}
           </p>
 
-          <button
-            type="button"
-            onClick={() => (isLocked ? undefined : onAdd(product))}
-            disabled={isLocked}
-            aria-label={isLocked ? `${product.name} — ${product.statusLabel}` : `Add ${product.name} to bag`}
-            className={cn(
-              "inline-flex min-h-[40px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] transition-all duration-300",
-              isLocked
-                ? "cursor-not-allowed border-border bg-surface-raised px-3 text-muted-foreground opacity-70"
-                : "border-signal/50 px-3.5 text-signal hover:bg-signal hover:text-primary-foreground active:scale-[0.97]",
-            )}
-          >
-            {isLocked ? (
-              product.statusLabel
-            ) : (
-              <>
-                <Plus size={13} />
-                Add to bag
-              </>
-            )}
-          </button>
+          {isLocked ? (
+            <span
+              aria-label={`${product.name} — ${product.statusLabel}`}
+              className="inline-flex min-h-[40px] shrink-0 cursor-not-allowed items-center whitespace-nowrap rounded-md border border-border bg-surface-raised px-3 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground opacity-70"
+            >
+              {product.statusLabel}
+            </span>
+          ) : (
+            <a
+              href={product.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Buy ${product.name} on PRESS HOUSE (opens in a new tab)`}
+              className="inline-flex min-h-[40px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-signal/50 px-3.5 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-signal transition-all duration-300 hover:bg-signal hover:text-primary-foreground active:scale-[0.97]"
+            >
+              Buy
+              <ArrowUpRight size={13} />
+            </a>
+          )}
         </div>
       </div>
     </article>

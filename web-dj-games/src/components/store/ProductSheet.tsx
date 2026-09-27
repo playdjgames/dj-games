@@ -1,4 +1,4 @@
-import { Minus, Plus, ShoppingBag } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -8,17 +8,16 @@ import { cn } from "@/lib/utils";
 interface ProductSheetProps {
   product: StoreProduct | null;
   onClose: () => void;
-  onAdd: (product: StoreProduct, selections: string[], quantity: number) => void;
 }
 
 /**
- * Product detail: gallery, copy, one selector row per variant axis (size /
- * color), quantity stepper, add to cart. Ported from the POD product page and
- * presented as a sheet so the catalog never unmounts behind it.
+ * Product detail synced from PRESS HOUSE: gallery, copy, materials, and a
+ * size/color preview that reprices exactly like PRESS HOUSE (e.g. XXL +$3).
+ * Buying hands off to the product's live PRESS HOUSE page, where checkout
+ * (Stripe) and printing (Printify) actually happen.
  */
-export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => {
+export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
   const [selections, setSelections] = useState<Record<string, string>>({});
-  const [quantity, setQuantity] = useState<number>(1);
   const [imageIndex, setImageIndex] = useState<number>(0);
 
   // Preselect the first in-stock value of every axis whenever the product changes.
@@ -30,18 +29,20 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
       if (firstAvailable) defaults[group.id] = firstAvailable.label;
     });
     setSelections(defaults);
-    setQuantity(1);
     setImageIndex(0);
   }, [product]);
 
-  const chosen = useMemo<string[]>(
-    () => (product ? product.options.map((group) => selections[group.id]).filter(Boolean) : []),
-    [product, selections],
-  );
+  const price = useMemo<number>(() => {
+    if (!product) return 0;
+    return product.options.reduce((total, group) => {
+      const picked = group.values.find((value) => value.label === selections[group.id]);
+      return total + (picked?.priceDelta ?? 0);
+    }, product.price);
+  }, [product, selections]);
 
   if (!product) return null;
 
-  const ready = product.options.every((group) => Boolean(selections[group.id]));
+  const canBuy = product.status === "available" && Boolean(product.url);
   const image = product.images[imageIndex] ?? product.images[0];
 
   return (
@@ -86,7 +87,7 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
 
           <p className="mt-3 flex items-baseline gap-2.5">
             <span className="font-mono text-xl font-bold text-signal">
-              {formatPrice(product.price, product.currency)}
+              {formatPrice(price, product.currency)}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price ? (
               <span className="font-mono text-sm text-muted-foreground line-through">
@@ -128,6 +129,9 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
                       )}
                     >
                       {value.label}
+                      {value.priceDelta ? (
+                        <span className="ml-1.5 text-[0.62rem] text-muted-foreground">+${value.priceDelta}</span>
+                      ) : null}
                     </button>
                   );
                 })}
@@ -135,53 +139,35 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
             </fieldset>
           ))}
 
-          <div className="mt-6 flex items-center gap-4">
-            <span className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-              Qty
-            </span>
-            <div className="flex items-center gap-1 rounded-md border border-border bg-surface-raised">
-              <button
-                type="button"
-                onClick={() => setQuantity((value) => Math.max(1, value - 1))}
-                aria-label="Decrease quantity"
-                className="inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:text-signal"
-              >
-                <Minus size={15} />
-              </button>
-              <span aria-live="polite" className="min-w-[2ch] text-center font-mono text-sm font-bold">
-                {quantity}
-              </span>
-              <button
-                type="button"
-                onClick={() => setQuantity((value) => Math.min(99, value + 1))}
-                aria-label="Increase quantity"
-                className="inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:text-signal"
-              >
-                <Plus size={15} />
-              </button>
-            </div>
-          </div>
+          {product.details && product.details.length > 0 ? (
+            <ul className="mt-6 space-y-2">
+              {product.details.map((detail) => (
+                <li key={detail} className="flex items-start gap-2.5 text-[0.88rem] text-muted-foreground">
+                  <Check size={14} className="mt-0.5 shrink-0 text-signal" aria-hidden="true" />
+                  {detail}
+                </li>
+              ))}
+            </ul>
+          ) : null}
 
-          <button
-            type="button"
-            disabled={!ready}
-            onClick={() => {
-              onAdd(product, chosen, quantity);
-              onClose();
-            }}
-            className={cn(
-              "mt-7 inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-md font-mono text-[0.76rem] font-bold uppercase tracking-[0.18em] transition-all duration-300",
-              ready
-                ? "bg-signal text-primary-foreground hover:shadow-glow active:scale-[0.99]"
-                : "cursor-not-allowed bg-surface-raised text-muted-foreground",
-            )}
-          >
-            <ShoppingBag size={16} />
-            Add to bag · {formatPrice(product.price * quantity, product.currency)}
-          </button>
+          {canBuy ? (
+            <a
+              href={product.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-md bg-signal font-mono text-[0.76rem] font-bold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
+            >
+              Buy on PRESS HOUSE · {formatPrice(price, product.currency)}
+              <ArrowUpRight size={16} />
+            </a>
+          ) : (
+            <span className="mt-7 inline-flex min-h-[54px] w-full cursor-not-allowed items-center justify-center rounded-md bg-surface-raised font-mono text-[0.76rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+              {product.statusLabel}
+            </span>
+          )}
 
           <p className="mt-3 text-center text-[0.75rem] leading-relaxed text-muted-foreground">
-            Your bag lives on this page. Nothing is charged yet.
+            Printed to order by PRESS HOUSE. You pick your size and pay on its secure checkout.
           </p>
         </div>
       </DialogContent>
