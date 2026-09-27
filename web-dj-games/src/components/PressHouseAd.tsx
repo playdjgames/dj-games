@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
@@ -13,7 +13,9 @@ import { cn } from "@/lib/utils";
  *
  * `PRESS_HOUSE_URL` is the platform's real host, verified live (HTTP 200) before
  * linking: https://djgamespod.rork.app — a full URL, so the ad renders as a
- * plain <a> that opens it in the same tab.
+ * plain <a> that opens PRESS HOUSE in a new tab. New tab (not same tab) because
+ * embedded previews and in-app browsers can silently refuse to navigate a
+ * framed page to another domain, which made the banner look dead.
  * ============================================================================
  */
 export const PRESS_HOUSE_URL = "https://djgamespod.rork.app";
@@ -51,20 +53,28 @@ const isInternal = PRESS_HOUSE_URL.startsWith("/");
 
 interface AdLinkProps {
   className?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }
 
 /**
  * One real link wrapping the whole ad — tapping anywhere opens PRESS HOUSE.
- * Same tab, never a popup.
+ * External host opens in a new tab so it works inside framed previews too.
  */
-const AdLink = ({ className, children }: AdLinkProps) =>
+const AdLink = ({ className, style, children }: AdLinkProps) =>
   isInternal ? (
-    <Link to={PRESS_HOUSE_URL} aria-label={LINK_LABEL} className={className}>
+    <Link to={PRESS_HOUSE_URL} aria-label={LINK_LABEL} className={className} style={style}>
       {children}
     </Link>
   ) : (
-    <a href={PRESS_HOUSE_URL} aria-label={LINK_LABEL} className={className}>
+    <a
+      href={PRESS_HOUSE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${LINK_LABEL} (opens in a new tab)`}
+      className={className}
+      style={style}
+    >
       {children}
     </a>
   );
@@ -249,6 +259,9 @@ export const PressHouseAd = ({
     </>
   );
 
+  /** Solid promo surface — without it the banner rendered transparent and read as inert. */
+  const bannerSurface: CSSProperties = { backgroundColor: CARD, borderColor: LINE };
+
   // PRESS HOUSE in dev — same card, navigates nowhere.
   if (disabled) {
     return (
@@ -257,6 +270,7 @@ export const PressHouseAd = ({
           "press-house-ad relative block overflow-hidden rounded-2xl border p-6 sm:p-8",
           className,
         )}
+        style={bannerSurface}
       >
         {bannerBody}
       </div>
@@ -266,9 +280,10 @@ export const PressHouseAd = ({
   return (
     <AdLink
       className={cn(
-        "press-house-ad group relative block overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8",
+        "press-house-ad group relative block cursor-pointer overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_-20px_rgba(232,255,71,0.35)] active:scale-[0.99] sm:p-8",
         className,
       )}
+      style={bannerSurface}
     >
       {bannerBody}
     </AdLink>
