@@ -9,7 +9,7 @@
 
 import type { PrereleaseApp } from "@/data/prerelease";
 
-export const PRERELEASE_SYNCED_AT = "2026-09-26T13:26:18.844Z";
+export const PRERELEASE_SYNCED_AT = "2026-09-27T12:29:28.830Z";
 
 export const PRERELEASE_APPS: PrereleaseApp[] = [
   {
