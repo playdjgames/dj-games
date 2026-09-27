@@ -56,6 +56,29 @@ const FEATURE_ICONS: Record<GameFeature["icon"], LucideIcon> = {
   ruler: Ruler,
 };
 
+/** Browser-window chrome above a web project's screenshot: dots, address, open cue. */
+const SiteFrameBar = ({ host, accent }: { host: string; accent: string }) => (
+  <div className="flex items-center gap-3 border-b border-border bg-surface-raised px-4 py-2.5">
+    <span className="flex gap-1.5" aria-hidden="true">
+      <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+      <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+      <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+    </span>
+    <span className="min-w-0 flex-1 truncate rounded-md bg-background/70 px-3 py-1 font-mono text-[0.68rem] tracking-[0.04em] text-muted-foreground">
+      {host || "Preview"}
+    </span>
+    {host ? (
+      <span
+        className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.16em]"
+        style={{ color: accent }}
+      >
+        Open site
+        <ExternalLink size={13} />
+      </span>
+    ) : null}
+  </div>
+);
+
 const GameDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { bySlug, isSyncing, released, submitted } = useGameLibrary();
@@ -92,6 +115,14 @@ const GameDetail = () => {
     game.division === "web" &&
     isLinkLive(game.websiteUrl) &&
     !game.websiteUrl.replace(/\/$/, "").endsWith("playdjgames.com");
+  /**
+   * Web projects use a full-page site screenshot as their cover. Blown up behind
+   * the hero it reads as a ghosted second website under the title, so web heroes
+   * get a clean backdrop and show the screenshot as a framed, clickable preview.
+   */
+  const isWebProject = game.division === "web";
+  const siteUrl = isLinkLive(game.websiteUrl) ? game.websiteUrl : null;
+  const siteHost = siteUrl?.replace(/^https?:\/\//, "").replace(/\/$/, "") ?? "";
   const isPortraitShots = game.screenshotAspect === "portrait";
   const paragraphs = game.description.split("\n\n");
   const accentStyle = { "--game-accent": game.accent } as CSSProperties;
@@ -99,7 +130,17 @@ const GameDetail = () => {
   return (
     <>
       {/* HERO */}
-      <section className="game-accent relative isolate" style={accentStyle}>
+      <section className="game-accent relative isolate overflow-hidden" style={accentStyle}>
+        {isWebProject ? (
+          <div className="absolute inset-0 -z-10" aria-hidden="true">
+            <div className="grid-backdrop pointer-events-none absolute inset-0 opacity-60" />
+            <div
+              className="absolute -right-40 top-1/2 h-[36rem] w-[36rem] -translate-y-1/2 rounded-full opacity-20 blur-3xl"
+              style={{ backgroundColor: game.accent }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          </div>
+        ) : (
         <div className="absolute inset-0 -z-10">
           <img
             src={game.coverImage}
@@ -115,8 +156,14 @@ const GameDetail = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/55" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-transparent to-transparent" />
         </div>
+        )}
 
-        <div className="container flex min-h-[46vh] flex-col justify-end py-12 sm:min-h-[52vh] sm:py-16">
+        <div
+          className={cn(
+            "container flex flex-col justify-end py-12 sm:py-16",
+            isWebProject ? "min-h-0" : "min-h-[46vh] sm:min-h-[52vh]",
+          )}
+        >
           <Link
             to="/games"
             className="inline-flex w-fit min-h-[44px] items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-foreground/85 transition-colors hover:text-signal"
@@ -149,6 +196,37 @@ const GameDetail = () => {
               )}
             </div>
           </div>
+
+          {/* Web projects: the real site, framed like a browser window — tap to open it. */}
+          {isWebProject ? (
+            siteUrl ? (
+              <a
+                href={siteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${game.title} (${siteHost}) in a new tab`}
+                className="group mt-10 block overflow-hidden rounded-xl border border-border bg-surface shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--game-accent)]"
+              >
+                <SiteFrameBar host={siteHost} accent={game.accent} />
+                <img
+                  src={game.coverImage}
+                  alt={`${game.title} homepage`}
+                  decoding="async"
+                  className="block aspect-[16/9] w-full object-cover object-top"
+                />
+              </a>
+            ) : (
+              <div className="mt-10 overflow-hidden rounded-xl border border-border bg-surface shadow-2xl">
+                <SiteFrameBar host={siteHost} accent={game.accent} />
+                <img
+                  src={game.coverImage}
+                  alt={`${game.title} homepage`}
+                  decoding="async"
+                  className="block aspect-[16/9] w-full object-cover object-top"
+                />
+              </div>
+            )
+          ) : null}
         </div>
       </section>
 
