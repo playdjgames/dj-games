@@ -279,6 +279,22 @@ export const findVariant = (
       (picked.size === undefined || variant.size === picked.size),
   );
 
+/**
+ * True when this combination of Color/Size labels is actually printable —
+ * an option that can't be fulfilled never becomes selectable.
+ * Products without variants (custom stickers, the pack) are always pickable.
+ */
+export const isPickable = (product: StoreProduct, picked: Record<string, string>): boolean =>
+  product.variants === undefined ? true : findVariant(product, picked) !== undefined;
+
+/** Sum of the picked options' price deltas (e.g. 2XL +$3), in dollars. */
+export const pickedPriceDelta = (product: StoreProduct, picked: Record<string, string>): number =>
+  product.options.reduce(
+    (total, group) =>
+      total + (group.values.find((value) => value.label === picked[group.id])?.priceDelta ?? 0),
+    0,
+  );
+
 /* ------------------------------ the house rack ---------------------------- */
 
 /**

@@ -47,6 +47,31 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
             "id": "color-3",
             "label": "Dark Grey Heather",
             "available": true
+          },
+          {
+            "id": "color-4",
+            "label": "Natural",
+            "available": true
+          },
+          {
+            "id": "color-5",
+            "label": "Soft Cream",
+            "available": true
+          },
+          {
+            "id": "color-6",
+            "label": "Solid Black Blend",
+            "available": true
+          },
+          {
+            "id": "color-7",
+            "label": "White",
+            "available": true
+          },
+          {
+            "id": "color-8",
+            "label": "Black Heather",
+            "available": true
           }
         ]
       },
@@ -57,32 +82,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -189,6 +210,131 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "id": 18152,
         "color": "Dark Grey Heather",
         "size": "2XL"
+      },
+      {
+        "id": 18388,
+        "color": "Natural",
+        "size": "S"
+      },
+      {
+        "id": 18389,
+        "color": "Natural",
+        "size": "M"
+      },
+      {
+        "id": 18390,
+        "color": "Natural",
+        "size": "L"
+      },
+      {
+        "id": 18391,
+        "color": "Natural",
+        "size": "XL"
+      },
+      {
+        "id": 18392,
+        "color": "Natural",
+        "size": "2XL"
+      },
+      {
+        "id": 18460,
+        "color": "Soft Cream",
+        "size": "S"
+      },
+      {
+        "id": 18461,
+        "color": "Soft Cream",
+        "size": "M"
+      },
+      {
+        "id": 18462,
+        "color": "Soft Cream",
+        "size": "L"
+      },
+      {
+        "id": 18463,
+        "color": "Soft Cream",
+        "size": "XL"
+      },
+      {
+        "id": 18464,
+        "color": "Soft Cream",
+        "size": "2XL"
+      },
+      {
+        "id": 18476,
+        "color": "Solid Black Blend",
+        "size": "S"
+      },
+      {
+        "id": 18477,
+        "color": "Solid Black Blend",
+        "size": "M"
+      },
+      {
+        "id": 18478,
+        "color": "Solid Black Blend",
+        "size": "L"
+      },
+      {
+        "id": 18479,
+        "color": "Solid Black Blend",
+        "size": "XL"
+      },
+      {
+        "id": 18480,
+        "color": "Solid Black Blend",
+        "size": "2XL"
+      },
+      {
+        "id": 18540,
+        "color": "White",
+        "size": "S"
+      },
+      {
+        "id": 18541,
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "id": 18542,
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "id": 18543,
+        "color": "White",
+        "size": "XL"
+      },
+      {
+        "id": 18544,
+        "color": "White",
+        "size": "2XL"
+      },
+      {
+        "id": 38782,
+        "color": "Black Heather",
+        "size": "S"
+      },
+      {
+        "id": 38785,
+        "color": "Black Heather",
+        "size": "M"
+      },
+      {
+        "id": 38788,
+        "color": "Black Heather",
+        "size": "L"
+      },
+      {
+        "id": 38791,
+        "color": "Black Heather",
+        "size": "XL"
+      },
+      {
+        "id": 38794,
+        "color": "Black Heather",
+        "size": "2XL"
       }
     ]
   },
@@ -217,12 +363,12 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "values": [
           {
             "id": "color-0",
-            "label": "Dark Heather",
+            "label": "Navy",
             "available": true
           },
           {
             "id": "color-1",
-            "label": "Navy",
+            "label": "Sport Grey",
             "available": true
           },
           {
@@ -244,32 +390,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -277,31 +419,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "featured": true,
     "pressHouseId": "prd_mukpeqoyded617b075",
     "variants": [
-      {
-        "id": 32878,
-        "color": "Dark Heather",
-        "size": "S"
-      },
-      {
-        "id": 32879,
-        "color": "Dark Heather",
-        "size": "M"
-      },
-      {
-        "id": 32880,
-        "color": "Dark Heather",
-        "size": "L"
-      },
-      {
-        "id": 32881,
-        "color": "Dark Heather",
-        "size": "XL"
-      },
-      {
-        "id": 32882,
-        "color": "Dark Heather",
-        "size": "2XL"
-      },
       {
         "id": 32894,
         "color": "Navy",
@@ -325,6 +442,31 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
       {
         "id": 32898,
         "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 32902,
+        "color": "Sport Grey",
+        "size": "S"
+      },
+      {
+        "id": 32903,
+        "color": "Sport Grey",
+        "size": "M"
+      },
+      {
+        "id": 32904,
+        "color": "Sport Grey",
+        "size": "L"
+      },
+      {
+        "id": 32905,
+        "color": "Sport Grey",
+        "size": "XL"
+      },
+      {
+        "id": 32906,
+        "color": "Sport Grey",
         "size": "2XL"
       },
       {
@@ -421,32 +563,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -455,34 +593,9 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "pressHouseId": "prd_mukper6hbf5dc93338",
     "variants": [
       {
-        "id": 33796,
-        "color": "Black",
-        "size": "S"
-      },
-      {
         "id": 33797,
         "color": "Black",
         "size": "M"
-      },
-      {
-        "id": 33798,
-        "color": "Black",
-        "size": "L"
-      },
-      {
-        "id": 33799,
-        "color": "Black",
-        "size": "XL"
-      },
-      {
-        "id": 33800,
-        "color": "Black",
-        "size": "2XL"
-      },
-      {
-        "id": 42711,
-        "color": "Navy",
-        "size": "S"
       },
       {
         "id": 42712,
@@ -490,18 +603,43 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "size": "M"
       },
       {
-        "id": 42713,
-        "color": "Navy",
-        "size": "L"
-      },
-      {
         "id": 42714,
         "color": "Navy",
         "size": "XL"
       },
       {
+        "id": 42711,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 42713,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 33796,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 33799,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 33798,
+        "color": "Black",
+        "size": "L"
+      },
+      {
         "id": 42715,
         "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 33800,
+        "color": "Black",
         "size": "2XL"
       }
     ]
@@ -524,10 +662,32 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [],
+    "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Natural",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Black",
+            "available": true
+          }
+        ]
+      }
+    ],
     "featured": false,
     "pressHouseId": "prd_mukperk07c709455e6",
     "variants": [
+      {
+        "id": 101409,
+        "color": "Natural",
+        "size": "15\" x 16\""
+      },
       {
         "id": 103598,
         "color": "Black",
@@ -567,6 +727,16 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
             "id": "color-1",
             "label": "Navy",
             "available": true
+          },
+          {
+            "id": "color-2",
+            "label": "White",
+            "available": true
+          },
+          {
+            "id": "color-3",
+            "label": "Stone",
+            "available": true
           }
         ]
       }
@@ -582,6 +752,16 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
       {
         "id": 105377,
         "color": "Navy",
+        "size": "One size"
+      },
+      {
+        "id": 105381,
+        "color": "White",
+        "size": "One size"
+      },
+      {
+        "id": 105380,
+        "color": "Stone",
         "size": "One size"
       }
     ]
@@ -738,7 +918,7 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "variants": [
       {
         "id": 72008,
-        "color": "Default",
+        "color": "White",
         "size": "4\" × 4\""
       }
     ]
@@ -958,7 +1138,25 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [],
+    "options": [
+      {
+        "id": "size",
+        "name": "Size",
+        "values": [
+          {
+            "id": "size-0",
+            "label": "18″ x 24″",
+            "available": true
+          },
+          {
+            "id": "size-1",
+            "label": "24″ x 36″",
+            "available": true,
+            "priceDelta": 12.0
+          }
+        ]
+      }
+    ],
     "featured": false,
     "pressHouseId": "prd_mukpethze882c4d24b",
     "variants": [
@@ -966,6 +1164,11 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "id": 43144,
         "color": "Default",
         "size": "18″ x 24″"
+      },
+      {
+        "id": 43150,
+        "color": "Default",
+        "size": "24″ x 36″"
       }
     ]
   },
@@ -987,7 +1190,25 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [],
+    "options": [
+      {
+        "id": "size",
+        "name": "Size",
+        "values": [
+          {
+            "id": "size-0",
+            "label": "18″ x 24″",
+            "available": true
+          },
+          {
+            "id": "size-1",
+            "label": "24″ x 36″",
+            "available": true,
+            "priceDelta": 12.0
+          }
+        ]
+      }
+    ],
     "featured": false,
     "pressHouseId": "prd_mukpetn5445d38101c",
     "variants": [
@@ -995,6 +1216,11 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "id": 43144,
         "color": "Default",
         "size": "18″ x 24″"
+      },
+      {
+        "id": 43150,
+        "color": "Default",
+        "size": "24″ x 36″"
       }
     ]
   },
@@ -1040,6 +1266,31 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
             "id": "color-3",
             "label": "Dark Grey Heather",
             "available": true
+          },
+          {
+            "id": "color-4",
+            "label": "Natural",
+            "available": true
+          },
+          {
+            "id": "color-5",
+            "label": "Soft Cream",
+            "available": true
+          },
+          {
+            "id": "color-6",
+            "label": "Solid Black Blend",
+            "available": true
+          },
+          {
+            "id": "color-7",
+            "label": "White",
+            "available": true
+          },
+          {
+            "id": "color-8",
+            "label": "Black Heather",
+            "available": true
           }
         ]
       },
@@ -1050,32 +1301,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -1182,6 +1429,131 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "id": 18152,
         "color": "Dark Grey Heather",
         "size": "2XL"
+      },
+      {
+        "id": 18388,
+        "color": "Natural",
+        "size": "S"
+      },
+      {
+        "id": 18389,
+        "color": "Natural",
+        "size": "M"
+      },
+      {
+        "id": 18390,
+        "color": "Natural",
+        "size": "L"
+      },
+      {
+        "id": 18391,
+        "color": "Natural",
+        "size": "XL"
+      },
+      {
+        "id": 18392,
+        "color": "Natural",
+        "size": "2XL"
+      },
+      {
+        "id": 18460,
+        "color": "Soft Cream",
+        "size": "S"
+      },
+      {
+        "id": 18461,
+        "color": "Soft Cream",
+        "size": "M"
+      },
+      {
+        "id": 18462,
+        "color": "Soft Cream",
+        "size": "L"
+      },
+      {
+        "id": 18463,
+        "color": "Soft Cream",
+        "size": "XL"
+      },
+      {
+        "id": 18464,
+        "color": "Soft Cream",
+        "size": "2XL"
+      },
+      {
+        "id": 18476,
+        "color": "Solid Black Blend",
+        "size": "S"
+      },
+      {
+        "id": 18477,
+        "color": "Solid Black Blend",
+        "size": "M"
+      },
+      {
+        "id": 18478,
+        "color": "Solid Black Blend",
+        "size": "L"
+      },
+      {
+        "id": 18479,
+        "color": "Solid Black Blend",
+        "size": "XL"
+      },
+      {
+        "id": 18480,
+        "color": "Solid Black Blend",
+        "size": "2XL"
+      },
+      {
+        "id": 18540,
+        "color": "White",
+        "size": "S"
+      },
+      {
+        "id": 18541,
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "id": 18542,
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "id": 18543,
+        "color": "White",
+        "size": "XL"
+      },
+      {
+        "id": 18544,
+        "color": "White",
+        "size": "2XL"
+      },
+      {
+        "id": 38782,
+        "color": "Black Heather",
+        "size": "S"
+      },
+      {
+        "id": 38785,
+        "color": "Black Heather",
+        "size": "M"
+      },
+      {
+        "id": 38788,
+        "color": "Black Heather",
+        "size": "L"
+      },
+      {
+        "id": 38791,
+        "color": "Black Heather",
+        "size": "XL"
+      },
+      {
+        "id": 38794,
+        "color": "Black Heather",
+        "size": "2XL"
       }
     ]
   },
@@ -1210,12 +1582,12 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "values": [
           {
             "id": "color-0",
-            "label": "Dark Heather",
+            "label": "Navy",
             "available": true
           },
           {
             "id": "color-1",
-            "label": "Navy",
+            "label": "Sport Grey",
             "available": true
           },
           {
@@ -1237,32 +1609,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -1270,31 +1638,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "featured": false,
     "pressHouseId": "prd_mukpeqv6a2e40b1178",
     "variants": [
-      {
-        "id": 32878,
-        "color": "Dark Heather",
-        "size": "S"
-      },
-      {
-        "id": 32879,
-        "color": "Dark Heather",
-        "size": "M"
-      },
-      {
-        "id": 32880,
-        "color": "Dark Heather",
-        "size": "L"
-      },
-      {
-        "id": 32881,
-        "color": "Dark Heather",
-        "size": "XL"
-      },
-      {
-        "id": 32882,
-        "color": "Dark Heather",
-        "size": "2XL"
-      },
       {
         "id": 32894,
         "color": "Navy",
@@ -1318,6 +1661,31 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
       {
         "id": 32898,
         "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 32902,
+        "color": "Sport Grey",
+        "size": "S"
+      },
+      {
+        "id": 32903,
+        "color": "Sport Grey",
+        "size": "M"
+      },
+      {
+        "id": 32904,
+        "color": "Sport Grey",
+        "size": "L"
+      },
+      {
+        "id": 32905,
+        "color": "Sport Grey",
+        "size": "XL"
+      },
+      {
+        "id": 32906,
+        "color": "Sport Grey",
         "size": "2XL"
       },
       {
@@ -1414,32 +1782,28 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           {
             "id": "size-0",
             "label": "S",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-1",
             "label": "M",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-2",
             "label": "L",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-3",
             "label": "XL",
-            "available": true,
-            "priceDelta": 0
+            "available": true
           },
           {
             "id": "size-4",
             "label": "2XL",
             "available": true,
-            "priceDelta": 0
+            "priceDelta": 3.0
           }
         ]
       }
@@ -1448,34 +1812,9 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "pressHouseId": "prd_mukperca39dc9cb42e",
     "variants": [
       {
-        "id": 33796,
-        "color": "Black",
-        "size": "S"
-      },
-      {
         "id": 33797,
         "color": "Black",
         "size": "M"
-      },
-      {
-        "id": 33798,
-        "color": "Black",
-        "size": "L"
-      },
-      {
-        "id": 33799,
-        "color": "Black",
-        "size": "XL"
-      },
-      {
-        "id": 33800,
-        "color": "Black",
-        "size": "2XL"
-      },
-      {
-        "id": 42711,
-        "color": "Navy",
-        "size": "S"
       },
       {
         "id": 42712,
@@ -1483,18 +1822,43 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "size": "M"
       },
       {
-        "id": 42713,
-        "color": "Navy",
-        "size": "L"
-      },
-      {
         "id": 42714,
         "color": "Navy",
         "size": "XL"
       },
       {
+        "id": 42711,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 42713,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 33796,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 33799,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 33798,
+        "color": "Black",
+        "size": "L"
+      },
+      {
         "id": 42715,
         "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 33800,
+        "color": "Black",
         "size": "2XL"
       }
     ]
@@ -1517,7 +1881,25 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [],
+    "options": [
+      {
+        "id": "size",
+        "name": "Size",
+        "values": [
+          {
+            "id": "size-0",
+            "label": "18″ x 24″",
+            "available": true
+          },
+          {
+            "id": "size-1",
+            "label": "24″ x 36″",
+            "available": true,
+            "priceDelta": 12.0
+          }
+        ]
+      }
+    ],
     "featured": false,
     "pressHouseId": "prd_mukpetafe0f2fc5d27",
     "variants": [
@@ -1525,6 +1907,11 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         "id": 43144,
         "color": "Default",
         "size": "18″ x 24″"
+      },
+      {
+        "id": 43150,
+        "color": "Default",
+        "size": "24″ x 36″"
       }
     ]
   }

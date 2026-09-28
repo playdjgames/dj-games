@@ -32,7 +32,7 @@ export const shopErrorResponse = (error: unknown): Response => {
 /* ------------------------------- catalog map ------------------------------- */
 
 /** Store listing id (from the synced catalog) → product in the Printify shop. */
-const LISTING_PRODUCTS: Record<string, string> = {
+export const LISTING_PRODUCTS: Record<string, string> = {
   prd_mukpeqbf32cbd2701c: "6ab92ea0a4fc0c9922093aa5", // House Mark Tee
   prd_mukpeqoyded617b075: "6ab92ea563d317ccfb0c76d0", // Wordmark Hoodie
   prd_mukper6hbf5dc93338: "6ab92ea9dcd154052a0154ef", // Grid Long Sleeve

@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import {
   findVariant,
   formatPrice,
+  isPickable,
+  pickedPriceDelta,
   isBuyable,
   normalizeStickerText,
   STICKER_COLORS,
@@ -57,12 +59,15 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
 
   const custom = product?.custom;
 
-  // Reset picks whenever the product changes.
+  // Reset picks whenever the product changes. Defaults are chosen so the
+  // combination is actually printable — no dead picks straight from the gate.
   useEffect(() => {
     if (!product) return;
     const defaults: Record<string, string> = {};
     product.options.forEach((group) => {
-      const firstAvailable = group.values.find((value) => value.available);
+      const firstAvailable = group.values.find((value) =>
+        isPickable(product, { ...defaults, [group.id]: value.label }),
+      );
       if (firstAvailable) defaults[group.id] = firstAvailable.label;
     });
     setSelections(defaults);
@@ -105,7 +110,8 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
   if (!product) return null;
 
   const stickerText = normalizeStickerText(sticker.text);
-  const price = size?.price ?? product.price;
+  const delta = custom ? 0 : pickedPriceDelta(product, selections);
+  const price = (size?.price ?? product.price) + delta;
   const canBuy = isBuyable(product) && (custom ? stickerText.length > 0 : product.pack ? true : Boolean(variant));
   const image = product.images[imageIndex] ?? product.images[0];
   const colors = custom?.cutVinyl ? STICKER_COLORS.filter((color) => color.glass) : STICKER_COLORS;
@@ -145,7 +151,7 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
     const labels = product.options
       .map((group) => selections[group.id])
       .filter((label): label is string => Boolean(label));
-    onAdd(product, labels, { kind: "listing", pressHouseId: product.pressHouseId, variantId: variant.id, price: product.price });
+    onAdd(product, labels, { kind: "listing", pressHouseId: product.pressHouseId, variantId: variant.id, price });
   };
 
   const setStickerField = <K extends keyof typeof sticker>(key: K, value: (typeof sticker)[K]): void =>
@@ -244,17 +250,20 @@ export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => 
               <div className="mt-2.5 flex flex-wrap gap-2">
                 {group.values.map((value) => {
                   const isPicked = selections[group.id] === value.label;
+                  // Combo-aware: a value is only selectable when a real variant
+                  // exists for it together with the other picked axis.
+                  const pickable = isPickable(product, { ...selections, [group.id]: value.label });
                   return (
                     <button
                       key={value.id}
                       type="button"
-                      disabled={!value.available}
+                      disabled={!pickable}
                       aria-pressed={isPicked}
                       onClick={() => setSelections((current) => ({ ...current, [group.id]: value.label }))}
                       className={cn(
                         CHIP,
                         "min-w-[56px]",
-                        !value.available
+                        !pickable
                           ? "cursor-not-allowed border-border bg-surface-raised text-muted-foreground/50 line-through"
                           : chipState(isPicked),
                       )}
