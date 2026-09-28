@@ -139,7 +139,7 @@ const Marketing = () => {
   useSeo({
     title: "DJ Games — Marketing",
     description:
-      "DJ Games is an independent iOS studio. Everything DIY, Run Dummy, Vexara and Astronix are out now on the App Store — more on the way.",
+      "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara and Astronix are out now — more on the way.",
   });
 
   useEffect(() => {
@@ -253,7 +253,7 @@ const Marketing = () => {
               </Reveal>
               <Reveal delay={140}>
                 <p className="mt-6 max-w-md text-xl font-light text-white/90 sm:text-2xl">
-                  Original iOS games and apps. Built to play.
+                  Original mobile games and apps. Built to play.
                 </p>
                 <p className="mt-3 font-mono text-[0.78rem] uppercase tracking-[0.2em] text-[#9FB6C6]">
                   No ads-first junk. No pay-to-win.
@@ -394,12 +394,12 @@ const Marketing = () => {
         <section className="relative border-t border-white/[0.07] py-20 sm:py-24" aria-labelledby="mk-next-title">
           <div className="mx-auto max-w-6xl px-5 sm:px-8">
             <Reveal>
-              <MkLabel>Submitted to Apple</MkLabel>
+              <MkLabel>In review</MkLabel>
               <h2 id="mk-next-title" className="mt-4 font-display text-3xl font-black uppercase text-white sm:text-4xl" style={{ fontVariationSettings: '"wdth" 78' }}>
                 Next through the door
               </h2>
               <p className="mt-4 max-w-2xl text-[0.98rem] leading-relaxed text-[#9FB6C6]">
-                {SUBMITTED.length === 1 ? "One title" : `${SUBMITTED.length} titles`} in Apple review. No fake dates.
+                {SUBMITTED.length === 1 ? "One title" : `${SUBMITTED.length} titles`} in review. No fake dates.
                 Launch dates go on the news page and by email first.
               </p>
             </Reveal>
@@ -413,7 +413,7 @@ const Marketing = () => {
                   >
                     <div>
                       <span className="inline-flex items-center rounded-full border border-[#FFB020]/45 px-3 py-1 font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-[#FFB020]">
-                        Submitted to Apple
+                        In review
                       </span>
                       <h3 className="mt-4 font-display text-2xl font-black uppercase text-white" style={{ fontVariationSettings: '"wdth" 78' }}>
                         {title}
@@ -664,7 +664,7 @@ const Marketing = () => {
               © 2026 DJ Games LLC. All rights reserved. Veteran owned, independently operated.
             </p>
             <p className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#8BE1FF]/80">
-              Original iOS games / Built to play
+              Original mobile games / Built to play
             </p>
           </div>
         </div>

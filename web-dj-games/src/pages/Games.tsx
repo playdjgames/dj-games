@@ -17,10 +17,10 @@ const ALL = "all" as const;
 type Active = DivisionId | typeof ALL;
 
 const GROUP_META = {
-  available: { eyebrow: "Available now", title: "Live on the App Store" },
-  // Sites are live on the open web, never the App Store — they get their own heading.
+  available: { eyebrow: "Available now", title: "Live on mobile" },
+  // Sites are live on the open web, never the app stores — they get their own heading.
   sites: { eyebrow: "Live now", title: "Live on the web" },
-  submitted: { eyebrow: "Submitted to Apple", title: "Launching next" },
+  submitted: { eyebrow: "In review", title: "Launching next" },
   concepts: { eyebrow: "Early concepts", title: "In development" },
 } as const;
 
@@ -28,7 +28,7 @@ const Games = () => {
   useSeo({
     title: "Apps-n-Stuff — DJ Games",
     description:
-      "Everything DJ Games builds, by division: iOS apps, mobile games, PC games and web work — live titles, builds with Apple, and early concepts.",
+      "Everything DJ Games builds, by division: mobile apps and games, PC games and web work — live titles, builds in review, and early concepts.",
   });
 
   const { games, released, submitted, concepts, isSyncing } = useGameLibrary();
@@ -82,7 +82,7 @@ const Games = () => {
             Apps-n-<span className="text-signal text-glow">Stuff</span>
           </>
         }
-        description="Apps, mobile games, PC games and web work — live ones, waiting-on-Apple ones, and the ones we won’t pretend are done."
+        description="Apps, mobile games, PC games and web work — live ones, in-review ones, and the ones we won’t pretend are done."
         stamp={["Apps", "Games", "Web"]}
       />
 

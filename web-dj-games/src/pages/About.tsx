@@ -30,7 +30,7 @@ const About = () => {
   useSeo({
     title: "About — DJ Games",
     description:
-      "DJ Games is an independent studio. We build iOS games and apps, design and build websites, and prototype fast — everything from scratch, nothing reskinned.",
+      "DJ Games is an independent studio. We build mobile games and apps, design and build websites, and prototype fast — everything from scratch, nothing reskinned.",
   });
 
   const posts = sortedPosts().slice(0, 3);
@@ -47,7 +47,7 @@ const About = () => {
             <span className="text-signal text-glow">DJ Games</span>
           </>
         }
-        description="An indie studio, not a factory. Original iOS games and apps — and we design and build websites too."
+        description="An indie studio, not a factory. Original mobile games and apps — and we design and build websites too."
         stamp={["Bold", "Ideas", "Real", "Games"]}
       />
 
@@ -58,16 +58,15 @@ const About = () => {
 
             <div className="space-y-4 text-[1.02rem] leading-relaxed text-muted-foreground">
               <p>
-                DJ Games is an independent iOS studio run as DJ Games LLC. We're small on purpose — it means every
+                DJ Games is an independent studio run as DJ Games LLC. We're small on purpose — it means every
                 idea gets to be strange, specific, and actually ours.
               </p>
               <p>
-                We prototype fast and ship games and apps that respect your time. Four titles are live on the App
-                Store today — Everything DIY, Run Dummy, Vexara and Astronix, all free — with Thinksort in Apple
+                We prototype fast and ship games and apps that respect your time. Four titles are live now — Everything DIY, Run Dummy, Vexara and Astronix, all free — with Thinksort in
                 review and more in development right now.
               </p>
               <p>
-                And it doesn't stop at the App Store: we design and build websites too — including this one. Fast,
+                And it doesn't stop at apps: we design and build websites too — including this one. Fast,
                 clean, made to last, with no template filler.
               </p>
               <p>

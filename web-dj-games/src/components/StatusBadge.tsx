@@ -12,7 +12,7 @@ const STATUS_STYLES: Record<GameStatus, string> = {
 
 const DEFAULT_LABELS: Record<GameStatus, string> = {
   available: "Live now",
-  submitted: "Submitted to Apple",
+  submitted: "In review",
   concept: "In development",
 };
 
@@ -23,7 +23,7 @@ interface StatusBadgeProps {
   className?: string;
 }
 
-/** Tier badge: LIVE NOW / SUBMITTED TO APPLE / IN DEVELOPMENT. */
+/** Tier badge: LIVE NOW / IN REVIEW / IN DEVELOPMENT. */
 export const StatusBadge = ({ status, label, className }: StatusBadgeProps) => (
   <span
     className={cn(

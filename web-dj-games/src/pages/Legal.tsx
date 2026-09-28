@@ -24,19 +24,19 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
     sections: [
       {
         heading: "The short version",
-        body: "We don't collect your personal information. Our apps contain no advertising, no tracking, and no account system, and this website uses no tracking cookies. Purchases are handled by Apple under Apple's own privacy policy. The rest of this page explains the details.",
+        body: "We don't collect your personal information. Our apps contain no advertising, no tracking, and no account system, and this website uses no tracking cookies. Purchases are handled by the app stores under their own privacy policies. The rest of this page explains the details.",
       },
       {
         heading: "Who this policy covers",
-        body: `This policy applies to the DJ Games website (${DOMAIN}) and to every app we publish on the App Store, current and upcoming — including ${APP_NAMES}. By downloading or playing any of our games, you agree to this policy.`,
+        body: `This policy applies to the DJ Games website (${DOMAIN}) and to every app we publish, current and upcoming — including ${APP_NAMES}. By downloading or playing any of our games, you agree to this policy.`,
       },
       {
         heading: "Data our games collect",
         body: "None. Our apps do not include our own analytics, advertising, or account systems, and they do not collect your name, email, location, contacts, or usage data. Anything the game needs to run — such as your progress or settings — stays on your device and is never transmitted to us.",
       },
       {
-        heading: "Data handled by Apple",
-        body: "Downloads, purchases, crash reports, and platform features such as Game Center are handled by Apple under Apple's own privacy policy (apple.com/legal/privacy). We never receive a copy of that information unless you contact us directly.",
+        heading: "Data handled by the app stores",
+        body: "Downloads, purchases, crash reports, and platform features are handled by the app stores under their own privacy policies. We never receive a copy of that information unless you contact us directly.",
       },
       {
         heading: "Children's privacy",
@@ -52,7 +52,7 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
       },
       {
         heading: "Changes to this policy",
-        body: "If we ever change how we handle data, we will update this page and the date below before the change takes effect. A game that starts collecting anything beyond what is described here would disclose it on its App Store listing before the update ships.",
+        body: "If we ever change how we handle data, we will update this page and the date below before the change takes effect. A game that starts collecting anything beyond what is described here would disclose it on its store listing before the update ships.",
       },
       {
         heading: "Contact",
@@ -74,11 +74,11 @@ const CONTENT: Record<LegalProps["kind"], { title: string; eyebrow: string; sect
       },
       {
         heading: "Our games",
-        body: "Games downloaded through the App Store are additionally governed by Apple's terms and by any end user licence agreement included with the game itself.",
+        body: "Games downloaded through an app store are additionally governed by that store's terms and by any end user licence agreement included with the game itself.",
       },
       {
         heading: "Purchases",
-        body: "Apps are bought through the App Store, and the purchase is a one-time payment at the price shown on the product's page — no subscription. Payment, refunds, and receipts are handled entirely by Apple under Apple's own terms; this site never processes payments and never stores payment details.",
+        body: "Apps are bought through the app stores, and the purchase is a one-time payment at the price shown on the product's page — no subscription. Payment, refunds, and receipts are handled entirely by the store under its own terms; this site never processes payments and never stores payment details.",
       },
       {
         heading: "Availability",

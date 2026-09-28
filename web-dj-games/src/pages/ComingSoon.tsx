@@ -14,7 +14,7 @@ const ComingSoon = () => {
   useSeo({
     title: "The Lab — DJ Games",
     description:
-      "See what DJ Games is building next: titles submitted to Apple and early concepts in development. Get notified when a game goes live.",
+      "See what DJ Games is building next: titles in review and early concepts in development. Get notified when a game goes live.",
   });
 
   const { submitted, concepts } = useGameLibrary();
@@ -29,7 +29,7 @@ const ComingSoon = () => {
             The <span className="text-signal text-glow">Lab</span>
           </>
         }
-        description="Submitted to Apple up top — those are next through the door. Early concepts below: first looks, not release dates."
+        description="In review up top — those are next through the door. Early concepts below: first looks, not release dates."
         stamp={["New", "Worlds", "Loading"]}
       />
 
@@ -38,9 +38,9 @@ const ComingSoon = () => {
         <section className="container py-14 sm:py-16">
           <Reveal>
             <SectionHeading
-              eyebrow="Submitted to Apple"
+              eyebrow="In review"
               title="In review now"
-              note={`${submitted.length} ${submitted.length === 1 ? "title" : "titles"} with Apple`}
+              note={`${submitted.length} ${submitted.length === 1 ? "title" : "titles"} in review`}
             />
           </Reveal>
 
@@ -54,7 +54,7 @@ const ComingSoon = () => {
 
           <Reveal className="mt-6" delay={120}>
             <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Every title here has a real build in Apple review. Launch dates get announced on{" "}
+              Every title here has a real build in review. Launch dates get announced on{" "}
               <Link to="/news" className="text-signal transition-colors hover:text-foreground">
                 the news page
               </Link>{" "}

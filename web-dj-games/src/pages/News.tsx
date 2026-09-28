@@ -16,14 +16,14 @@ const News = () => {
   useSeo({
     title: "News & Updates — DJ Games",
     description:
-      "Announcements, release notes and devlogs from DJ Games — plus live App Store releases, version updates and review status, updated automatically.",
+      "Announcements, release notes and devlogs from DJ Games — plus live store releases, version updates and review status, updated automatically.",
   });
 
   const { items, pipeline, autoCount, isSyncing } = useNewsFeed();
 
   const note =
     autoCount > 0
-      ? `${items.length} entries · ${autoCount} from the App Store`
+      ? `${items.length} entries · ${autoCount} from the stores`
       : `${items.length} ${items.length === 1 ? "entry" : "entries"}`;
 
   return (
@@ -36,7 +36,7 @@ const News = () => {
             News &amp; <span className="text-signal text-glow">Updates</span>
           </>
         }
-        description="Announcements, release notes and the occasional look behind the curtain — plus every App Store release and update, posted the moment Apple publishes it."
+        description="Announcements, release notes and the occasional look behind the curtain — plus every release and update, posted the moment it goes live."
         stamp={["Devlogs", "Patches", "Releases"]}
       />
 
@@ -91,7 +91,7 @@ const News = () => {
 
           <Reveal className="mt-5" delay={110}>
             <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
-              Status pulled from App Store Connect — these move on their own as builds progress.
+              Status pulled from our developer console — these move on their own as builds progress.
             </p>
           </Reveal>
         </section>

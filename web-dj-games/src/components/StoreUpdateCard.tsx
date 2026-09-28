@@ -43,7 +43,7 @@ export const StoreUpdateCard = ({ update, dateLabel, className }: StoreUpdateCar
           <span className="text-muted-foreground">/ {isLaunch ? "Release" : "Update"}</span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-signal/40 px-2 py-0.5 text-[0.55rem] tracking-[0.16em] text-signal">
             <span className="h-1.5 w-1.5 rounded-full bg-signal" />
-            Live from the App Store
+            Live from the store
           </span>
         </p>
 

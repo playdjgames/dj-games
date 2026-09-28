@@ -34,9 +34,9 @@ export interface SiteConfig {
 
 export const SITE: SiteConfig = {
   brandName: "DJ Games",
-  tagline: "Original iOS games and apps — and the websites too.",
+  tagline: "Original mobile games and apps — and the websites too.",
   description:
-    "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara and Astronix are out now on the App Store — more on the way, and we design and build websites too.",
+    "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara and Astronix are out now on mobile — more on the way, and we design and build websites too.",
   website: "https://playdjgames.com",
   email: "hello@playdjgames.com",
   supportEmail: "support@playdjgames.com",

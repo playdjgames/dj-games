@@ -94,9 +94,9 @@ const storeUpdateFor = (game: LibraryGame): StoreUpdate | null => {
       id: `store-launch-${app.trackId}`,
       kind: "launch",
       game,
-      title: `${game.title} is live on the App Store`,
+      title: `${game.title} is live`,
       summary: price
-        ? `${price} on iPhone — version ${version} is available to download now.`
+        ? `${price} on mobile — version ${version} is available to download now.`
         : `Version ${version} is available to download now.`,
       version,
       date: current,
@@ -108,7 +108,7 @@ const storeUpdateFor = (game: LibraryGame): StoreUpdate | null => {
     kind: "update",
     game,
     title: `${game.title} updated to ${version}`,
-    summary: "The new build is rolling out on the App Store right now.",
+    summary: "The new build is rolling out right now.",
     version,
     date: current,
   };

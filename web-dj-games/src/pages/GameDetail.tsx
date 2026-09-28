@@ -360,7 +360,7 @@ const GameDetail = () => {
           <Reveal delay={60}>
             <article className="game-accent surface-card p-6 sm:p-8" style={accentStyle}>
               <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
-                Released {formatSyncDate(game.live.currentVersionReleaseDate)} · pulled live from the App Store
+                Released {formatSyncDate(game.live.currentVersionReleaseDate)} · pulled live from the store listing
               </p>
               <div className="mt-4 space-y-3 text-[0.98rem] leading-relaxed text-muted-foreground">
                 {game.live.releaseNotes
@@ -455,10 +455,10 @@ const GameDetail = () => {
                     ? isOtherSite
                       ? "Live on the open web, designed and built in-house by DJ Games. Need one like it? We build for others too."
                       : "This site is the project — designed and built in-house by DJ Games, statuses and all. Need one like it? We build for others too."
-                    : `Available now on the App Store for iPhone${game.price ? ` — ${game.price}` : ""}.`
+                    : `Available now on mobile${game.price ? ` — ${game.price}` : ""}.`
                   : isConcept
                     ? "Early concept — not launching this week. First looks and the release window land here and in the newsletter first."
-                    : "A real build is in review with Apple. Get one email the day it goes live — no spam, no drip campaign."}
+                    : "A real build is in review. Get one email the day it goes live — no spam, no drip campaign."}
               </p>
 
               {isLive ? (

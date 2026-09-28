@@ -33,7 +33,7 @@ const VALUES: { title: string; body: string }[] = [
 
 const Home = () => {
   useSeo({
-    title: "DJ Games — Original iOS Games, Apps and Websites",
+    title: "DJ Games — Original Mobile Games, Apps and Websites",
     description: SITE.description,
   });
 
@@ -70,7 +70,7 @@ const Home = () => {
             </h1>
 
             <p className="mt-4 text-xl font-light text-foreground/90 sm:text-2xl">
-              Original iOS games and apps. Built to play.
+              Original mobile games and apps. Built to play.
             </p>
 
             {/* Web design lives right under the title — the studio's quiet second trade. Plain text, NOT a link, matches the line. */}
@@ -115,7 +115,7 @@ const Home = () => {
       {live ? (
         <section className="container py-16 sm:py-20">
           <Reveal>
-            <SectionHeading eyebrow="Available now" title="Everything DIY" note="Out now · iPhone" />
+            <SectionHeading eyebrow="Available now" title="Everything DIY" note="Out now · Mobile" />
           </Reveal>
 
           <Reveal delay={70}>
@@ -150,7 +150,7 @@ const Home = () => {
 
               <div className="flex flex-col items-stretch justify-center gap-4 border-t border-border/60 pt-7 lg:items-start lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                 <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
-                  {live.price ?? "Free"} · iPhone
+                  {live.price ?? "Free"} · Mobile
                 </p>
                 <StoreButtons
                   appStoreUrl={live.appStoreUrl}
@@ -176,8 +176,8 @@ const Home = () => {
           <Reveal>
             <SectionHeading
               eyebrow="The pipeline"
-              title="Submitted to Apple"
-              note="In review — launching on the App Store next"
+              title="Launching next"
+              note="In review — launching on mobile next"
             />
           </Reveal>
 

@@ -160,7 +160,7 @@ export const Footer = () => {
             © {SITE.copyrightYear} DJ Games LLC. All rights reserved. Veteran owned, independently operated.
           </p>
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
-            Original iOS games <span className="text-ember">/</span> Built to play
+            Original mobile games <span className="text-ember">/</span> Built to play
           </p>
         </div>
       </div>

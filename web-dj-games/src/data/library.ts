@@ -84,7 +84,7 @@ const withSiteHook = (description: string, tagline: string): string => {
 const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   slug: slugify(app.trackName),
   title: app.trackName,
-  tagline: app.description.split(/[.\n]/)[0]?.trim().slice(0, 140) || "Available now on the App Store.",
+  tagline: app.description.split(/[.\n]/)[0]?.trim().slice(0, 140) || "Available now on mobile.",
   description: app.description,
   genre: app.primaryGenreName,
   status: "available",
@@ -94,11 +94,11 @@ const gameFromApp = (app: AppStoreApp): LibraryGame => ({
   // mobile game, everything else is an app.
   division: /game/i.test(app.primaryGenreName) ? "mobile-games" : "apps",
   accent: "#8BE1FF",
-  platforms: ["iOS"],
+  platforms: ["Mobile"],
   featured: true,
   releaseDate: app.releaseDate,
-  seoTitle: `${app.trackName} — Live on iOS | DJ Games`,
-  seoDescription: `${app.trackName} by DJ Games is available now on the App Store for iPhone.`,
+  seoTitle: `${app.trackName} — Live Now | DJ Games`,
+  seoDescription: `${app.trackName} by DJ Games is available now on mobile.`,
   coverImage: app.artworkUrl ?? "",
   coverFit: "contain",
   screenshots: app.screenshotUrls,

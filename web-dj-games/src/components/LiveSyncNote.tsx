@@ -27,7 +27,7 @@ export const LiveSyncNote = ({ isSyncing, className }: LiveSyncNoteProps) => (
       aria-hidden="true"
       className={cn("text-signal", isSyncing ? "animate-spin" : undefined)}
     />
-    {isSyncing ? "Checking the App Store…" : "Synced live from the App Store"}
+    {isSyncing ? "Checking the store…" : "Synced live from the store"}
   </p>
 );
 
@@ -44,6 +44,6 @@ export const PrereleaseSyncNote = ({ className }: PrereleaseSyncNoteProps) => (
     )}
   >
     <FileClock size={12} aria-hidden="true" className="text-ember" />
-    Pre-release details from App Store Connect
+    Pre-release details from our developer console
   </p>
 );

@@ -38,21 +38,21 @@ export const POSTS: NewsPost[] = [
       "Point the phone at a shelf, a doorway, a board or an opening, tap two points, and you get a length. Save it straight to the project you're working on so it lives next to the steps and the shopping list instead of on the back of a receipt you're going to lose.",
       "There are two ways to use it. Live measure is for when you're standing in front of the job — raise the phone, tap, done. Set scale on a photo is for everything else: got a picture of the wall from last week, or a shot your contractor sent you? Drop the scale on something of a known size in the frame and measure the rest of the picture after the fact. That second one quietly solves a problem a laser measure can't touch — you can measure a room you're not standing in.",
       "One honest note, and it's in the app too: the numbers are approximate. They're right for planning — how wide that shelf run is, how much board to buy, whether the fridge fits through the door. For a cut you can't take back, confirm it with a real tape.",
-      "Everything DIY stays free on iPhone. Update from the App Store and the measure tool is waiting in your next project.",
+      "Everything DIY stays free on mobile. Update the app and the measure tool is waiting in your next project.",
     ],
   },
   {
     slug: "everything-diy-is-live",
-    title: "Everything DIY is live on the App Store",
+    title: "Everything DIY is live",
     date: "2026-09-10",
     category: "Release",
     excerpt: "Our first app is out now. Bring on the projects.",
     image: "/apps/everything-diy-2.png",
     gameSlug: "everything-diy",
     body: [
-      "Everything DIY is officially available on the App Store. If you have ever stood in a hardware aisle wondering what tool you actually need — or what a job is going to cost before you start pulling things apart — this is the app for you.",
+      "Everything DIY is officially out now. If you have ever stood in a hardware aisle wondering what tool you actually need — or what a job is going to cost before you start pulling things apart — this is the app for you.",
       "Type in any project and the app puts together step-by-step instructions plus video walkthroughs. Not sure what a part is called? Point your camera at it and the app helps identify tools and materials, then tells you where to get them and roughly what they cost.",
-      "Everything DIY is free on iPhone. If you take on a project with it, we'd genuinely love to hear how it went — feedback goes straight into how we improve the next version.",
+      "Everything DIY is free on mobile. If you take on a project with it, we'd genuinely love to hear how it went — feedback goes straight into how we improve the next version.",
     ],
   },
   {
@@ -68,8 +68,8 @@ export const POSTS: NewsPost[] = [
     body: [
       "Time to talk about what's next. Run Dummy is a 3D maze runner starring a crash-test dummy loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.",
       "The walls can't hurt you — the traps will. Every trial hides spinning blades, floor spikes, dart launchers, crumbling tiles and pressure switches between you and the exit. Chain clean wall streaks to unlock new runners and chase up to 3 stars per trial.",
-      "35 trials across 5 chapters are in and tuned, and the build is now with Apple for review. Watch this space for a release date.",
-      "Update: Run Dummy is out now — free on the App Store, with every power-up included and no purchases or ads.",
+      "35 trials across 5 chapters are in and tuned, and the build is now in review. Watch this space for a release date.",
+      "Update: Run Dummy is out now — free, with every power-up included and no purchases or ads.",
     ],
   },
   {
@@ -83,9 +83,9 @@ export const POSTS: NewsPost[] = [
     body: [
       "Studio update time. We've been quiet on here, but behind the scenes there's a lot in motion — and for the first time we can put a name to the next project.",
       "Blood War is the newest thing on the slate. It's early — too early to share screens or even say much about what it is — but it's been eating most of our prototype time lately and we're excited about where it's heading. We'll reveal more once it's further along.",
-      "In the meantime, Run Dummy, Vexara, Astronix and Thinksort are all moving through Apple review, and Everything DIY keeps getting refined based on the feedback coming in. Thanks for following along — 2026 is shaping up to be our busiest year yet.",
-      "Update: Vexara and Astronix have both since launched — free on the App Store.",
-      "Update: Run Dummy has launched too — also free on the App Store.",
+      "In the meantime, Run Dummy, Vexara, Astronix and Thinksort are all moving through review, and Everything DIY keeps getting refined based on the feedback coming in. Thanks for following along — 2026 is shaping up to be our busiest year yet.",
+      "Update: Vexara and Astronix have both since launched — free.",
+      "Update: Run Dummy has launched too — also free.",
     ],
   },
 ];
