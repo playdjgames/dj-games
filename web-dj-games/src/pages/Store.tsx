@@ -9,7 +9,7 @@ import { PRESS_HOUSE_IN_DEV, PressHouseAd } from "@/components/PressHouseAd";
 import { CartDrawer } from "@/components/store/CartDrawer";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
-import { cartCount, STORE_IS_STOCKED, useStoreCatalog, type StoreProduct } from "@/data/store";
+import { cartCount, STORE_IS_STOCKED, useStoreCatalog, type LineCheckout, type StoreProduct } from "@/data/store";
 import { useCart } from "@/hooks/use-cart";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
@@ -44,8 +44,8 @@ const Store = () => {
   }, [searchParams, setSearchParams]);
 
   const handleAdd = useCallback(
-    (product: StoreProduct, selections: string[], variantId: number): void => {
-      cart.add(product, selections, 1, variantId);
+    (product: StoreProduct, selections: string[], checkout: LineCheckout): void => {
+      cart.add(product, selections, 1, checkout);
       setActive(null);
       setIsBagOpen(true);
       toast.success(`${product.name} added to your bag`);

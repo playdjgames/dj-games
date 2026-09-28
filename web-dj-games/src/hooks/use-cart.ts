@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import type { CartLine, StoreProduct } from "@/data/store";
+import type { CartLine, LineCheckout, StoreProduct } from "@/data/store";
 
 const STORAGE_KEY = "dj-games-cart";
 
@@ -21,7 +21,7 @@ const readStored = (): CartLine[] => {
         typeof (line as CartLine).productId === "string" &&
         typeof (line as CartLine).quantity === "number" &&
         // Lines saved before checkout existed have no printable variant — drop them.
-        typeof (line as CartLine).variantId === "number",
+        (typeof (line as CartLine).variantId === "number" || typeof (line as CartLine).variantId === "string"),
     );
   } catch (error: unknown) {
     console.warn("cart restore failed", error);
@@ -31,7 +31,7 @@ const readStored = (): CartLine[] => {
 
 export interface Cart {
   lines: CartLine[];
-  add: (product: StoreProduct, selections: string[], quantity: number, variantId?: number) => void;
+  add: (product: StoreProduct, selections: string[], quantity: number, checkout: LineCheckout) => void;
   setQuantity: (productId: string, selections: string[], quantity: number) => void;
   remove: (productId: string, selections: string[]) => void;
   clear: () => void;
@@ -56,7 +56,7 @@ export const useCart = (): Cart => {
     }
   }, [lines]);
 
-  const add = useCallback((product: StoreProduct, selections: string[], quantity: number, variantId?: number): void => {
+  const add = useCallback((product: StoreProduct, selections: string[], quantity: number, checkout: LineCheckout): void => {
     setLines((current) => {
       const key = lineKey(product.id, selections);
       const existing = current.find((line) => lineKey(line.productId, line.selections) === key);
@@ -74,12 +74,15 @@ export const useCart = (): Cart => {
         {
           productId: product.id,
           name: product.name,
-          image: product.images[0],
-          price: product.price,
+          image: checkout.image ?? product.images[0],
+          price: checkout.price,
           quantity,
           selections,
-          pressHouseId: product.pressHouseId,
-          variantId,
+          kind: checkout.kind,
+          pressHouseId: checkout.pressHouseId,
+          variantId: checkout.variantId,
+          custom: checkout.custom,
+          design: checkout.design,
         },
       ];
     });

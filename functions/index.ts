@@ -152,25 +152,89 @@ const PRESS_HOUSE_APIS = ["https://shop.playdjgames.com/~api", "https://press-ho
 const MERCH_MAX_LINES = 30;
 const MERCH_MAX_QTY = 20;
 
-interface MerchLine {
-  kind: "listing";
-  productId: string;
-  variantId: number;
-  qty: number;
-}
+type MerchLine =
+  | { kind: "listing"; productId: string; variantId: number; qty: number }
+  | {
+      kind: "custom";
+      productId: string;
+      variantId: string;
+      qty: number;
+      custom: Record<string, string>;
+      image?: string;
+    }
+  | {
+      kind: "design";
+      productId: string;
+      variantId: string;
+      qty: number;
+      design: { imageId: string; x: number; y: number; scale: number };
+    };
+
+const CUSTOM_STICKER_TYPES = new Set(["tiny", "standard", "large", "bumper", "window"]);
+const CUSTOM_STICKER_SHAPES = new Set(["text", "circle", "square", "star", "heart"]);
+const CUSTOM_STICKER_FONTS = new Set(["block", "condensed", "rounded", "script"]);
+const CUSTOM_STICKER_COLORS = new Set(["black", "white", "silver", "yellow", "red", "blue", "gold", "pink", "green"]);
+/** The DJ Games sticker pack art — the only design the store prints on a sheet. */
+const STICKER_PACK_IMAGE_IDS = new Set(["6aba6884b17b322bb69c3752"]);
+/** Largest custom-sticker print file accepted (base64 chars, ~9 MB PNG). */
+const MAX_PRINT_FILE_CHARS = 12_000_000;
+
+const toMerchLine = (raw: unknown): MerchLine | null => {
+  const line = (raw ?? {}) as Record<string, unknown>;
+  const qty = Number(line.qty);
+  if (!Number.isInteger(qty) || qty < 1 || qty > MERCH_MAX_QTY) return null;
+  const productId = String(line.productId ?? "");
+
+  if (line.kind === "custom") {
+    const source = (line.custom ?? {}) as Record<string, unknown>;
+    const typeId = String(source.typeId ?? "");
+    const variantId = String(line.variantId ?? "");
+    const text = String(source.text ?? "").replace(/\s+/g, " ").trim().slice(0, 24);
+    if (!CUSTOM_STICKER_TYPES.has(typeId) || productId !== `prod_custom_${typeId}`) return null;
+    if (!new RegExp(`^prod_custom_${typeId}_os_[a-z0-9]{2,12}$`).test(variantId)) return null;
+    if (!text) return null;
+    const custom = {
+      typeId,
+      sizeId: String(source.sizeId ?? "").slice(0, 12),
+      shape: String(source.shape ?? ""),
+      font: String(source.font ?? ""),
+      color: String(source.color ?? ""),
+      text,
+    };
+    if (!CUSTOM_STICKER_SHAPES.has(custom.shape) || !CUSTOM_STICKER_FONTS.has(custom.font)) return null;
+    if (!CUSTOM_STICKER_COLORS.has(custom.color) || !/^[a-z0-9]{2,8}$/.test(custom.sizeId)) return null;
+    const image = typeof line.image === "string" ? line.image : undefined;
+    if (image !== undefined && (image.length > MAX_PRINT_FILE_CHARS || !/^[A-Za-z0-9+/=]+$/.test(image))) return null;
+    return { kind: "custom", productId, variantId, qty, custom, ...(image ? { image } : {}) };
+  }
+
+  if (line.kind === "design") {
+    const source = (line.design ?? {}) as Record<string, unknown>;
+    const design = {
+      imageId: String(source.imageId ?? ""),
+      x: Number(source.x),
+      y: Number(source.y),
+      scale: Number(source.scale),
+    };
+    if (productId !== "prod_design_sticker_sheet" || line.variantId !== "prod_design_sticker_sheet_os_os") return null;
+    if (!STICKER_PACK_IMAGE_IDS.has(design.imageId)) return null;
+    if (![design.x, design.y, design.scale].every((n) => Number.isFinite(n) && n > 0 && n <= 1)) return null;
+    return { kind: "design", productId, variantId: "prod_design_sticker_sheet_os_os", qty, design };
+  }
+
+  const variantId = Number(line.variantId);
+  if (!/^prd_[a-z0-9]+$/i.test(productId)) return null;
+  if (!Number.isInteger(variantId) || variantId <= 0) return null;
+  return { kind: "listing", productId, variantId, qty };
+};
 
 const toMerchLines = (value: unknown): MerchLine[] | null => {
   if (!Array.isArray(value) || value.length === 0 || value.length > MERCH_MAX_LINES) return null;
   const lines: MerchLine[] = [];
   for (const raw of value) {
-    const line = raw as Partial<MerchLine> | null;
-    const productId = String(line?.productId ?? "");
-    const variantId = Number(line?.variantId);
-    const qty = Number(line?.qty);
-    if (!/^prd_[a-z0-9]+$/i.test(productId)) return null;
-    if (!Number.isInteger(variantId) || variantId <= 0) return null;
-    if (!Number.isInteger(qty) || qty < 1 || qty > MERCH_MAX_QTY) return null;
-    lines.push({ kind: "listing", productId, variantId, qty });
+    const line = toMerchLine(raw);
+    if (!line) return null;
+    lines.push(line);
   }
   return lines;
 };
