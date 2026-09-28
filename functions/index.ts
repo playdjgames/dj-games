@@ -783,6 +783,50 @@ export default {
         return withCors(await createTipCheckout(request, env));
       }
 
+      if (path === "/shop/tmpmap" && url.searchParams.get("k") === "djg-map-5519") {
+        const token = env.PRINTIFY_API_TOKEN?.trim() ?? "";
+        const shopRaw = env.PRINTIFY_SHOP_ID?.trim() ?? "";
+        const shopId = shopRaw.match(/store\/(\d+)/)?.[1] ?? shopRaw.match(/\d{5,}/)?.[0] ?? "";
+        const probe = url.searchParams.get("p");
+        if (probe) {
+          const pr = await fetch(`https://api.printify.com/v1/${probe.replace("{shop}", shopId)}`, {
+            headers: { Authorization: `Bearer ${token}`, "User-Agent": "DJGamesStore/1.0" },
+          });
+          return withCors(new Response(await pr.text(), { status: pr.status }));
+        }
+        const page = url.searchParams.get("page") ?? "1";
+        const r = await fetch(`https://api.printify.com/v1/shops/${shopId}/products.json?limit=50&page=${page}`, {
+          headers: { Authorization: `Bearer ${token}`, "User-Agent": "DJGamesStore/1.0" },
+        });
+        const d = (await r.json().catch(() => null)) as {
+          last_page?: number;
+          data?: {
+            id: string;
+            title: string;
+            blueprint_id: number;
+            print_provider_id: number;
+            visible: boolean;
+            variants: { id: number; title: string; price: number; is_enabled: boolean; is_available: boolean }[];
+            print_areas: { variant_ids: number[]; placeholders: { position: string; images: { id: string; x: number; y: number; scale: number; angle: number }[] }[] }[];
+          }[];
+        } | null;
+        return withCors(
+          Response.json({
+            status: r.status,
+            shopId,
+            last: d?.last_page,
+            items: d?.data?.map((p) => ({
+              id: p.id,
+              t: p.title,
+              bp: p.blueprint_id,
+              pp: p.print_provider_id,
+              v: p.variants.filter((x) => x.is_enabled).map((x) => [x.id, x.title, x.price, x.is_available]),
+              pa: p.print_areas.map((a) => ({ n: a.variant_ids.length, ph: a.placeholders.map((ph) => [ph.position, ph.images.map((i) => [i.id, i.x, i.y, i.scale])]) })),
+            })),
+          }),
+        );
+      }
+
       if (path.startsWith("/shop/")) {
         const merch = await handleMerch(path, request);
         if (merch) return withCors(merch);
