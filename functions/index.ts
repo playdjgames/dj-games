@@ -62,6 +62,8 @@ type Env = {
   R2_PUBLIC_BASE_URL?: string;
   /** Stripe secret key — server-only, used to create card-tip Checkout sessions. */
   STRIPE_SECRET_KEY?: string;
+  PRINTIFY_API_TOKEN?: string;
+  PRINTIFY_SHOP_ID?: string;
 };
 
 /** Hosts allowed as Checkout success/cancel return targets. */

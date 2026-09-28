@@ -50,8 +50,8 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: "card",
     name: "Card",
-    meta: "Coming soon",
-    live: false,
+    meta: "Live now",
+    live: true,
     cta: "Pay with card",
     url: () => "",
     serverCheckout: "stripe",

@@ -14,15 +14,18 @@ const isPreviewHost = (): boolean =>
   (window.location.hostname.endsWith(".rork.live") || window.location.hostname === "localhost");
 
 /**
- * Card is only offered to the public with a LIVE Stripe key. A test key is
- * usable on the preview host only, clearly labelled, so no visitor ever types
- * a real card into a checkout that can't charge it.
+ * Card is live by default (the backend Stripe key is live). It only drops back
+ * to "Coming soon" if the backend reports no key, and a test key is usable on
+ * the preview host only, clearly labelled, so no visitor ever types a real
+ * card into a checkout that can't charge it.
  */
 const resolveCard = (method: PaymentMethod, mode: CardMode | undefined): PaymentMethod => {
   if (method.serverCheckout !== "stripe") return method;
-  if (mode === "live") return { ...method, live: true, meta: "Live now" };
-  if (mode === "test" && isPreviewHost()) return { ...method, live: true, meta: "Test mode · preview only" };
-  return { ...method, live: false, meta: "Coming soon" };
+  if (mode === "off" || (mode === "test" && !isPreviewHost())) {
+    return { ...method, live: false, meta: "Coming soon" };
+  }
+  if (mode === "test") return { ...method, live: true, meta: "Test mode · preview only" };
+  return { ...method, live: true, meta: "Live now" };
 };
 
 /* ------------------------------- constants -------------------------------- */
@@ -78,13 +81,14 @@ const Donate = () => {
   useSeo({
     title: "Support DJ Games — Donate",
     description:
-      "Tips keep the house moving. Support DJ Games with a tip via PayPal, Venmo or Cash App ($PlayDJGames).",
+      "Tips keep the house moving. Support DJ Games with a tip by card, PayPal, Venmo or Cash App ($PlayDJGames).",
   });
 
   const numericAmount = Number.parseInt(amount, 10);
   const amountValid = Number.isInteger(numericAmount) && numericAmount >= 1;
 
-  const selected = methods.find((m) => m.id === selectedId) ?? null;
+  // If card was picked but the backend turns out to have no key, fall back to the first live method.
+  const selected = methods.find((m) => m.id === selectedId && m.live) ?? methods.find((m) => m.live) ?? null;
   const canPay = Boolean(selected?.live) && amountValid;
 
   const cardCheckout = useMutation({
@@ -181,7 +185,7 @@ const Donate = () => {
           <SectionLabel>Pay with</SectionLabel>
           <div role="radiogroup" aria-label="Payment method" className="grid gap-3">
             {methods.map((method) => {
-              const isSelected = method.id === selectedId;
+              const isSelected = method.id === selected?.id;
               const selectable = method.live;
               return (
                 <button
