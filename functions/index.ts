@@ -35,9 +35,19 @@
 
 export { Subscribers } from "./subscribers";
 export { MediaLibrary } from "./media";
+export { Orders } from "./orders";
 
 import type { MediaRow } from "./media";
 import { contentTypeForKey, safeFilename, safeSlug, specForContentType } from "./_lib/media-types";
+import {
+  assertAddress,
+  createCheckoutSession,
+  newOrderId,
+  priceLines,
+  quote,
+  shopErrorResponse,
+  uploadPrintFile,
+} from "./_lib/shop";
 import {
   copyObject,
   createBucket,
@@ -140,17 +150,12 @@ const createTipCheckout = async (request: Request, env: Env): Promise<Response> 
 /* ------------------------------ merch checkout ------------------------------ */
 
 /**
- * PRESS HOUSE prints and fulfils the DJ Games merch (Stripe + Printify). The
- * store on playdjgames.com talks to it only through these routes so shoppers
- * never leave the DJ Games site to buy. Requests are rebuilt from scratch — no
- * visitor or Cloudflare headers are forwarded (PRESS HOUSE rejects those).
+ * The store's own checkout: Stripe takes payment on the DJ Games store page,
+ * then the order goes straight to our Printify shop for printing and shipping.
+ * PRESS HOUSE is not involved at any point. Prices, variants and shipping are
+ * always resolved server-side from the live Printify shop — the browser only
+ * says which item and variant it picked.
  */
-/**
- * Tried in order. press-house.rork.app answers subrequests from this backend
- * with Cloudflare 1016 (same-platform routing), so the shop.playdjgames.com
- * proxy goes first and the origin is only a fallback.
- */
-const PRESS_HOUSE_APIS = ["https://shop.playdjgames.com/~api", "https://press-house.rork.app/~api"];
 const MERCH_MAX_LINES = 30;
 const MERCH_MAX_QTY = 20;
 
@@ -256,60 +261,77 @@ const toMerchAddress = (value: unknown): Record<string, string> => {
   };
 };
 
-const callPressHouse = async (path: string, init?: { method: string; body?: unknown }): Promise<Response> => {
-  for (const base of PRESS_HOUSE_APIS) {
-    try {
-      const upstream = await fetch(`${base}${path}`, {
-        method: init?.method ?? "GET",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: init?.body === undefined ? undefined : JSON.stringify(init.body),
-      });
-      const text = await upstream.text();
-      let data: unknown = null;
-      try {
-        data = text ? JSON.parse(text) : null;
-      } catch {
-        data = null;
-      }
-      if (data !== null) {
-        return Response.json(data, { status: upstream.status, headers: { "Cache-Control": "no-store" } });
-      }
-      console.error("press house bad response", { base, path: path.split("?")[0], status: upstream.status });
-    } catch (error: unknown) {
-      console.error("press house unreachable", { base, message: error instanceof Error ? error.message : String(error) });
-    }
-  }
-  return Response.json({ error: "CHECKOUT IS UNAVAILABLE RIGHT NOW" }, { status: 502 });
-};
-
-const handleMerch = async (path: string, request: Request): Promise<Response | null> => {
+const handleMerch = async (path: string, request: Request, env: Env): Promise<Response | null> => {
   if (path === "/shop/quote" && request.method === "POST") {
     const body = await jsonBody<{ lines?: unknown; address?: unknown }>(request);
     const lines = toMerchLines(body?.lines);
     if (!lines) return Response.json({ error: "YOUR BAG IS EMPTY" }, { status: 400 });
-    return callPressHouse("/checkout/quote", {
-      method: "POST",
-      body: { lines, address: toMerchAddress(body?.address) },
-    });
+    const address = toMerchAddress(body?.address);
+    try {
+      assertAddress(address);
+      const priced = await priceLines(env, lines);
+      return Response.json(await quote(env, priced, address), { headers: { "Cache-Control": "no-store" } });
+    } catch (error: unknown) {
+      return shopErrorResponse(error);
+    }
   }
 
   if (path === "/shop/order" && request.method === "POST") {
     const body = await jsonBody<{ lines?: unknown; address?: unknown; origin?: string }>(request);
     const lines = toMerchLines(body?.lines);
     if (!lines) return Response.json({ error: "YOUR BAG IS EMPTY" }, { status: 400 });
+    const address = toMerchAddress(body?.address);
     const requestedOrigin = String(body?.origin ?? "").replace(/\/+$/, "");
     const origin = TIP_RETURN_ORIGINS.has(requestedOrigin) ? requestedOrigin : TIP_DEFAULT_ORIGIN;
-    return callPressHouse("/checkout/order", {
-      method: "POST",
-      body: { lines, address: toMerchAddress(body?.address), pay: "stripe", origin },
-    });
+    try {
+      assertAddress(address);
+      const priced = await priceLines(env, lines, true);
+      const pricedQuote = await quote(env, priced, address);
+      const orderId = newOrderId();
+
+      // Upload custom print files now and record the image ids on the jobs, so
+      // fulfilment never needs the (large) raw files. The stored lines carry
+      // the authoritative server-side pricing — nothing from the request.
+      for (const [index, line] of priced.entries()) {
+        if (line.printFile && line.job.kind === "made") {
+          line.job.imageId = await uploadPrintFile(env, `djg-${orderId}-${index}`, line.printFile);
+        }
+      }
+
+      const session = await createCheckoutSession(env, {
+        orderId,
+        lines: priced,
+        shippingCents: pricedQuote.shipping_cents,
+        email: address.email,
+        origin,
+      });
+      await callDO(env, "Orders", "global", "/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: orderId,
+          email: address.email,
+          address,
+          lines: priced.map(({ printFile: _file, ...rest }) => rest),
+          merchandise_cents: pricedQuote.merchandise_cents,
+          shipping_cents: pricedQuote.shipping_cents,
+          total_cents: pricedQuote.total_cents,
+          session_id: session.id,
+        }),
+      });
+      return Response.json({ url: session.url, orderId });
+    } catch (error: unknown) {
+      return shopErrorResponse(error);
+    }
   }
 
   const orderMatch = path.match(/^\/shop\/orders\/([A-Za-z0-9_-]{4,80})$/);
   if (orderMatch && request.method === "GET") {
     const sessionId = new URL(request.url).searchParams.get("session_id") ?? "";
     const query = /^[A-Za-z0-9_]{1,255}$/.test(sessionId) ? `?session_id=${encodeURIComponent(sessionId)}` : "";
-    return callPressHouse(`/orders/${encodeURIComponent(orderMatch[1])}${query}`);
+    return callDO(env, "Orders", "global", `/status/${encodeURIComponent(orderMatch[1])}${query}`, {
+      method: "GET",
+    });
   }
 
   return null;
@@ -783,52 +805,8 @@ export default {
         return withCors(await createTipCheckout(request, env));
       }
 
-      if (path === "/shop/tmpmap" && url.searchParams.get("k") === "djg-map-5519") {
-        const token = env.PRINTIFY_API_TOKEN?.trim() ?? "";
-        const shopRaw = env.PRINTIFY_SHOP_ID?.trim() ?? "";
-        const shopId = shopRaw.match(/store\/(\d+)/)?.[1] ?? shopRaw.match(/\d{5,}/)?.[0] ?? "";
-        const probe = url.searchParams.get("p");
-        if (probe) {
-          const pr = await fetch(`https://api.printify.com/v1/${probe.replace("{shop}", shopId)}`, {
-            headers: { Authorization: `Bearer ${token}`, "User-Agent": "DJGamesStore/1.0" },
-          });
-          return withCors(new Response(await pr.text(), { status: pr.status }));
-        }
-        const page = url.searchParams.get("page") ?? "1";
-        const r = await fetch(`https://api.printify.com/v1/shops/${shopId}/products.json?limit=50&page=${page}`, {
-          headers: { Authorization: `Bearer ${token}`, "User-Agent": "DJGamesStore/1.0" },
-        });
-        const d = (await r.json().catch(() => null)) as {
-          last_page?: number;
-          data?: {
-            id: string;
-            title: string;
-            blueprint_id: number;
-            print_provider_id: number;
-            visible: boolean;
-            variants: { id: number; title: string; price: number; is_enabled: boolean; is_available: boolean }[];
-            print_areas: { variant_ids: number[]; placeholders: { position: string; images: { id: string; x: number; y: number; scale: number; angle: number }[] }[] }[];
-          }[];
-        } | null;
-        return withCors(
-          Response.json({
-            status: r.status,
-            shopId,
-            last: d?.last_page,
-            items: d?.data?.map((p) => ({
-              id: p.id,
-              t: p.title,
-              bp: p.blueprint_id,
-              pp: p.print_provider_id,
-              v: p.variants.filter((x) => x.is_enabled).map((x) => [x.id, x.title, x.price, x.is_available]),
-              pa: p.print_areas.map((a) => ({ n: a.variant_ids.length, ph: a.placeholders.map((ph) => [ph.position, ph.images.map((i) => [i.id, i.x, i.y, i.scale])]) })),
-            })),
-          }),
-        );
-      }
-
       if (path.startsWith("/shop/")) {
-        const merch = await handleMerch(path, request);
+        const merch = await handleMerch(path, request, env);
         if (merch) return withCors(merch);
       }
 

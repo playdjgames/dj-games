@@ -5,8 +5,9 @@
  * The Store page IS the merch catalog, synced from PRESS HOUSE
  * (https://shop.playdjgames.com) by `scripts/sync-presshouse.mjs` into
  * `presshouse.generated.ts`. Browsing, the bag and checkout all happen on
- * /store; the backend (`/~api/shop/*`) hands the order to PRESS HOUSE for
- * Stripe payment + Printify printing. Re-run the sync after catalog changes.
+ * /store; the backend (`/~api/shop/*`) runs the store's OWN checkout — Stripe
+ * takes payment on the store page, then the order goes straight to the
+ * Printify shop for printing. Re-run the sync after catalog changes.
  * ============================================================================
  */
 
@@ -25,7 +26,7 @@ export interface ProductOptionValue {
   label: string;
   /** Out-of-stock values render struck through and unselectable. */
   available: boolean;
-  /** Added to the base price when picked (e.g. XXL +$3), mirroring PRESS HOUSE. */
+  /** Added to the base price when picked (e.g. XXL +$3). */
   priceDelta?: number;
 }
 
@@ -57,9 +58,9 @@ export interface StoreProduct {
   status: ProductStatus;
   statusLabel: string;
   options: ProductOptionGroup[];
-  /** Material / construction bullets from PRESS HOUSE. */
+  /** Material / construction bullets from the catalog. */
   details?: string[];
-  /** PRESS HOUSE listing id — required for an item to be buyable. */
+  /** Catalog listing id — required for an item to be buyable. */
   pressHouseId?: string;
   /** Exact printable variants (color x size) with their Printify ids. */
   variants?: ProductVariant[];
@@ -75,7 +76,7 @@ export interface StoreProduct {
 export type StickerShape = "text" | "circle" | "square" | "star" | "heart";
 export type StickerFont = "block" | "condensed" | "rounded" | "script";
 
-/** What the shopper built — sent to PRESS HOUSE alongside the rendered print file. */
+/** What the shopper built — sent to checkout alongside the rendered print file. */
 export interface CustomSticker {
   typeId: string;
   sizeId: string;
@@ -141,7 +142,7 @@ export const stickerColor = (id: string): StickerColor =>
 /** Same rule PRESS HOUSE uses: one line, collapsed spaces, 24 characters max. */
 export const normalizeStickerText = (text: string): string => text.replace(/\s+/g, " ").trim().slice(0, 24);
 
-/** PRESS HOUSE's variant id for a custom sticker size, e.g. prod_custom_standard_os_3x3in. */
+  /** The checkout's variant id for a custom sticker size, e.g. prod_custom_standard_os_3x3in. */
 export const stickerVariantId = (typeId: string, size: StickerSize): string =>
   `prod_custom_${typeId}_os_${size.label.replace(/[^\dA-Za-z]/g, "")}`.toLowerCase();
 

@@ -2,7 +2,7 @@ import { findStickerSize, type CartLine } from "@/data/store";
 import { BACKEND_PATH } from "@/lib/backend";
 import { renderStickerPng } from "@/lib/sticker-render";
 
-/** Shipping address — US only, the way PRESS HOUSE prints and ships. */
+/** Shipping address — US only, what Printify ships to. */
 export interface MerchAddress {
   email: string;
   name: string;
@@ -48,7 +48,7 @@ const call = async <T>(path: string, body?: unknown): Promise<T> => {
 };
 
 /**
- * Bag lines in PRESS HOUSE's checkout shape. Orders also carry the full-size
+ * Bag lines in the store's checkout shape. Orders also carry the full-size
  * print file for every custom sticker, rendered right here from the preview.
  */
 const toLines = (lines: CartLine[], withPrintFiles: boolean) =>

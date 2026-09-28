@@ -22,6 +22,13 @@ export class ShopError extends Error {
 
 const UNAVAILABLE = "CHECKOUT IS UNAVAILABLE RIGHT NOW";
 
+/** Maps a checkout failure to a shopper-facing JSON response. */
+export const shopErrorResponse = (error: unknown): Response => {
+  if (error instanceof ShopError) return Response.json({ error: error.message }, { status: error.status });
+  console.error("shop checkout failed", { message: error instanceof Error ? error.message : String(error) });
+  return Response.json({ error: UNAVAILABLE }, { status: 502 });
+};
+
 /* ------------------------------- catalog map ------------------------------- */
 
 /** Store listing id (from the synced catalog) → product in the Printify shop. */
@@ -94,8 +101,8 @@ const COLOR_LABELS: Record<string, string> = {
   green: "Green",
 };
 
-/** The goon sticker pack: four die-cuts on an 11 × 8.5 in white sheet. */
-const STICKER_PACK: PrintSpec = { blueprintId: 661, printProviderId: 73, variantId: 72841, cents: 1400, label: "11 × 8.5 in sheet" };
+/** The goon sticker pack: a finished product in the shop (four die-cuts, 11 × 8.5 in). */
+const STICKER_PACK = { productId: "6ab94b977ffd41ee910cabcc", variantId: 72841, cents: 1400, label: "11 × 8.5 in sheet" };
 
 /* ---------------------------------- types ---------------------------------- */
 
@@ -129,8 +136,7 @@ export type PrintJob =
       blueprintId: number;
       printProviderId: number;
       variantId: number;
-      /** "front" for a single custom sticker, "sheet" for the four-up pack. */
-      layout: "front" | "sheet";
+      /** Uploaded print-file image id — set at checkout, before the session opens. */
       imageId?: string;
       x: number;
       y: number;
@@ -138,6 +144,8 @@ export type PrintJob =
       /** Created on first fulfilment attempt so retries never duplicate it. */
       createdProductId?: string;
     };
+
+export type MadeJob = Extract<PrintJob, { kind: "made" }>;
 
 export interface PricedLine {
   title: string;
@@ -214,7 +222,7 @@ interface PrintifyProduct {
 /* --------------------------------- pricing --------------------------------- */
 
 /** Resolves every bag line to an authoritative price and print job. */
-export const priceLines = async (env: ShopEnv, lines: IncomingLine[]): Promise<PricedLine[]> => {
+export const priceLines = async (env: ShopEnv, lines: IncomingLine[], requireFiles = false): Promise<PricedLine[]> => {
   const products = new Map<string, Promise<PrintifyProduct>>();
   const productFor = (id: string): Promise<PrintifyProduct> => {
     const cached = products.get(id);
@@ -230,7 +238,7 @@ export const priceLines = async (env: ShopEnv, lines: IncomingLine[]): Promise<P
         const typeId = line.custom.typeId ?? "";
         const spec = CUSTOM_SIZES[typeId]?.[line.custom.sizeId ?? ""];
         if (!spec) throw new ShopError("THAT STICKER SIZE ISN'T AVAILABLE");
-        if (!line.image) throw new ShopError("YOUR STICKER ART DIDN'T COME THROUGH — TRY AGAIN");
+        if (requireFiles && !line.image) throw new ShopError("YOUR STICKER ART DIDN'T COME THROUGH — TRY AGAIN");
         return {
           title: `${CUSTOM_TITLES[typeId] ?? "Custom Sticker"} · “${line.custom.text}”`,
           size_label: spec.label,
@@ -243,7 +251,6 @@ export const priceLines = async (env: ShopEnv, lines: IncomingLine[]): Promise<P
             blueprintId: spec.blueprintId,
             printProviderId: spec.printProviderId,
             variantId: spec.variantId,
-            layout: "front",
             x: 0.5,
             y: 0.5,
             scale: 1,
@@ -258,17 +265,7 @@ export const priceLines = async (env: ShopEnv, lines: IncomingLine[]): Promise<P
           color_label: "",
           qty: line.qty,
           unit_cents: STICKER_PACK.cents,
-          job: {
-            kind: "made",
-            blueprintId: STICKER_PACK.blueprintId,
-            printProviderId: STICKER_PACK.printProviderId,
-            variantId: STICKER_PACK.variantId,
-            layout: "sheet",
-            imageId: line.design.imageId,
-            x: line.design.x,
-            y: line.design.y,
-            scale: line.design.scale,
-          },
+          job: { kind: "product", productId: STICKER_PACK.productId, variantId: STICKER_PACK.variantId },
         };
       }
 
