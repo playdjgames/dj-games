@@ -18,7 +18,10 @@
     // worker.js already handles this hostname (it rewrites requests onto the
     // backend's /media/ prefix). Without this route the Worker would never run
     // for it, so the DNS record alone would not be enough.
-    { "pattern": "media.playdjgames.com/*", "zone_name": "playdjgames.com" }
+    { "pattern": "media.playdjgames.com/*", "zone_name": "playdjgames.com" },
+    // PRESS HOUSE store: worker.js proxies this hostname onto press-house.rork.app.
+    // Needs a proxied (orange-cloud) DNS record for "shop" too, or it never resolves.
+    { "pattern": "shop.playdjgames.com/*", "zone_name": "playdjgames.com" }
   ],
   "observability": {
     "enabled": true

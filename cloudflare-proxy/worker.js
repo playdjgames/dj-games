@@ -42,6 +42,15 @@ const BACKEND_HOST = "dj-games-backend.rork.app";
 const MEDIA_HOST = "media.playdjgames.com";
 
 /**
+ * PRESS HOUSE (the print-on-demand store) is a separate Rork project served at
+ * `press-house.rork.app`. `shop.playdjgames.com` is proxied onto it exactly the
+ * way the apex is proxied onto the DJ Games site, so shoppers stay on the
+ * playdjgames.com domain end to end.
+ */
+const SHOP_HOST = "shop.playdjgames.com";
+const SHOP_ORIGIN_HOST = "press-house.rork.app";
+
+/**
  * Send `www.playdjgames.com` to the bare domain with a permanent redirect.
  * Keeps one canonical URL for search engines. Set to false to serve both.
  */
@@ -68,17 +77,19 @@ export default {
     // the site origin. `media.example.com/vexara/clip.mp4` maps onto the
     // backend's `/media/vexara/clip.mp4`.
     const isMediaHost = url.hostname === MEDIA_HOST;
+    const isShopHost = url.hostname === SHOP_HOST;
 
     // One canonical hostname: fold www. into the bare domain before any work.
-    if (!isMediaHost && REDIRECT_WWW_TO_APEX && url.hostname.startsWith("www.")) {
+    if (!isMediaHost && !isShopHost && REDIRECT_WWW_TO_APEX && url.hostname.startsWith("www.")) {
       const apex = new URL(url.toString());
       apex.hostname = url.hostname.slice(4);
       return Response.redirect(apex.toString(), 301);
     }
 
     // Promotional media is served by the backend Worker straight out of R2.
-    const isMediaPath = isMediaHost || url.pathname.startsWith("/media/");
-    const originHost = isMediaPath ? BACKEND_HOST : ORIGIN_HOST;
+    // The shop hostname goes to PRESS HOUSE untouched, /media/ included.
+    const isMediaPath = !isShopHost && (isMediaHost || url.pathname.startsWith("/media/"));
+    const originHost = isShopHost ? SHOP_ORIGIN_HOST : isMediaPath ? BACKEND_HOST : ORIGIN_HOST;
     const originPath = isMediaHost ? `/media${url.pathname}` : url.pathname;
 
     // Rebuild the request against the origin, preserving path + query exactly.
