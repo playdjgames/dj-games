@@ -56,8 +56,34 @@ const SHOP_ORIGIN_HOST = "press-house.rork.app";
  */
 const REDIRECT_WWW_TO_APEX = true;
 
-/** Hop-by-hop and Cloudflare-internal headers that must not be forwarded. */
-const STRIPPED_REQUEST_HEADERS = ["host", "connection", "keep-alive", "transfer-encoding", "upgrade"];
+/**
+ * Hop-by-hop headers plus every visitor-IP header Cloudflare stamps on the
+ * incoming request. The origins (press-house.rork.app, playdjgames-com.rork.app)
+ * sit on Cloudflare too, and a forwarded `CF-Connecting-IP` makes their edge
+ * answer `403 error code: 1000` — the exact "Access denied" shoppers hit on
+ * shop.playdjgames.com. Never forward them.
+ */
+const STRIPPED_REQUEST_HEADERS = [
+  "host",
+  "connection",
+  "keep-alive",
+  "transfer-encoding",
+  "upgrade",
+  "x-forwarded-for",
+  "x-real-ip",
+  "true-client-ip",
+  "forwarded",
+  "cdn-loop",
+];
+
+/** Any `cf-*` header (cf-connecting-ip, cf-ray, cf-visitor, cf-ipcountry, ...). */
+const isCloudflareHeader = (name) => name.toLowerCase().startsWith("cf-");
+
+/** The shop's origin, used as a last-resort redirect so a shopper never sees a dead page. */
+const SHOP_FALLBACK_ORIGIN = `https://${SHOP_ORIGIN_HOST}`;
+
+/** Origin answers worth one retry before giving up (blocked or temporarily down). */
+const isRetryableStatus = (status) => status === 403 || status >= 500;
 
 /**
  * Vite emits content-hashed filenames under /assets/, so those bytes can never
@@ -95,35 +121,62 @@ export default {
     // Rebuild the request against the origin, preserving path + query exactly.
     const target = new URL(originPath + url.search, `https://${originHost}`);
 
-    const headers = new Headers(request.headers);
-    for (const name of STRIPPED_REQUEST_HEADERS) headers.delete(name);
+    const headers = new Headers();
+    for (const [name, value] of request.headers) {
+      if (isCloudflareHeader(name) || STRIPPED_REQUEST_HEADERS.includes(name.toLowerCase())) continue;
+      headers.set(name, value);
+    }
     // Let the origin (and the site's own canonical logic) know the real host.
     headers.set("X-Forwarded-Host", url.hostname);
     headers.set("X-Forwarded-Proto", "https");
 
     const hasBody = request.method !== "GET" && request.method !== "HEAD";
 
-    const originRequest = new Request(target.toString(), {
-      method: request.method,
-      headers,
-      body: hasBody ? request.body : undefined,
-      // Handle redirects ourselves so Location headers can be rewritten to the
-      // custom domain instead of leaking the .rork.app hostname.
-      redirect: "manual",
-    });
+    const buildOriginRequest = () =>
+      new Request(target.toString(), {
+        method: request.method,
+        headers,
+        body: hasBody ? request.body : undefined,
+        // Handle redirects ourselves so Location headers can be rewritten to the
+        // custom domain instead of leaking the .rork.app hostname.
+        redirect: "manual",
+      });
+
+    const shopFallback = () =>
+      new Response(null, {
+        status: 302,
+        headers: {
+          Location: SHOP_FALLBACK_ORIGIN + url.pathname + url.search,
+          "Cache-Control": "no-store",
+          "X-PlayDJGames-Proxy": "shop-fallback",
+        },
+      });
 
     let response;
     try {
-      response = await fetch(originRequest);
+      response = await fetch(buildOriginRequest());
+      // Safe (bodiless) requests get one retry if the origin blocks or hiccups.
+      if (!hasBody && isRetryableStatus(response.status)) {
+        console.warn("origin retry", { host: originHost, path: url.pathname, status: response.status });
+        response = await fetch(buildOriginRequest());
+      }
     } catch (error) {
       console.error("origin fetch failed", {
         path: url.pathname,
         message: error instanceof Error ? error.message : String(error),
       });
+      if (isShopHost && !hasBody) return shopFallback();
       return new Response("The site is temporarily unreachable. Please try again in a moment.", {
         status: 502,
         headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
       });
+    }
+
+    // Still blocked after the retry: send the shopper straight to PRESS HOUSE's
+    // own address instead of leaving them on an "Access denied" page.
+    if (isShopHost && !hasBody && isRetryableStatus(response.status)) {
+      console.error("shop origin still failing, redirecting", { path: url.pathname, status: response.status });
+      return shopFallback();
     }
 
     const outHeaders = new Headers(response.headers);
@@ -150,6 +203,9 @@ export default {
 
     // Don't advertise the upstream host.
     outHeaders.delete("x-powered-by");
+    // Marks responses that really came through this Worker (diagnostics: a 403
+    // WITHOUT this header was blocked by the zone's own security settings).
+    outHeaders.set("X-PlayDJGames-Proxy", isShopHost ? "shop" : isMediaPath ? "media" : "site");
 
     return new Response(response.body, {
       status: response.status,
