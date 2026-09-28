@@ -4,9 +4,9 @@
  * ============================================================================
  * The Store page IS the merch catalog, synced from PRESS HOUSE
  * (https://shop.playdjgames.com) by `scripts/sync-presshouse.mjs` into
- * `presshouse.generated.ts`. Browsing happens here; buying hands off to the
- * product's real PRESS HOUSE page, where Stripe checkout + Printify fulfilment
- * live. Re-run the sync after changing the PRESS HOUSE catalog.
+ * `presshouse.generated.ts`. Browsing, the bag and checkout all happen on
+ * /store; the backend (`/~api/shop/*`) hands the order to PRESS HOUSE for
+ * Stripe payment + Printify printing. Re-run the sync after catalog changes.
  * ============================================================================
  */
 
@@ -59,10 +59,36 @@ export interface StoreProduct {
   options: ProductOptionGroup[];
   /** Material / construction bullets from PRESS HOUSE. */
   details?: string[];
-  /** The product's live PRESS HOUSE page — where checkout happens. */
-  url?: string;
+  /** PRESS HOUSE listing id — required for an item to be buyable. */
+  pressHouseId?: string;
+  /** Exact printable variants (color x size) with their Printify ids. */
+  variants?: ProductVariant[];
   featured?: boolean;
 }
+
+export interface ProductVariant {
+  id: number;
+  color: string;
+  size: string;
+}
+
+/** True when the item can go in the bag and through checkout. */
+export const isBuyable = (product: StoreProduct): boolean =>
+  product.status === "available" && Boolean(product.pressHouseId) && (product.variants?.length ?? 0) > 0;
+
+/**
+ * The variant matching the picked Color/Size labels. Axes with a single value
+ * have no option group, so they match anything.
+ */
+export const findVariant = (
+  product: StoreProduct,
+  picked: Record<string, string>,
+): ProductVariant | undefined =>
+  product.variants?.find(
+    (variant) =>
+      (picked.color === undefined || variant.color === picked.color) &&
+      (picked.size === undefined || variant.size === picked.size),
+  );
 
 /* ------------------------------ the house rack ---------------------------- */
 
@@ -118,9 +144,11 @@ export interface CartLine {
   image?: string;
   price: number;
   quantity: number;
-  /** Chosen variant labels, e.g. ["L", "Black"]. */
+  /** Chosen variant labels, e.g. ["Black", "L"]. */
   selections: string[];
-  url?: string;
+  /** PRESS HOUSE listing id + Printify variant id — what checkout sends. */
+  pressHouseId?: string;
+  variantId?: number;
 }
 
 /** USD formatting used everywhere in the store. */

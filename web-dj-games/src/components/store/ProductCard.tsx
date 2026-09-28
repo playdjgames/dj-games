@@ -1,6 +1,6 @@
-import { ArrowUpRight } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 
-import { formatPrice, type StoreProduct } from "@/data/store";
+import { formatPrice, isBuyable, type StoreProduct } from "@/data/store";
 import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
@@ -11,15 +11,14 @@ interface ProductCardProps {
 }
 
 /**
- * Catalog card: image, name, price, pitch, and an on-card BUY link to the
- * product's live PRESS HOUSE page (where checkout happens). The artwork opens
- * the detail sheet. Items that are not buyable yet — out of stock, drop locked — wear
+ * Catalog card: image, name, price, pitch, and an on-card BUY button. Both the
+ * artwork and BUY open the product sheet on this page — never another site. Items that are not buyable yet — out of stock, drop locked — wear
  * their status on the badge and on the button instead of the add action, with
  * the art dimmed. Missing art renders a clearly-labeled dark placeholder with
  * the product name.
  */
 export const ProductCard = ({ product, onSelect, className }: ProductCardProps) => {
-  const isLocked = product.status !== "available" || !product.url;
+  const isLocked = !isBuyable(product);
   const cover = product.images[0];
   const variantHint = product.options
     .map((group) => group.name)
@@ -109,16 +108,15 @@ export const ProductCard = ({ product, onSelect, className }: ProductCardProps) 
               {product.statusLabel}
             </span>
           ) : (
-            <a
-              href={product.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Buy ${product.name} on PRESS HOUSE (opens in a new tab)`}
+            <button
+              type="button"
+              onClick={() => onSelect(product)}
+              aria-label={`Buy ${product.name}`}
               className="inline-flex min-h-[40px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-signal/50 px-3.5 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-signal transition-all duration-300 hover:bg-signal hover:text-primary-foreground active:scale-[0.97]"
             >
+              <ShoppingBag size={13} />
               Buy
-              <ArrowUpRight size={13} />
-            </a>
+            </button>
           )}
         </div>
       </div>

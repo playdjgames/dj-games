@@ -1,13 +1,16 @@
-import { ArrowUpRight, Hammer, Heart } from "lucide-react";
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Hammer, Heart, ShoppingBag } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
-import { PRESS_HOUSE_IN_DEV, PRESS_HOUSE_URL, PressHouseAd } from "@/components/PressHouseAd";
+import { PRESS_HOUSE_IN_DEV, PressHouseAd } from "@/components/PressHouseAd";
+import { CartDrawer } from "@/components/store/CartDrawer";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductSheet } from "@/components/store/ProductSheet";
-import { STORE_IS_STOCKED, useStoreCatalog, type StoreProduct } from "@/data/store";
+import { cartCount, STORE_IS_STOCKED, useStoreCatalog, type StoreProduct } from "@/data/store";
+import { useCart } from "@/hooks/use-cart";
 import { useSeo } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +30,30 @@ const Store = () => {
 
   const [filter, setFilter] = useState<string>(ALL);
   const [active, setActive] = useState<StoreProduct | null>(null);
+  const [isBagOpen, setIsBagOpen] = useState<boolean>(false);
+  const cart = useCart();
+  const bagCount = cartCount(cart.lines);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Returning from a cancelled payment reopens the bag right where it was.
+  useEffect(() => {
+    if (searchParams.get("bag") !== "open") return;
+    setIsBagOpen(true);
+    searchParams.delete("bag");
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  const handleAdd = useCallback(
+    (product: StoreProduct, selections: string[], variantId: number): void => {
+      cart.add(product, selections, 1, variantId);
+      setActive(null);
+      setIsBagOpen(true);
+      toast.success(`${product.name} added to your bag`);
+    },
+    [cart],
+  );
+
+  const closeBag = useCallback((): void => setIsBagOpen(false), []);
 
   const filters = useMemo<string[]>(() => [ALL, ...categories], [categories]);
   const visible = useMemo<StoreProduct[]>(
@@ -47,23 +74,22 @@ const Store = () => {
         description={
           PRESS_HOUSE_IN_DEV
             ? "Merch from the house. The print floor is still being built."
-            : "Merch from the house, printed to order by PRESS HOUSE."
+            : "Merch from the house. Pick it, bag it, pay right here — printed to order and shipped to you."
         }
         stamp={PRESS_HOUSE_IN_DEV ? ["Under", "Construction"] : ["Wear", "The", "House"]}
       >
         {PRESS_HOUSE_IN_DEV ? null : (
           <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={PRESS_HOUSE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => setIsBagOpen(true)}
               className="inline-flex min-h-[48px] items-center gap-2 rounded-md bg-signal px-5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
             >
-              Shop on PRESS HOUSE
-              <ArrowUpRight size={16} />
-            </a>
+              <ShoppingBag size={16} />
+              Your bag{bagCount > 0 ? ` · ${bagCount}` : ""}
+            </button>
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
-              {products.length} items · checkout on PRESS HOUSE
+              {products.length} items · secure checkout on this page
             </span>
           </div>
         )}
@@ -198,7 +224,31 @@ const Store = () => {
         <PressHouseAd variant="strip" className="mt-14" />
       </section>
 
-      {PRESS_HOUSE_IN_DEV ? null : <ProductSheet product={active} onClose={() => setActive(null)} />}
+      {PRESS_HOUSE_IN_DEV ? null : (
+        <>
+          <ProductSheet product={active} onClose={() => setActive(null)} onAdd={handleAdd} />
+          <CartDrawer
+            open={isBagOpen}
+            lines={cart.lines}
+            onClose={closeBag}
+            onQuantity={cart.setQuantity}
+            onRemove={cart.remove}
+          />
+
+          {/* Floating bag — always one tap away while browsing the rack. */}
+          {bagCount > 0 && !isBagOpen ? (
+            <button
+              type="button"
+              onClick={() => setIsBagOpen(true)}
+              aria-label={`Open bag, ${bagCount} ${bagCount === 1 ? "item" : "items"}`}
+              className="fixed bottom-[92px] right-4 z-40 inline-flex h-14 items-center gap-2 rounded-full bg-signal px-5 font-mono text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground shadow-glow transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97] lg:bottom-6"
+            >
+              <ShoppingBag size={17} />
+              Bag · {bagCount}
+            </button>
+          ) : null}
+        </>
+      )}
     </>
   );
 };

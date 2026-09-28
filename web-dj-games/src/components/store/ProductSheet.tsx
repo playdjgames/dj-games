@@ -1,26 +1,27 @@
-import { ArrowUpRight, Check } from "lucide-react";
+import { Check, ShoppingBag } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import { formatPrice, type StoreProduct } from "@/data/store";
+import { findVariant, formatPrice, isBuyable, type StoreProduct } from "@/data/store";
 import { cn } from "@/lib/utils";
 
 interface ProductSheetProps {
   product: StoreProduct | null;
   onClose: () => void;
+  /** Adds the picked variant to the on-page bag. */
+  onAdd: (product: StoreProduct, selections: string[], variantId: number) => void;
 }
 
 /**
- * Product detail synced from PRESS HOUSE: gallery, copy, materials, and a
- * size/color preview that reprices exactly like PRESS HOUSE (e.g. XXL +$3).
- * Buying hands off to the product's live PRESS HOUSE page, where checkout
- * (Stripe) and printing (Printify) actually happen.
+ * Product detail: art, copy, materials, and a color/size picker mapped to the
+ * exact printable variant. Adding goes straight into the bag on this page —
+ * nothing here ever leaves the DJ Games site.
  */
-export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
+export const ProductSheet = ({ product, onClose, onAdd }: ProductSheetProps) => {
   const [selections, setSelections] = useState<Record<string, string>>({});
   const [imageIndex, setImageIndex] = useState<number>(0);
 
-  // Preselect the first in-stock value of every axis whenever the product changes.
+  // Preselect the first value of every axis whenever the product changes.
   useEffect(() => {
     if (!product) return;
     const defaults: Record<string, string> = {};
@@ -32,22 +33,24 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
     setImageIndex(0);
   }, [product]);
 
-  const price = useMemo<number>(() => {
-    if (!product) return 0;
-    return product.options.reduce((total, group) => {
-      const picked = group.values.find((value) => value.label === selections[group.id]);
-      return total + (picked?.priceDelta ?? 0);
-    }, product.price);
-  }, [product, selections]);
+  const variant = useMemo(() => (product ? findVariant(product, selections) : undefined), [product, selections]);
 
   if (!product) return null;
 
-  const canBuy = product.status === "available" && Boolean(product.url);
+  const canBuy = isBuyable(product) && Boolean(variant);
   const image = product.images[imageIndex] ?? product.images[0];
+
+  const handleAdd = (): void => {
+    if (!variant) return;
+    const labels = product.options
+      .map((group) => selections[group.id])
+      .filter((label): label is string => Boolean(label));
+    onAdd(product, labels, variant.id);
+  };
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent className="max-h-[92vh] gap-0 overflow-y-auto border-border bg-surface p-0 sm:max-w-[560px]">
+      <DialogContent className="block max-h-[92vh] gap-0 overflow-y-auto border-border bg-surface p-0 sm:max-w-[560px]">
         <div className="relative aspect-square w-full overflow-hidden bg-surface-raised">
           {image ? (
             <img src={image} alt={product.name} decoding="async" className="h-full w-full object-cover" />
@@ -87,7 +90,7 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
 
           <p className="mt-3 flex items-baseline gap-2.5">
             <span className="font-mono text-xl font-bold text-signal">
-              {formatPrice(price, product.currency)}
+              {formatPrice(product.price, product.currency)}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price ? (
               <span className="font-mono text-sm text-muted-foreground line-through">
@@ -108,6 +111,7 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
             <fieldset key={group.id} className="mt-6">
               <legend className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                 {group.name}
+                {selections[group.id] ? <span className="ml-2 text-foreground">{selections[group.id]}</span> : null}
               </legend>
               <div className="mt-2.5 flex flex-wrap gap-2">
                 {group.values.map((value) => {
@@ -120,7 +124,7 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
                       aria-pressed={isPicked}
                       onClick={() => setSelections((current) => ({ ...current, [group.id]: value.label }))}
                       className={cn(
-                        "min-h-[44px] min-w-[56px] rounded-md border px-4 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.1em] transition-all duration-200",
+                        "min-h-[44px] min-w-[56px] rounded-md border px-4 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.1em] transition-all duration-200 active:scale-[0.97]",
                         !value.available
                           ? "cursor-not-allowed border-border bg-surface-raised text-muted-foreground/50 line-through"
                           : isPicked
@@ -129,9 +133,6 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
                       )}
                     >
                       {value.label}
-                      {value.priceDelta ? (
-                        <span className="ml-1.5 text-[0.62rem] text-muted-foreground">+${value.priceDelta}</span>
-                      ) : null}
                     </button>
                   );
                 })}
@@ -151,23 +152,22 @@ export const ProductSheet = ({ product, onClose }: ProductSheetProps) => {
           ) : null}
 
           {canBuy ? (
-            <a
-              href={product.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={handleAdd}
               className="mt-7 inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-md bg-signal font-mono text-[0.76rem] font-bold uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:shadow-glow active:scale-[0.99]"
             >
-              Buy on PRESS HOUSE · {formatPrice(price, product.currency)}
-              <ArrowUpRight size={16} />
-            </a>
+              <ShoppingBag size={16} />
+              Add to bag · {formatPrice(product.price, product.currency)}
+            </button>
           ) : (
             <span className="mt-7 inline-flex min-h-[54px] w-full cursor-not-allowed items-center justify-center rounded-md bg-surface-raised font-mono text-[0.76rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-              {product.statusLabel}
+              {isBuyable(product) ? "Pick an option" : product.statusLabel}
             </span>
           )}
 
           <p className="mt-3 text-center text-[0.75rem] leading-relaxed text-muted-foreground">
-            Printed to order by PRESS HOUSE. You pick your size and pay on its secure checkout.
+            Printed to order and shipped to you. Checkout happens right here in your bag.
           </p>
         </div>
       </DialogContent>

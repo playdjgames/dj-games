@@ -19,7 +19,9 @@ const readStored = (): CartLine[] => {
         typeof line === "object" &&
         line !== null &&
         typeof (line as CartLine).productId === "string" &&
-        typeof (line as CartLine).quantity === "number",
+        typeof (line as CartLine).quantity === "number" &&
+        // Lines saved before checkout existed have no printable variant — drop them.
+        typeof (line as CartLine).variantId === "number",
     );
   } catch (error: unknown) {
     console.warn("cart restore failed", error);
@@ -29,7 +31,7 @@ const readStored = (): CartLine[] => {
 
 export interface Cart {
   lines: CartLine[];
-  add: (product: StoreProduct, selections: string[], quantity: number) => void;
+  add: (product: StoreProduct, selections: string[], quantity: number, variantId?: number) => void;
   setQuantity: (productId: string, selections: string[], quantity: number) => void;
   remove: (productId: string, selections: string[]) => void;
   clear: () => void;
@@ -37,7 +39,7 @@ export interface Cart {
 
 /**
  * Store cart, persisted so a refresh never loses what someone picked. The bag
- * lives on /store; checkout stays disabled until payments are wired.
+ * and checkout both live on /store.
  */
 export const useCart = (): Cart => {
   const [lines, setLines] = useState<CartLine[]>([]);
@@ -54,7 +56,7 @@ export const useCart = (): Cart => {
     }
   }, [lines]);
 
-  const add = useCallback((product: StoreProduct, selections: string[], quantity: number): void => {
+  const add = useCallback((product: StoreProduct, selections: string[], quantity: number, variantId?: number): void => {
     setLines((current) => {
       const key = lineKey(product.id, selections);
       const existing = current.find((line) => lineKey(line.productId, line.selections) === key);
@@ -76,6 +78,8 @@ export const useCart = (): Cart => {
           price: product.price,
           quantity,
           selections,
+          pressHouseId: product.pressHouseId,
+          variantId,
         },
       ];
     });

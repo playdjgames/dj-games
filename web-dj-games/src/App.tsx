@@ -19,6 +19,7 @@ import MediaLibrary from "./pages/MediaLibrary";
 import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
 import NotFound from "./pages/NotFound";
+import OrderDone from "./pages/OrderDone";
 import PressHouse from "./pages/PressHouse";
 import Store from "./pages/Store";
 import Subscribers from "./pages/Subscribers";
@@ -55,6 +56,11 @@ const App = () => {
             <Route path="/store" element={<Store />} />
             {/* /shop is an alias so either address reaches the storefront. */}
             <Route path="/shop" element={<Store />} />
+            {/* Card payment returns here — order confirmation stays on playdjgames.com. */}
+            <Route path="/checkout/done/:orderId" element={<OrderDone />} />
+            {/* A cancelled payment comes back to one of these; reopen the bag on /store. */}
+            <Route path="/checkout/*" element={<Navigate to="/store?bag=open" replace />} />
+            <Route path="/cart" element={<Navigate to="/store?bag=open" replace />} />
             <Route path="/donate" element={<Donate />} />
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />

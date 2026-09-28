@@ -2,7 +2,7 @@
 /* Source: https://shop.playdjgames.com (live PRESS HOUSE catalog). */
 import type { StoreProduct } from "./store";
 
-export const PRESS_HOUSE_SYNCED_AT = "2026-09-28T01:10:24.574Z";
+export const PRESS_HOUSE_SYNCED_AT = "2026-09-28T12:55:42.414Z";
 
 export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
   {
@@ -17,11 +17,39 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 34,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ea0a4fc0c9922093aa5/18542/102044/house-mark-tee.jpg?camera_label=front-2"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ea0a4fc0c9922093aa5/18542/102044/house-mark-tee.jpg?camera_label=front-2"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Asphalt",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-2",
+            "label": "Dark Grey",
+            "available": true
+          },
+          {
+            "id": "color-3",
+            "label": "Dark Grey Heather",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -52,36 +80,117 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Bone",
-            "available": true
-          },
-          {
-            "id": "color-2",
-            "label": "Slate",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/house-mark-tee",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukpeqbf32cbd2701c",
+    "variants": [
+      {
+        "id": 18068,
+        "color": "Asphalt",
+        "size": "S"
+      },
+      {
+        "id": 18069,
+        "color": "Asphalt",
+        "size": "M"
+      },
+      {
+        "id": 18070,
+        "color": "Asphalt",
+        "size": "L"
+      },
+      {
+        "id": 18071,
+        "color": "Asphalt",
+        "size": "XL"
+      },
+      {
+        "id": 18072,
+        "color": "Asphalt",
+        "size": "2XL"
+      },
+      {
+        "id": 18100,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 18101,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 18102,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 18103,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 18104,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 18140,
+        "color": "Dark Grey",
+        "size": "S"
+      },
+      {
+        "id": 18141,
+        "color": "Dark Grey",
+        "size": "M"
+      },
+      {
+        "id": 18142,
+        "color": "Dark Grey",
+        "size": "L"
+      },
+      {
+        "id": 18143,
+        "color": "Dark Grey",
+        "size": "XL"
+      },
+      {
+        "id": 18144,
+        "color": "Dark Grey",
+        "size": "2XL"
+      },
+      {
+        "id": 18148,
+        "color": "Dark Grey Heather",
+        "size": "S"
+      },
+      {
+        "id": 18149,
+        "color": "Dark Grey Heather",
+        "size": "M"
+      },
+      {
+        "id": 18150,
+        "color": "Dark Grey Heather",
+        "size": "L"
+      },
+      {
+        "id": 18151,
+        "color": "Dark Grey Heather",
+        "size": "XL"
+      },
+      {
+        "id": 18152,
+        "color": "Dark Grey Heather",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_wordmark_hoodie",
@@ -95,11 +204,39 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 72,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ea563d317ccfb0c76d0/32920/98424/wordmark-hoodie.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ea563d317ccfb0c76d0/32920/98424/wordmark-hoodie.jpg?camera_label=front"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Dark Heather",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Navy",
+            "available": true
+          },
+          {
+            "id": "color-2",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-3",
+            "label": "Charcoal",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -130,36 +267,117 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Slate",
-            "available": true
-          },
-          {
-            "id": "color-2",
-            "label": "Navy",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/wordmark-hoodie",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukpeqoyded617b075",
+    "variants": [
+      {
+        "id": 32878,
+        "color": "Dark Heather",
+        "size": "S"
+      },
+      {
+        "id": 32879,
+        "color": "Dark Heather",
+        "size": "M"
+      },
+      {
+        "id": 32880,
+        "color": "Dark Heather",
+        "size": "L"
+      },
+      {
+        "id": 32881,
+        "color": "Dark Heather",
+        "size": "XL"
+      },
+      {
+        "id": 32882,
+        "color": "Dark Heather",
+        "size": "2XL"
+      },
+      {
+        "id": 32894,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 32895,
+        "color": "Navy",
+        "size": "M"
+      },
+      {
+        "id": 32896,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 32897,
+        "color": "Navy",
+        "size": "XL"
+      },
+      {
+        "id": 32898,
+        "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 32918,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 32919,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 32920,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 32921,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 32922,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 42211,
+        "color": "Charcoal",
+        "size": "S"
+      },
+      {
+        "id": 42212,
+        "color": "Charcoal",
+        "size": "M"
+      },
+      {
+        "id": 42213,
+        "color": "Charcoal",
+        "size": "L"
+      },
+      {
+        "id": 42214,
+        "color": "Charcoal",
+        "size": "XL"
+      },
+      {
+        "id": 42215,
+        "color": "Charcoal",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_grid_long_sleeve",
@@ -173,11 +391,29 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 46,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ea9dcd154052a0154ef/33798/105264/grid-long-sleeve.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ea9dcd154052a0154ef/33798/105264/grid-long-sleeve.jpg?camera_label=front"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Navy",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -208,31 +444,67 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Navy",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/grid-long-sleeve",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukper6hbf5dc93338",
+    "variants": [
+      {
+        "id": 33796,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 33797,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 33798,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 33799,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 33800,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 42711,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 42712,
+        "color": "Navy",
+        "size": "M"
+      },
+      {
+        "id": 42713,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 42714,
+        "color": "Navy",
+        "size": "XL"
+      },
+      {
+        "id": 42715,
+        "color": "Navy",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_house_tote",
@@ -246,30 +518,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 28,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92eac313d78541609a09c/101409/93895/house-tote.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92eac313d78541609a09c/101409/93895/house-tote.jpg?camera_label=front"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [
+    "options": [],
+    "featured": false,
+    "pressHouseId": "prd_mukperk07c709455e6",
+    "variants": [
       {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Bone",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Black",
-            "available": true
-          }
-        ]
+        "id": 103598,
+        "color": "Black",
+        "size": "15\" x 16\""
       }
-    ],
-    "url": "https://shop.playdjgames.com/product/house-tote",
-    "featured": false
+    ]
   },
   {
     "id": "prod_dad_hat",
@@ -283,7 +547,9 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 32,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92eaf63d317ccfb0c76d4/105381/102307/dad-hat.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92eaf63d317ccfb0c76d4/105381/102307/dad-hat.jpg?camera_label=front"
+    ],
     "category": "Hats",
     "status": "available",
     "statusLabel": "In stock",
@@ -299,19 +565,26 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "color-1",
-            "label": "Bone",
-            "available": true
-          },
-          {
-            "id": "color-2",
             "label": "Navy",
             "available": true
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/dad-hat",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukpervr0e0d0cca1b",
+    "variants": [
+      {
+        "id": 105372,
+        "color": "Black",
+        "size": "One size"
+      },
+      {
+        "id": 105377,
+        "color": "Navy",
+        "size": "One size"
+      }
+    ]
   },
   {
     "id": "prod_camp_cap",
@@ -325,7 +598,9 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 36,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92eb2a4fc0c9922093aaf/119157/109584/five-panel-camp-cap.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92eb2a4fc0c9922093aaf/119157/109584/five-panel-camp-cap.jpg?camera_label=front"
+    ],
     "category": "Hats",
     "status": "available",
     "statusLabel": "In stock",
@@ -341,14 +616,26 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "color-1",
-            "label": "Slate",
+            "label": "Grey",
             "available": true
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/camp-cap",
-    "featured": false
+    "featured": false,
+    "pressHouseId": "prd_mukpes37aa2f12bbbe",
+    "variants": [
+      {
+        "id": 119155,
+        "color": "Black",
+        "size": "One size"
+      },
+      {
+        "id": 119157,
+        "color": "Grey",
+        "size": "One size"
+      }
+    ]
   },
   {
     "id": "prod_enamel_mug",
@@ -362,13 +649,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 26,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92eb4313d78541609a0a2/70768/6906/enamel-mug.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92eb4313d78541609a0a2/70768/6906/enamel-mug.jpg?camera_label=front"
+    ],
     "category": "Drinkware",
     "status": "available",
     "statusLabel": "In stock",
     "options": [],
-    "url": "https://shop.playdjgames.com/product/enamel-mug",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukpesdn06c02beffc",
+    "variants": [
+      {
+        "id": 70768,
+        "color": "Default",
+        "size": "12oz"
+      }
+    ]
   },
   {
     "id": "prod_insulated_bottle",
@@ -382,13 +678,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 42,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92eb7b89b0ed60e0390c1/125364/112599/insulated-bottle.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92eb7b89b0ed60e0390c1/125364/112599/insulated-bottle.jpg?camera_label=front"
+    ],
     "category": "Drinkware",
     "status": "available",
     "statusLabel": "In stock",
     "options": [],
-    "url": "https://shop.playdjgames.com/product/insulated-bottle",
-    "featured": false
+    "featured": false,
+    "pressHouseId": "prd_mukpespnf14c702060",
+    "variants": [
+      {
+        "id": 125364,
+        "color": "Black",
+        "size": "22oz"
+      }
+    ]
   },
   {
     "id": "prod_sticker_pack",
@@ -404,10 +709,9 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [],
-    "url": "https://shop.playdjgames.com/product/sticker-pack",
     "featured": true
   },
   {
@@ -422,13 +726,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 6,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ebd4969eb2e8f085ccd/72008/14861/die-cut-mark-sticker.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ebd4969eb2e8f085ccd/72008/14861/die-cut-mark-sticker.jpg?camera_label=front"
+    ],
     "category": "Stickers",
     "status": "available",
     "statusLabel": "In stock",
     "options": [],
-    "url": "https://shop.playdjgames.com/product/die-cut-mark",
-    "featured": false
+    "featured": false,
+    "pressHouseId": "prd_mukpet1fbe4b319ba7",
+    "variants": [
+      {
+        "id": 72008,
+        "color": "Default",
+        "size": "4\" × 4\""
+      }
+    ]
   },
   {
     "id": "prod_custom_tiny",
@@ -444,8 +757,8 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [
       {
         "id": "size",
@@ -460,7 +773,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/custom-text-sticker-tiny",
     "featured": false
   },
   {
@@ -477,8 +789,8 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [
       {
         "id": "size",
@@ -499,7 +811,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/custom-text-sticker-standard",
     "featured": false
   },
   {
@@ -516,8 +827,8 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [
       {
         "id": "size",
@@ -538,7 +849,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/custom-text-sticker-large",
     "featured": false
   },
   {
@@ -555,8 +865,8 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [
       {
         "id": "size",
@@ -577,7 +887,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/custom-text-sticker-bumper",
     "featured": false
   },
   {
@@ -595,8 +904,8 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     "currency": "USD",
     "images": [],
     "category": "Stickers",
-    "status": "available",
-    "statusLabel": "In stock",
+    "status": "coming_soon",
+    "statusLabel": "Coming soon",
     "options": [
       {
         "id": "size",
@@ -629,7 +938,6 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/custom-text-sticker-window",
     "featured": false
   },
   {
@@ -644,32 +952,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 28,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ec10d7900d72c070b74/43144/94696/press-poster.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ec10d7900d72c070b74/43144/94696/press-poster.jpg?camera_label=front"
+    ],
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [
+    "options": [],
+    "featured": false,
+    "pressHouseId": "prd_mukpethze882c4d24b",
+    "variants": [
       {
-        "id": "size",
-        "name": "Size",
-        "values": [
-          {
-            "id": "size-0",
-            "label": "18 × 24 in",
-            "available": true,
-            "priceDelta": 0
-          },
-          {
-            "id": "size-1",
-            "label": "24 × 36 in",
-            "available": true,
-            "priceDelta": 12
-          }
-        ]
+        "id": 43144,
+        "color": "Default",
+        "size": "18″ x 24″"
       }
-    ],
-    "url": "https://shop.playdjgames.com/product/press-poster",
-    "featured": false
+    ]
   },
   {
     "id": "prod_orbit_poster",
@@ -683,32 +981,22 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 28,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab92ec3a4fc0c9922093abc/43144/94696/orbit-poster.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab92ec3a4fc0c9922093abc/43144/94696/orbit-poster.jpg?camera_label=front"
+    ],
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [
+    "options": [],
+    "featured": false,
+    "pressHouseId": "prd_mukpetn5445d38101c",
+    "variants": [
       {
-        "id": "size",
-        "name": "Size",
-        "values": [
-          {
-            "id": "size-0",
-            "label": "18 × 24 in",
-            "available": true,
-            "priceDelta": 0
-          },
-          {
-            "id": "size-1",
-            "label": "24 × 36 in",
-            "available": true,
-            "priceDelta": 12
-          }
-        ]
+        "id": 43144,
+        "color": "Default",
+        "size": "18″ x 24″"
       }
-    ],
-    "url": "https://shop.playdjgames.com/product/orbit-poster",
-    "featured": false
+    ]
   },
   {
     "id": "prod_cassette_tee",
@@ -722,11 +1010,39 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 34,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab948ba7ffd41ee910caa27/18542/102044/cassette-tee.jpg?camera_label=front-2"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab948ba7ffd41ee910caa27/18542/102044/cassette-tee.jpg?camera_label=front-2"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Asphalt",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-2",
+            "label": "Dark Grey",
+            "available": true
+          },
+          {
+            "id": "color-3",
+            "label": "Dark Grey Heather",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -757,36 +1073,117 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Bone",
-            "available": true
-          },
-          {
-            "id": "color-2",
-            "label": "Slate",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/cassette-tee",
-    "featured": true
+    "featured": true,
+    "pressHouseId": "prd_mukpeqgw91c476a628",
+    "variants": [
+      {
+        "id": 18068,
+        "color": "Asphalt",
+        "size": "S"
+      },
+      {
+        "id": 18069,
+        "color": "Asphalt",
+        "size": "M"
+      },
+      {
+        "id": 18070,
+        "color": "Asphalt",
+        "size": "L"
+      },
+      {
+        "id": 18071,
+        "color": "Asphalt",
+        "size": "XL"
+      },
+      {
+        "id": 18072,
+        "color": "Asphalt",
+        "size": "2XL"
+      },
+      {
+        "id": 18100,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 18101,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 18102,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 18103,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 18104,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 18140,
+        "color": "Dark Grey",
+        "size": "S"
+      },
+      {
+        "id": 18141,
+        "color": "Dark Grey",
+        "size": "M"
+      },
+      {
+        "id": 18142,
+        "color": "Dark Grey",
+        "size": "L"
+      },
+      {
+        "id": 18143,
+        "color": "Dark Grey",
+        "size": "XL"
+      },
+      {
+        "id": 18144,
+        "color": "Dark Grey",
+        "size": "2XL"
+      },
+      {
+        "id": 18148,
+        "color": "Dark Grey Heather",
+        "size": "S"
+      },
+      {
+        "id": 18149,
+        "color": "Dark Grey Heather",
+        "size": "M"
+      },
+      {
+        "id": 18150,
+        "color": "Dark Grey Heather",
+        "size": "L"
+      },
+      {
+        "id": 18151,
+        "color": "Dark Grey Heather",
+        "size": "XL"
+      },
+      {
+        "id": 18152,
+        "color": "Dark Grey Heather",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_bassline_hoodie",
@@ -800,11 +1197,39 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 72,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab948c57ffd41ee910caa31/32920/98424/bassline-hoodie.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab948c57ffd41ee910caa31/32920/98424/bassline-hoodie.jpg?camera_label=front"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Dark Heather",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Navy",
+            "available": true
+          },
+          {
+            "id": "color-2",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-3",
+            "label": "Charcoal",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -835,36 +1260,117 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Slate",
-            "available": true
-          },
-          {
-            "id": "color-2",
-            "label": "Navy",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/bassline-hoodie",
-    "featured": false
+    "featured": false,
+    "pressHouseId": "prd_mukpeqv6a2e40b1178",
+    "variants": [
+      {
+        "id": 32878,
+        "color": "Dark Heather",
+        "size": "S"
+      },
+      {
+        "id": 32879,
+        "color": "Dark Heather",
+        "size": "M"
+      },
+      {
+        "id": 32880,
+        "color": "Dark Heather",
+        "size": "L"
+      },
+      {
+        "id": 32881,
+        "color": "Dark Heather",
+        "size": "XL"
+      },
+      {
+        "id": 32882,
+        "color": "Dark Heather",
+        "size": "2XL"
+      },
+      {
+        "id": 32894,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 32895,
+        "color": "Navy",
+        "size": "M"
+      },
+      {
+        "id": 32896,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 32897,
+        "color": "Navy",
+        "size": "XL"
+      },
+      {
+        "id": 32898,
+        "color": "Navy",
+        "size": "2XL"
+      },
+      {
+        "id": 32918,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 32919,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 32920,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 32921,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 32922,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 42211,
+        "color": "Charcoal",
+        "size": "S"
+      },
+      {
+        "id": 42212,
+        "color": "Charcoal",
+        "size": "M"
+      },
+      {
+        "id": 42213,
+        "color": "Charcoal",
+        "size": "L"
+      },
+      {
+        "id": 42214,
+        "color": "Charcoal",
+        "size": "XL"
+      },
+      {
+        "id": 42215,
+        "color": "Charcoal",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_frequency_long_sleeve",
@@ -878,11 +1384,29 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 46,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab948cad93c97b61d03328f/33798/105264/frequency-long-sleeve.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab948cad93c97b61d03328f/33798/105264/frequency-long-sleeve.jpg?camera_label=front"
+    ],
     "category": "Apparel",
     "status": "available",
     "statusLabel": "In stock",
     "options": [
+      {
+        "id": "color",
+        "name": "Color",
+        "values": [
+          {
+            "id": "color-0",
+            "label": "Black",
+            "available": true
+          },
+          {
+            "id": "color-1",
+            "label": "Navy",
+            "available": true
+          }
+        ]
+      },
       {
         "id": "size",
         "name": "Size",
@@ -913,31 +1437,67 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
           },
           {
             "id": "size-4",
-            "label": "XXL",
+            "label": "2XL",
             "available": true,
-            "priceDelta": 3
-          }
-        ]
-      },
-      {
-        "id": "color",
-        "name": "Color",
-        "values": [
-          {
-            "id": "color-0",
-            "label": "Black",
-            "available": true
-          },
-          {
-            "id": "color-1",
-            "label": "Navy",
-            "available": true
+            "priceDelta": 0
           }
         ]
       }
     ],
-    "url": "https://shop.playdjgames.com/product/frequency-long-sleeve",
-    "featured": false
+    "featured": false,
+    "pressHouseId": "prd_mukperca39dc9cb42e",
+    "variants": [
+      {
+        "id": 33796,
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "id": 33797,
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "id": 33798,
+        "color": "Black",
+        "size": "L"
+      },
+      {
+        "id": 33799,
+        "color": "Black",
+        "size": "XL"
+      },
+      {
+        "id": 33800,
+        "color": "Black",
+        "size": "2XL"
+      },
+      {
+        "id": 42711,
+        "color": "Navy",
+        "size": "S"
+      },
+      {
+        "id": 42712,
+        "color": "Navy",
+        "size": "M"
+      },
+      {
+        "id": 42713,
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "id": 42714,
+        "color": "Navy",
+        "size": "XL"
+      },
+      {
+        "id": 42715,
+        "color": "Navy",
+        "size": "2XL"
+      }
+    ]
   },
   {
     "id": "prod_turntable_poster",
@@ -951,31 +1511,21 @@ export const PRESS_HOUSE_PRODUCTS: StoreProduct[] = [
     ],
     "price": 28,
     "currency": "USD",
-    "images": ["https://images-api.printify.com/mockup/6ab948d1d93c97b61d03329b/43144/94696/turntable-poster.jpg?camera_label=front"],
+    "images": [
+      "https://images-api.printify.com/mockup/6ab948d1d93c97b61d03329b/43144/94696/turntable-poster.jpg?camera_label=front"
+    ],
     "category": "Posters",
     "status": "available",
     "statusLabel": "In stock",
-    "options": [
+    "options": [],
+    "featured": false,
+    "pressHouseId": "prd_mukpetafe0f2fc5d27",
+    "variants": [
       {
-        "id": "size",
-        "name": "Size",
-        "values": [
-          {
-            "id": "size-0",
-            "label": "18 × 24 in",
-            "available": true,
-            "priceDelta": 0
-          },
-          {
-            "id": "size-1",
-            "label": "24 × 36 in",
-            "available": true,
-            "priceDelta": 12
-          }
-        ]
+        "id": 43144,
+        "color": "Default",
+        "size": "18″ x 24″"
       }
-    ],
-    "url": "https://shop.playdjgames.com/product/turntable-poster",
-    "featured": false
+    ]
   }
 ];

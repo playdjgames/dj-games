@@ -135,6 +135,120 @@ const createTipCheckout = async (request: Request, env: Env): Promise<Response> 
   return Response.json({ ok: true, url: data.url });
 };
 
+/* ------------------------------ merch checkout ------------------------------ */
+
+/**
+ * PRESS HOUSE prints and fulfils the DJ Games merch (Stripe + Printify). The
+ * store on playdjgames.com talks to it only through these routes so shoppers
+ * never leave the DJ Games site to buy. Requests are rebuilt from scratch — no
+ * visitor or Cloudflare headers are forwarded (PRESS HOUSE rejects those).
+ */
+/**
+ * Tried in order. press-house.rork.app answers subrequests from this backend
+ * with Cloudflare 1016 (same-platform routing), so the shop.playdjgames.com
+ * proxy goes first and the origin is only a fallback.
+ */
+const PRESS_HOUSE_APIS = ["https://shop.playdjgames.com/~api", "https://press-house.rork.app/~api"];
+const MERCH_MAX_LINES = 30;
+const MERCH_MAX_QTY = 20;
+
+interface MerchLine {
+  kind: "listing";
+  productId: string;
+  variantId: number;
+  qty: number;
+}
+
+const toMerchLines = (value: unknown): MerchLine[] | null => {
+  if (!Array.isArray(value) || value.length === 0 || value.length > MERCH_MAX_LINES) return null;
+  const lines: MerchLine[] = [];
+  for (const raw of value) {
+    const line = raw as Partial<MerchLine> | null;
+    const productId = String(line?.productId ?? "");
+    const variantId = Number(line?.variantId);
+    const qty = Number(line?.qty);
+    if (!/^prd_[a-z0-9]+$/i.test(productId)) return null;
+    if (!Number.isInteger(variantId) || variantId <= 0) return null;
+    if (!Number.isInteger(qty) || qty < 1 || qty > MERCH_MAX_QTY) return null;
+    lines.push({ kind: "listing", productId, variantId, qty });
+  }
+  return lines;
+};
+
+const toMerchAddress = (value: unknown): Record<string, string> => {
+  const source = (value ?? {}) as Record<string, unknown>;
+  const field = (key: string, max = 120): string => String(source[key] ?? "").trim().slice(0, max);
+  return {
+    email: field("email", 200),
+    name: field("name"),
+    address1: field("address1"),
+    address2: field("address2"),
+    city: field("city"),
+    state: field("state", 40),
+    zip: field("zip", 20),
+    country: "US",
+  };
+};
+
+const callPressHouse = async (path: string, init?: { method: string; body?: unknown }): Promise<Response> => {
+  for (const base of PRESS_HOUSE_APIS) {
+    try {
+      const upstream = await fetch(`${base}${path}`, {
+        method: init?.method ?? "GET",
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: init?.body === undefined ? undefined : JSON.stringify(init.body),
+      });
+      const text = await upstream.text();
+      let data: unknown = null;
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        data = null;
+      }
+      if (data !== null) {
+        return Response.json(data, { status: upstream.status, headers: { "Cache-Control": "no-store" } });
+      }
+      console.error("press house bad response", { base, path: path.split("?")[0], status: upstream.status });
+    } catch (error: unknown) {
+      console.error("press house unreachable", { base, message: error instanceof Error ? error.message : String(error) });
+    }
+  }
+  return Response.json({ error: "CHECKOUT IS UNAVAILABLE RIGHT NOW" }, { status: 502 });
+};
+
+const handleMerch = async (path: string, request: Request): Promise<Response | null> => {
+  if (path === "/shop/quote" && request.method === "POST") {
+    const body = await jsonBody<{ lines?: unknown; address?: unknown }>(request);
+    const lines = toMerchLines(body?.lines);
+    if (!lines) return Response.json({ error: "YOUR BAG IS EMPTY" }, { status: 400 });
+    return callPressHouse("/checkout/quote", {
+      method: "POST",
+      body: { lines, address: toMerchAddress(body?.address) },
+    });
+  }
+
+  if (path === "/shop/order" && request.method === "POST") {
+    const body = await jsonBody<{ lines?: unknown; address?: unknown; origin?: string }>(request);
+    const lines = toMerchLines(body?.lines);
+    if (!lines) return Response.json({ error: "YOUR BAG IS EMPTY" }, { status: 400 });
+    const requestedOrigin = String(body?.origin ?? "").replace(/\/+$/, "");
+    const origin = TIP_RETURN_ORIGINS.has(requestedOrigin) ? requestedOrigin : TIP_DEFAULT_ORIGIN;
+    return callPressHouse("/checkout/order", {
+      method: "POST",
+      body: { lines, address: toMerchAddress(body?.address), pay: "stripe", origin },
+    });
+  }
+
+  const orderMatch = path.match(/^\/shop\/orders\/([A-Za-z0-9_-]{4,80})$/);
+  if (orderMatch && request.method === "GET") {
+    const sessionId = new URL(request.url).searchParams.get("session_id") ?? "";
+    const query = /^[A-Za-z0-9_]{1,255}$/.test(sessionId) ? `?session_id=${encodeURIComponent(sessionId)}` : "";
+    return callPressHouse(`/orders/${encodeURIComponent(orderMatch[1])}${query}`);
+  }
+
+  return null;
+};
+
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
@@ -601,6 +715,11 @@ export default {
 
       if (path === "/tip/checkout" && request.method === "POST") {
         return withCors(await createTipCheckout(request, env));
+      }
+
+      if (path.startsWith("/shop/")) {
+        const merch = await handleMerch(path, request);
+        if (merch) return withCors(merch);
       }
 
       if (path === "/newsletter/subscribe" && request.method === "POST") {
