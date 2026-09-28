@@ -274,7 +274,7 @@ export const GAMES: Game[] = [
         description: "Card checkout and fulfilment happen on PRESS HOUSE itself, with order tracking after you buy.",
       },
     ],
-    websiteUrl: "https://press-house.rork.app",
+    websiteUrl: "https://shop.playdjgames.com",
     appStoreUrl: "[APP_STORE_URL]",
     googlePlayUrl: "[GOOGLE_PLAY_URL]",
     trailerUrl: "[TRAILER_URL]",

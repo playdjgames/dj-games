@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
  * drop and not a product card.
  *
  * `PRESS_HOUSE_URL` is the platform's real host, verified live (HTTP 200) before
- * linking: https://press-house.rork.app — a full URL, so the ad renders as a
+ * linking: https://shop.playdjgames.com — a full URL, so the ad renders as a
  * plain <a> that opens PRESS HOUSE in a new tab. New tab (not same tab) because
  * embedded previews and in-app browsers can silently refuse to navigate a
  * framed page to another domain, which made the banner look dead.
  * ============================================================================
  */
-export const PRESS_HOUSE_URL = "https://press-house.rork.app";
+export const PRESS_HOUSE_URL = "https://shop.playdjgames.com";
 
 /**
  * PRESS HOUSE launched 2026-09-27, so this is false and every instance of the

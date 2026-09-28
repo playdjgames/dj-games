@@ -3,7 +3,7 @@
  * DJ GAMES STORE — CATALOG SOURCE
  * ============================================================================
  * The Store page IS the merch catalog, synced from PRESS HOUSE
- * (https://press-house.rork.app) by `scripts/sync-presshouse.mjs` into
+ * (https://shop.playdjgames.com) by `scripts/sync-presshouse.mjs` into
  * `presshouse.generated.ts`. Browsing happens here; buying hands off to the
  * product's real PRESS HOUSE page, where Stripe checkout + Printify fulfilment
  * live. Re-run the sync after changing the PRESS HOUSE catalog.

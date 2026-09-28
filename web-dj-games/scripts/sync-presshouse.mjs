@@ -2,7 +2,11 @@
  * ============================================================================
  * PRESS HOUSE SYNC  —  run with:  node scripts/sync-presshouse.mjs
  * ============================================================================
- * PRESS HOUSE (https://press-house.rork.app) is a separate Rork project and
+ * PRESS HOUSE (https://shop.playdjgames.com) is a separate Rork project. Its
+ * own origin is https://press-house.rork.app; shop.playdjgames.com is a
+ * Cloudflare Worker proxy over it (see cloudflare-proxy/worker.js), so shoppers
+ * stay on the DJ Games domain. Syncing through the proxy keeps the URLs here
+ * identical to what shoppers click.
  * does not expose a catalog endpoint — its products are compiled into its
  * site bundle. This script downloads that live bundle, extracts the product
  * array (names, copy, prices, sizes, colors, per-size surcharges) and writes
@@ -19,7 +23,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_FILE = join(ROOT, "src/data/presshouse.generated.ts");
-const PRESS_HOUSE = "https://press-house.rork.app";
+const PRESS_HOUSE = "https://shop.playdjgames.com";
 
 const fetchText = async (url) => {
   const response = await fetch(url);
