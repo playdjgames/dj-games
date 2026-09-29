@@ -19,7 +19,7 @@ const ENTRIES: SupportEntry[] = [
     icon: Bell,
     question: "When do the submitted games launch?",
     answer: [
-      "Vexara, Astronix and Run Dummy are out — all free right now. Thinksort is a real build going through review. Review usually takes a few days, but we don't post a launch date until it's approved — we don't do countdowns that slip.",
+      "Everything DIY, Run Dummy, Vexara, Astronix and Thinksort are all out now. The next titles are still in development — review usually takes a few days once a build is in, but we don't post a launch date until it's approved. We don't do countdowns that slip.",
       "The moment each game is live it appears on the Games page automatically (the site checks the store listings directly), and we announce it on the news page. Newsletter subscribers get beta invites before launch and exactly one email when a game goes live.",
     ],
     link: { label: "Get notified", href: "/coming-soon#notify" },

@@ -62,8 +62,8 @@ const About = () => {
                 idea gets to be strange, specific, and actually ours.
               </p>
               <p>
-                We prototype fast and ship games and apps that respect your time. Four titles are live now — Everything DIY, Run Dummy, Vexara and Astronix, all free — with Thinksort in
-                review and more in development right now.
+                We prototype fast and ship games and apps that respect your time. Five titles are live now — Everything DIY, Run Dummy, Vexara, Astronix and Thinksort — with more in
+                development right now.
               </p>
               <p>
                 And it doesn't stop at apps: we design and build websites too — including this one. Fast,

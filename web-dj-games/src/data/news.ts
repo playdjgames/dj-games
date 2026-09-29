@@ -86,6 +86,7 @@ export const POSTS: NewsPost[] = [
       "In the meantime, Run Dummy, Vexara, Astronix and Thinksort are all moving through review, and Everything DIY keeps getting refined based on the feedback coming in. Thanks for following along — 2026 is shaping up to be our busiest year yet.",
       "Update: Vexara and Astronix have both since launched — free.",
       "Update: Run Dummy has launched too — also free.",
+      "Update: Thinksort is out now as well — free for 7 days, then one purchase unlocks it for good.",
     ],
   },
 ];

@@ -45,6 +45,8 @@ interface MkTitle {
   href: string;
   /** Public App Store link — only set once the title is actually live. */
   store?: string;
+  /** Live badge text; defaults to "Live now · Free". */
+  badge?: string;
 }
 
 /**
@@ -70,11 +72,18 @@ const ALSO_LIVE: MkTitle[] = [
     href: `${SITE_URL}/games/run-dummy`,
     store: "https://apps.apple.com/us/app/run-dummy/id6805272943",
   },
+  {
+    title: "Thinksort",
+    line: "Get a little structure in your day of chaos.",
+    href: `${SITE_URL}/games/thinksort`,
+    store: "https://apps.apple.com/us/app/thinksort/id6812587639",
+    // Free 7-day trial, then a one-time unlock — never call it plain "Free".
+    badge: "Live now · Free trial",
+  },
 ];
 
-const SUBMITTED: MkTitle[] = [
-  { title: "Thinksort", line: "Get a little structure in your day of chaos.", href: `${SITE_URL}/games/thinksort` },
-];
+/** Titles with a real build in review. Empty hides the section. */
+const SUBMITTED: MkTitle[] = [];
 
 const CONCEPTS = [
   { title: "Blood War", line: "It's the cost of the crown — you want gold — first you bleed.", href: `${SITE_URL}/games/blood-war` },
@@ -139,7 +148,7 @@ const Marketing = () => {
   useSeo({
     title: "DJ Games — Marketing",
     description:
-      "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara and Astronix are out now — more on the way.",
+      "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara, Astronix and Thinksort are out now — more on the way.",
   });
 
   useEffect(() => {
@@ -349,13 +358,13 @@ const Marketing = () => {
             </Reveal>
 
             <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-              {ALSO_LIVE.map(({ title, line, href, store }, index) => (
+              {ALSO_LIVE.map(({ title, line, href, store, badge }, index) => (
                 <Reveal as="li" key={title} delay={index * 70}>
                   <div className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-200 hover:border-[#8BE1FF]/40 sm:p-7">
                     <div>
                       <span className="inline-flex items-center gap-2 rounded-full border border-[#8BE1FF]/45 bg-[#8BE1FF]/10 px-3 py-1 font-mono text-[0.58rem] font-bold uppercase tracking-[0.2em] text-[#8BE1FF]">
                         <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[#8BE1FF]" aria-hidden="true" />
-                        Live now · Free
+                        {badge ?? "Live now · Free"}
                       </span>
                       <h3
                         className="mt-4 font-display text-2xl font-black uppercase text-white"
@@ -391,6 +400,7 @@ const Marketing = () => {
         </section>
 
         {/* ----------------------- NEXT THROUGH THE DOOR --------------------- */}
+        {SUBMITTED.length > 0 ? (
         <section className="relative border-t border-white/[0.07] py-20 sm:py-24" aria-labelledby="mk-next-title">
           <div className="mx-auto max-w-6xl px-5 sm:px-8">
             <Reveal>
@@ -430,6 +440,7 @@ const Marketing = () => {
             </ul>
           </div>
         </section>
+        ) : null}
 
         {/* --------------------------- EARLY CONCEPTS ------------------------ */}
         <section className="relative border-t border-white/[0.07] py-20 sm:py-24" aria-labelledby="mk-concepts-title">

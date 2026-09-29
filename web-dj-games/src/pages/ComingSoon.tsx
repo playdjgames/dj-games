@@ -29,7 +29,11 @@ const ComingSoon = () => {
             The <span className="text-signal text-glow">Lab</span>
           </>
         }
-        description="In review up top — those are next through the door. Early concepts below: first looks, not release dates."
+        description={
+          submitted.length > 0
+            ? "In review up top — those are next through the door. Early concepts below: first looks, not release dates."
+            : "Everything we're building next. Early concepts: first looks, not release dates."
+        }
         stamp={["New", "Worlds", "Loading"]}
       />
 
