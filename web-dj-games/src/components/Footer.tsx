@@ -18,6 +18,9 @@ const FOOTER_LINKS: { label: string; to: string }[] = [
   { label: "Donate", to: "/donate" },
 ];
 
+/** The one Discord invite. External, so it sits after the in-site links and opens a new tab. */
+const DISCORD_URL = "https://discord.gg/jzjMtwBVp";
+
 const LEGAL_LINKS: { label: string; to: string }[] = [
   { label: "Privacy Policy", to: "/privacy" },
   { label: "Terms of Use", to: "/terms" },
@@ -107,6 +110,16 @@ export const Footer = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <a
+                href={DISCORD_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Discord
+              </a>
+            </li>
           </ul>
         </nav>
 
