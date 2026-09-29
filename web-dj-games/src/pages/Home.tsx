@@ -4,19 +4,18 @@ import { Link } from "react-router-dom";
 
 import { ConceptCard } from "@/components/ConceptCard";
 import { GameCard } from "@/components/GameCard";
+import { LatestLiveCard } from "@/components/LatestLiveCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ParticleField } from "@/components/ParticleField";
 import { PressHouseAd } from "@/components/PressHouseAd";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { StoreButtons } from "@/components/StoreButtons";
 import { DIVISIONS } from "@/data/divisions";
 import { formatPostDate, sortedPosts } from "@/data/news";
 import type { LibraryGame } from "@/data/library";
 import { useGameLibrary } from "@/data/library";
 import { SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
-import { FEATURE_ICONS } from "@/lib/feature-icons";
 
 /** Milliseconds for an ISO date, or 0 when it's a target like "2026" / "TBA". */
 const timeOf = (iso: string | undefined): number => {
@@ -125,66 +124,11 @@ const Home = () => {
         <PressHouseAd />
       </section>
 
-      {/* AVAILABLE NOW — exactly one product: always the newest launch */}
+      {/* LIVE NOW — exactly one product: always the newest launch */}
       {live ? (
-        <section className="container py-16 sm:py-20">
+        <section className="container pb-20 pt-16 sm:pb-24 sm:pt-20">
           <Reveal>
-            <SectionHeading eyebrow="Available now" title={live.title} note="Latest release · Mobile" />
-          </Reveal>
-
-          <Reveal delay={70}>
-            <div className="surface-card corner-ticks mt-8 grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.2fr_0.8fr]">
-              <div>
-                <p className="text-[1.02rem] leading-relaxed text-muted-foreground">{live.tagline}</p>
-
-                {live.features.length > 0 ? (
-                  <ul className="mt-6 space-y-3.5">
-                    {live.features.slice(0, 3).map((feature) => {
-                      const Icon = FEATURE_ICONS[feature.icon];
-                      return (
-                        <li key={feature.title} className="flex items-center gap-3.5">
-                          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-signal/30 bg-signal/10 text-signal">
-                            <Icon size={18} />
-                          </span>
-                          <span className="text-[0.95rem] font-medium">{feature.title}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : null}
-
-                {live.jobs ? (
-                  <div className="mt-7 flex flex-wrap gap-2">
-                    {live.jobs.map((job) => (
-                      <span
-                        key={job}
-                        className="rounded-full border border-border bg-surface-raised px-3.5 py-1.5 font-mono text-[0.64rem] uppercase tracking-[0.12em] text-foreground/80"
-                      >
-                        {job}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col items-stretch justify-center gap-4 border-t border-border/60 pt-7 lg:items-start lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-                <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
-                  {live.priceNote ?? live.price ?? "Free"} · Mobile
-                </p>
-                <StoreButtons
-                  appStoreUrl={live.appStoreUrl}
-                  googlePlayUrl={live.googlePlayUrl}
-                  gameTitle={live.title}
-                />
-                <Link
-                  to={`/games/${live.slug}`}
-                  className="inline-flex min-h-[44px] items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-signal transition-colors hover:text-foreground"
-                >
-                  Learn more
-                  <ArrowRight size={15} />
-                </Link>
-              </div>
-            </div>
+            <LatestLiveCard game={live} />
           </Reveal>
         </section>
       ) : null}
