@@ -93,6 +93,8 @@ export interface Game {
   features: GameFeature[];
   /** Shown on the detail page when set, e.g. "FREE". */
   price?: string;
+  /** Overrides the price in the home spotlight, e.g. "Free trial" for a trial + one-time unlock. */
+  priceNote?: string;
   /** Apple age rating, e.g. "12+". */
   ageRating?: string;
   /** One-line example jobs (Everything DIY hero + detail page). */
@@ -293,7 +295,7 @@ export const GAMES: Game[] = [
     accent: "#FFB020",
     platforms: ["Mobile"],
     featured: false,
-    releaseDate: "2026",
+    releaseDate: "2026-09-24",
     ageRating: "12+",
     seoTitle: "Run Dummy — 3D Maze Runner for Mobile | DJ Games",
     seoDescription:
@@ -339,7 +341,7 @@ export const GAMES: Game[] = [
     accent: "#4DE1FF",
     platforms: ["Mobile"],
     featured: false,
-    releaseDate: "2026",
+    releaseDate: "2026-09-21",
     ageRating: "9+",
     seoTitle: "Vexara — Neon Arcade Space Shooter for Mobile | DJ Games",
     seoDescription:
@@ -390,7 +392,7 @@ export const GAMES: Game[] = [
     accent: "#FFC93C",
     platforms: ["Mobile"],
     featured: false,
-    releaseDate: "2026",
+    releaseDate: "2026-09-22",
     ageRating: "4+",
     seoTitle: "Astronix — One-Thumb Space Shooter for Mobile | DJ Games",
     seoDescription:
@@ -431,6 +433,7 @@ export const GAMES: Game[] = [
     description:
       "Thinksort is an offline productivity app for mobile that gives your daily chaos one place to land. Speak or type one long, messy ramble and it sorts it into dated tasks, prep items, shopping and ideas — showing a confirm screen before anything is saved.\n\nThe organizer is rule-based and runs entirely on your device: it never invents dates, times or places. The Today screen shows a single NEXT UP card with a plain-language reason why it's next, One Thing Mode hides everything else when a list feels like too much, and 'I am Stuck' hands back one tiny first step when a task has you frozen.\n\nA built-in focus timer, store-grouped shopping lists, Siri and Shortcuts capture — and no account, no cloud, no analytics, no ads. Everything stays on your device.\n\nFree for the first 7 days, then one purchase unlocks it for good. No subscription, no monthly fee.",
     genre: "Productivity",
+    priceNote: "Free trial",
     /** Live on the App Store since 2026-09-29 — verified by the public iTunes lookup (1.1.3). */
     status: "available",
     statusLabel: "Available now",
@@ -438,7 +441,7 @@ export const GAMES: Game[] = [
     accent: "#9D7BFF",
     platforms: ["Mobile"],
     featured: false,
-    releaseDate: "2026",
+    releaseDate: "2026-09-29",
     seoTitle: "Thinksort — Offline Productivity, One Next Step | DJ Games",
     seoDescription:
       "Thinksort is an offline productivity app for mobile: brain-dump sorting, one clear next step, no account and no cloud. Free for 7 days, then a one-time purchase — no subscription. Available now on mobile.",

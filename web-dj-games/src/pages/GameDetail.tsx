@@ -1,27 +1,4 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  Bell,
-  Brush,
-  Camera,
-  Check,
-  ExternalLink,
-  Flag,
-  Link2,
-  Map,
-  Music,
-  Ruler,
-  Search,
-  Shield,
-  Sparkles,
-  Swords,
-  Tag,
-  Trophy,
-  Users,
-  Wrench,
-  Zap,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bell, Check, ExternalLink, Link2 } from "lucide-react";
 import type { CSSProperties } from "react";
 import { useCallback, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -32,29 +9,11 @@ import { Reveal } from "@/components/Reveal";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StoreButtons } from "@/components/StoreButtons";
 import { divisionLabel } from "@/data/divisions";
-import type { GameFeature } from "@/data/games";
 import { formatSyncDate, useGameLibrary } from "@/data/library";
 import { canonicalUrl, isLive as isLinkLive, SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
+import { FEATURE_ICONS } from "@/lib/feature-icons";
 import { cn } from "@/lib/utils";
-
-const FEATURE_ICONS: Record<GameFeature["icon"], LucideIcon> = {
-  flag: Flag,
-  brush: Brush,
-  trophy: Trophy,
-  swords: Swords,
-  shield: Shield,
-  zap: Zap,
-  map: Map,
-  users: Users,
-  music: Music,
-  sparkles: Sparkles,
-  camera: Camera,
-  wrench: Wrench,
-  search: Search,
-  tag: Tag,
-  ruler: Ruler,
-};
 
 /** Browser-window chrome above a web project's screenshot: dots, address, open cue. */
 const SiteFrameBar = ({ host, accent }: { host: string; accent: string }) => (

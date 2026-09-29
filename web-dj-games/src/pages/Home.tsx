@@ -1,4 +1,4 @@
-import { ArrowRight, Camera, Tag, Wrench } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
@@ -12,18 +12,32 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { StoreButtons } from "@/components/StoreButtons";
 import { DIVISIONS } from "@/data/divisions";
 import { formatPostDate, sortedPosts } from "@/data/news";
+import type { LibraryGame } from "@/data/library";
 import { useGameLibrary } from "@/data/library";
 import { SITE } from "@/data/site";
 import { useSeo } from "@/hooks/use-seo";
+import { FEATURE_ICONS } from "@/lib/feature-icons";
 
-/** The one live product — everything else on this page is pipeline. */
-const LIVE_APP = "everything-diy";
+/** Milliseconds for an ISO date, or 0 when it's a target like "2026" / "TBA". */
+const timeOf = (iso: string | undefined): number => {
+  const time = new Date(iso ?? "").getTime();
+  return Number.isNaN(time) ? 0 : time;
+};
 
-const HERO_BULLETS: { icon: typeof Wrench; text: string }[] = [
-  { icon: Wrench, text: "Step-by-step projects" },
-  { icon: Camera, text: "Camera identifies tools & materials" },
-  { icon: Tag, text: "Price + where to buy" },
-];
+/**
+ * The newest app or game to LAUNCH. Apple's first-release date wins (it's live
+ * data), falling back to the curated date before Apple answers; same-day
+ * launches break the tie on the newest version. Websites never take the slot.
+ */
+const latestLaunch = (released: LibraryGame[]): LibraryGame | undefined =>
+  released
+    .filter((game) => game.division !== "web")
+    .map((game) => ({
+      game,
+      launched: timeOf(game.live?.releaseDate || game.releaseDate),
+      updated: timeOf(game.live?.currentVersionReleaseDate),
+    }))
+    .sort((a, b) => b.launched - a.launched || b.updated - a.updated)[0]?.game;
 
 const VALUES: { title: string; body: string }[] = [
   { title: "Original ideas", body: "Games and apps built around ideas designed to be different and memorable." },
@@ -38,7 +52,7 @@ const Home = () => {
   });
 
   const { games, released, submitted, concepts } = useGameLibrary();
-  const live = released.find((game) => game.slug === LIVE_APP) ?? released[0];
+  const live = useMemo(() => latestLaunch(released), [released]);
   const posts = sortedPosts().slice(0, 3);
 
   // What the studio makes, counted from the real library — a division with
@@ -111,11 +125,11 @@ const Home = () => {
         <PressHouseAd />
       </section>
 
-      {/* AVAILABLE NOW — exactly one product, no competition for attention */}
+      {/* AVAILABLE NOW — exactly one product: always the newest launch */}
       {live ? (
         <section className="container py-16 sm:py-20">
           <Reveal>
-            <SectionHeading eyebrow="Available now" title="Everything DIY" note="Out now · Mobile" />
+            <SectionHeading eyebrow="Available now" title={live.title} note="Latest release · Mobile" />
           </Reveal>
 
           <Reveal delay={70}>
@@ -123,16 +137,21 @@ const Home = () => {
               <div>
                 <p className="text-[1.02rem] leading-relaxed text-muted-foreground">{live.tagline}</p>
 
-                <ul className="mt-6 space-y-3.5">
-                  {HERO_BULLETS.map((bullet) => (
-                    <li key={bullet.text} className="flex items-center gap-3.5">
-                      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-signal/30 bg-signal/10 text-signal">
-                        <bullet.icon size={18} />
-                      </span>
-                      <span className="text-[0.95rem] font-medium">{bullet.text}</span>
-                    </li>
-                  ))}
-                </ul>
+                {live.features.length > 0 ? (
+                  <ul className="mt-6 space-y-3.5">
+                    {live.features.slice(0, 3).map((feature) => {
+                      const Icon = FEATURE_ICONS[feature.icon];
+                      return (
+                        <li key={feature.title} className="flex items-center gap-3.5">
+                          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-signal/30 bg-signal/10 text-signal">
+                            <Icon size={18} />
+                          </span>
+                          <span className="text-[0.95rem] font-medium">{feature.title}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
 
                 {live.jobs ? (
                   <div className="mt-7 flex flex-wrap gap-2">
@@ -150,7 +169,7 @@ const Home = () => {
 
               <div className="flex flex-col items-stretch justify-center gap-4 border-t border-border/60 pt-7 lg:items-start lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                 <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-muted-foreground">
-                  {live.price ?? "Free"} · Mobile
+                  {live.priceNote ?? live.price ?? "Free"} · Mobile
                 </p>
                 <StoreButtons
                   appStoreUrl={live.appStoreUrl}
