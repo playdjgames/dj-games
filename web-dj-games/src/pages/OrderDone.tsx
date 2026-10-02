@@ -60,6 +60,16 @@ const OrderDone = () => {
             <p className="mt-2 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground">
               Order {orderId}
             </p>
+            <p className="mt-4 text-[0.85rem] text-muted-foreground">
+              Save your order number — check status and tracking any time at{" "}
+              <Link
+                to={`/order-status?order=${encodeURIComponent(orderId)}`}
+                className="text-signal underline-offset-4 hover:underline"
+              >
+                Find my order
+              </Link>
+              .
+            </p>
           </>
         ) : (
           <>

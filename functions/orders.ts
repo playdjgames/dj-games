@@ -45,6 +45,25 @@ export interface PublicOrder {
   email: string;
 }
 
+/** One shipment as Printify reports it once the parcel leaves the printer. */
+export interface OrderShipment {
+  carrier: string;
+  number: string;
+  url: string;
+  delivered_at: string | null;
+}
+
+/** What a shopper sees on "Find my order" — no address beyond city/state. */
+export interface OrderDetail extends PublicOrder {
+  created_at: string;
+  merchandise_cents: number;
+  shipping_cents: number;
+  lines: { title: string; size_label: string; color_label: string; qty: number; unit_cents: number }[];
+  ship_to: string;
+  printify_status: string | null;
+  shipments: OrderShipment[];
+}
+
 const SWEEP_EVERY_MS = 5 * 60_000;
 /** Checkout sessions expire after 2h; stop polling Stripe a little after that. */
 const UNPAID_WINDOW_MS = 3 * 60 * 60_000;
@@ -136,17 +155,35 @@ export class Orders extends DurableObject<OrdersEnv> {
       return Response.json({ order: toPublic(refreshed) });
     }
 
+    if (request.method === "POST" && url.pathname === "/lookup") {
+      const body = (await request.json().catch(() => null)) as { id?: string; email?: string } | null;
+      const id = String(body?.id ?? "").trim().toUpperCase();
+      const email = String(body?.email ?? "").trim().toLowerCase();
+      const row = /^DJG-[A-Z0-9]{6,20}$/.test(id) ? this.row(id) : undefined;
+      // Same answer for a wrong number and a wrong email, so neither can be probed.
+      if (!row || row.email.trim().toLowerCase() !== email || email.length === 0) {
+        return Response.json({ error: "NO ORDER MATCHES THAT NUMBER AND EMAIL" }, { status: 404 });
+      }
+      const refreshed = row.payment_status === "unpaid" ? await this.advance(row) : row;
+      return Response.json({ order: await this.detail(refreshed, true) });
+    }
+
     if (request.method === "GET" && url.pathname === "/list") {
+      const withTracking = url.searchParams.get("tracking") === "1";
       const rows = this.ctx.storage.sql.exec<OrderRow>("SELECT * FROM orders ORDER BY created_at DESC LIMIT 200").toArray();
-      return Response.json({
-        orders: rows.map((row) => ({
-          ...toPublic(row),
-          created_at: new Date(row.created_at).toISOString(),
-          printify_order_id: row.printify_order_id,
-          attempts: row.attempts,
-          last_error: row.last_error,
-        })),
-      });
+      const orders = await Promise.all(
+        rows.map(async (row) => {
+          const address = JSON.parse(row.address) as ShopAddress;
+          return {
+            ...(await this.detail(row, withTracking)),
+            name: address.name,
+            printify_order_id: row.printify_order_id,
+            attempts: row.attempts,
+            last_error: row.last_error,
+          };
+        }),
+      );
+      return Response.json({ orders });
     }
 
     return new Response("not found", { status: 404 });
@@ -177,6 +214,49 @@ export class Orders extends DurableObject<OrdersEnv> {
       }
     }
     await this.scheduleSweep();
+  }
+
+  /** Full order view; optionally asks Printify for live production/shipping status. */
+  private async detail(row: OrderRow, withTracking: boolean): Promise<OrderDetail> {
+    const address = JSON.parse(row.address) as ShopAddress;
+    const lines = JSON.parse(row.lines) as StoredLine[];
+    let printifyStatus: string | null = null;
+    let shipments: OrderShipment[] = [];
+    if (withTracking && row.printify_order_id) {
+      const live = await printify<{
+        status?: string;
+        shipments?: { carrier?: string; number?: string; url?: string; delivered_at?: string | null }[];
+      }>(this.env, `shops/{shop}/orders/${row.printify_order_id}.json`).catch((error: unknown) => {
+        console.warn("printify status lookup failed", {
+          orderId: row.id,
+          message: error instanceof Error ? error.message : String(error),
+        });
+        return null;
+      });
+      printifyStatus = live?.status ?? null;
+      shipments = (live?.shipments ?? []).map((shipment) => ({
+        carrier: shipment.carrier ?? "",
+        number: shipment.number ?? "",
+        url: shipment.url ?? "",
+        delivered_at: shipment.delivered_at ?? null,
+      }));
+    }
+    return {
+      ...toPublic(row),
+      created_at: new Date(row.created_at).toISOString(),
+      merchandise_cents: row.merchandise_cents,
+      shipping_cents: row.shipping_cents,
+      lines: lines.map(({ title, size_label, color_label, qty, unit_cents }) => ({
+        title,
+        size_label,
+        color_label,
+        qty,
+        unit_cents,
+      })),
+      ship_to: [address.city, address.state].filter(Boolean).join(", "),
+      printify_status: printifyStatus,
+      shipments,
+    };
   }
 
   private scheduleSweep(): Promise<void> {

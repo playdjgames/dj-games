@@ -15,6 +15,7 @@ const FOOTER_LINKS: { label: string; to: string }[] = [
   { label: "News", to: "/news" },
   { label: "Support", to: "/support" },
   { label: "Store", to: "/store" },
+  { label: "Find my order", to: "/order-status" },
   { label: "Donate", to: "/donate" },
 ];
 

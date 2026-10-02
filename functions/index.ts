@@ -25,6 +25,11 @@
 //                                   card tip; returns { url } to redirect to
 //   GET  /tip/status                public — whether card tips are configured
 //
+//   POST /shop/lookup               public — guest "find my order": order number +
+//                                   checkout email → status, items, tracking
+//   GET  /shop-admin/orders         admin  — every store order (?tracking=1 adds
+//                                   live Printify status + tracking)
+//
 // Admin routes require the NEWSLETTER_ADMIN_KEY project env, sent either as
 // `Authorization: Bearer <key>` or a `?key=` query param (needed so a browser
 // download link can carry it). Without the env set, admin routes stay closed.
@@ -323,6 +328,15 @@ const handleMerch = async (path: string, request: Request, env: Env): Promise<Re
     } catch (error: unknown) {
       return shopErrorResponse(error);
     }
+  }
+
+  if (path === "/shop/lookup" && request.method === "POST") {
+    const body = await jsonBody<{ id?: string; email?: string }>(request);
+    return callDO(env, "Orders", "global", "/lookup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: String(body?.id ?? ""), email: String(body?.email ?? "") }),
+    });
   }
 
   const orderMatch = path.match(/^\/shop\/orders\/([A-Za-z0-9_-]{4,80})$/);
@@ -820,7 +834,8 @@ export default {
         return withCors(result);
       }
 
-      const isAdminRoute = path.startsWith("/newsletter/") || path.startsWith("/media-admin/");
+      const isAdminRoute =
+        path.startsWith("/newsletter/") || path.startsWith("/media-admin/") || path.startsWith("/shop-admin/");
       if (isAdminRoute && !isAuthorized(request, env)) {
         const configured = Boolean(env.NEWSLETTER_ADMIN_KEY?.trim());
         return withCors(
@@ -833,6 +848,11 @@ export default {
 
       if (path.startsWith("/media-admin/")) {
         return withCors(await handleMediaAdmin(path, request, env));
+      }
+
+      if (path === "/shop-admin/orders" && request.method === "GET") {
+        const tracking = new URL(request.url).searchParams.get("tracking") === "1" ? "?tracking=1" : "";
+        return withCors(await callDO(env, "Orders", "global", `/list${tracking}`, { method: "GET" }));
       }
 
       if (path === "/newsletter/list" && request.method === "GET") {

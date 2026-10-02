@@ -20,6 +20,8 @@ import News from "./pages/News";
 import NewsPost from "./pages/NewsPost";
 import NotFound from "./pages/NotFound";
 import OrderDone from "./pages/OrderDone";
+import OrderLookup from "./pages/OrderLookup";
+import Orders from "./pages/Orders";
 import PressHouse from "./pages/PressHouse";
 import Store from "./pages/Store";
 import Subscribers from "./pages/Subscribers";
@@ -58,6 +60,9 @@ const App = () => {
             <Route path="/shop" element={<Store />} />
             {/* Card payment returns here — order confirmation stays on playdjgames.com. */}
             <Route path="/checkout/done/:orderId" element={<OrderDone />} />
+            {/* Guest order history: order number + checkout email. */}
+            <Route path="/order-status" element={<OrderLookup />} />
+            <Route path="/track" element={<Navigate to="/order-status" replace />} />
             {/* A cancelled payment comes back to one of these; reopen the bag on /store. */}
             <Route path="/checkout/*" element={<Navigate to="/store?bag=open" replace />} />
             <Route path="/cart" element={<Navigate to="/store?bag=open" replace />} />
@@ -65,6 +70,7 @@ const App = () => {
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />
             <Route path="/media" element={<MediaLibrary />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/privacy" element={<Legal kind="privacy" />} />
             <Route path="/terms" element={<Legal kind="terms" />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
