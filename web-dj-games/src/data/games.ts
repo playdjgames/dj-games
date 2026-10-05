@@ -285,7 +285,7 @@ export const GAMES: Game[] = [
     title: "Run Dummy",
     tagline: "Run. Remember. Escape.",
     description:
-      "Run Dummy is a 3D maze runner for mobile starring a crash-test dummy on the loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.\n\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, teleporters and pressure switches. Chain clean wall streaks to unlock new runners, stock power-ups before a run, and chase up to 3 stars per trial for speed and flawless runs.\n\nEvery runner and every star is earned by playing. Every power-up is included free — no purchases, no subscriptions and no ads anywhere in the game.\n\nOnly the traps can stop you. How far can you run?",
+      "Run Dummy is a 3D maze runner for mobile starring a crash-test dummy on the loose in a neon laboratory. Steer with an on-screen joystick or tap buttons — switch any time — memorize the corridors, and reach the reward well before the clock runs out.\n\nEvery trial hides hazards between you and the exit: spinning blades, floor spikes, dart launchers, crumbling tiles, moving walls, teleporters and pressure switches. Chain clean wall streaks to unlock new runners, stock power-ups before a run, and chase up to 3 stars per trial for speed and flawless runs.\n\nEvery runner and every star is earned by playing. Every power-up is included free — no purchases, no subscriptions and no ads anywhere in the game.\n\nOnly the traps can stop you. How far can you run?",
     genre: "Maze Runner",
     status: "available",
     statusLabel: "Available now",
@@ -316,6 +316,11 @@ export const GAMES: Game[] = [
         icon: "users",
         title: "Unlock the crew",
         description: "Chain wall streaks — clean runs without kissing the walls — to unlock new runners, each with its own look.",
+      },
+      {
+        icon: "wrench",
+        title: "Your controls, your way",
+        description: "Run with an on-screen joystick or classic button controls — flip between them in settings whenever you like.",
       },
     ],
     appStoreId: 6805272943,
