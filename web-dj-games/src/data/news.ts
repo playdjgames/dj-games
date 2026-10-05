@@ -63,7 +63,7 @@ export const POSTS: NewsPost[] = [
     excerpt: "A crash-test dummy, a booby-trapped lab and a ticking clock — our next game is taking shape.",
     // Same key art as the Run Dummy library card (games.ts `coverImage`) — the
     // post and the card must never show two different versions of the game.
-    image: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/74b7731b-abaa-4f03-a756-155d3d402b85.png",
+    image: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/74b7731b-abaa-4f03-a756-155d3d402b85.png",
     gameSlug: "run-dummy",
     body: [
       "Time to talk about what's next. Run Dummy is a 3D maze runner starring a crash-test dummy loose in a neon laboratory. Steer with simple tank controls, memorize the corridors, and reach the reward well before the clock runs out.",
@@ -78,7 +78,7 @@ export const POSTS: NewsPost[] = [
     date: "2026-07-30",
     category: "Devlog",
     excerpt: "A quick update on everything we're building right now.",
-    image: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
+    image: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
     gameSlug: "blood-war",
     body: [
       "Studio update time. We've been quiet on here, but behind the scenes there's a lot in motion — and for the first time we can put a name to the next project.",

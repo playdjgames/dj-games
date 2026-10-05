@@ -298,7 +298,7 @@ export const GAMES: Game[] = [
     seoTitle: "Run Dummy — 3D Maze Runner for Mobile | DJ Games",
     seoDescription:
       "Run Dummy is a 3D maze runner for mobile: 35 trials across 5 chapters, booby-trapped labs, star ratings and crew unlocks. Free — no purchases, no ads. Available now on mobile.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/74b7731b-abaa-4f03-a756-155d3d402b85.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/74b7731b-abaa-4f03-a756-155d3d402b85.png",
     coverFit: "cover",
     screenshots: [],
     features: [
@@ -344,7 +344,7 @@ export const GAMES: Game[] = [
     seoTitle: "Vexara — Neon Arcade Space Shooter for Mobile | DJ Games",
     seoDescription:
       "Vexara is a one-thumb neon arcade space shooter for mobile. Free — no ads, no in-app purchases, no account. Available now on mobile.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/b24909ff-52af-406e-abd7-432a8e7c69a3.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/b24909ff-52af-406e-abd7-432a8e7c69a3.png",
     coverFit: "cover",
     screenshots: [],
     features: [
@@ -395,7 +395,7 @@ export const GAMES: Game[] = [
     seoTitle: "Astronix — One-Thumb Space Shooter for Mobile | DJ Games",
     seoDescription:
       "Astronix is a one-thumb endless-wave space shooter for mobile: hangar unlocks earned by play and a daily global challenge. Free — no ads, no in-app purchases. Available now on mobile.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/52916db6-85d5-4918-8f4b-4f0d7d4cbe9d.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/52916db6-85d5-4918-8f4b-4f0d7d4cbe9d.png",
     coverFit: "cover",
     screenshots: [],
     features: [
@@ -442,7 +442,7 @@ export const GAMES: Game[] = [
     seoTitle: "Thinksort — Offline Productivity, One Next Step | DJ Games",
     seoDescription:
       "Thinksort is an offline productivity app for mobile: brain-dump sorting, one clear next step, no account and no cloud. Free for 7 days, then a one-time purchase — no subscription. Available now on mobile.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/a654c904-58c9-4da5-8c3d-14e94603fa80.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/a654c904-58c9-4da5-8c3d-14e94603fa80.png",
     coverFit: "cover",
     screenshots: ["/apps/thinksort-1.jpg"],
     screenshotAspect: "portrait",
@@ -493,7 +493,7 @@ export const GAMES: Game[] = [
     seoTitle: "Neon Evolution — Upcoming Game | DJ Games",
     seoDescription:
       "Neon Evolution is an upcoming game from DJ Games — an unmapped planet, glowing in the dark. In development; follow along for the first look.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/21887f67-a8b2-46ed-930f-264d1a8f005f.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/21887f67-a8b2-46ed-930f-264d1a8f005f.png",
     coverFit: "cover",
     screenshots: [],
     features: [],
@@ -522,7 +522,7 @@ export const GAMES: Game[] = [
     seoTitle: "Blood War: The End of You — Upcoming Game | DJ Games",
     seoDescription:
       "Blood War is an upcoming game from DJ Games — it's the cost of the crown: you want gold — first you bleed. In development; follow along for the first look.",
-    coverImage: "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/44b0f9e7-68d1-463f-a813-9ef69fadd98e.png",
     coverFit: "cover",
     screenshots: [],
     features: [],

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 export const HERO_IMAGE =
-  "https://r2-pub.rork.com/projects/2s7937nfb5j5e0l2chd6r/assets/c5ec20e2-febc-4769-bcf9-7a3f42e64c8c.png";
+  "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/c5ec20e2-febc-4769-bcf9-7a3f42e64c8c.png";
 
 interface HeroProps {
   eyebrow: string;

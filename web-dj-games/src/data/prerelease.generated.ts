@@ -9,9 +9,35 @@
 
 import type { PrereleaseApp } from "@/data/prerelease";
 
-export const PRERELEASE_SYNCED_AT = "2026-09-27T12:29:28.830Z";
+export const PRERELEASE_SYNCED_AT = "2026-10-05T03:32:40.613Z";
 
 export const PRERELEASE_APPS: PrereleaseApp[] = [
+  {
+    "appStoreId": 6818914218,
+    "name": "DesignCo",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.0",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
+  {
+    "appStoreId": 6817487973,
+    "name": "Gumball Line",
+    "nameIsPlaceholder": false,
+    "subtitle": null,
+    "description": null,
+    "keywords": [],
+    "version": "1.1.2",
+    "reviewState": "PREPARE_FOR_SUBMISSION",
+    "reviewStateLabel": "In development",
+    "reviewStage": "building",
+    "ageRating": null
+  },
   {
     "appStoreId": 6813098751,
     "name": "Blood War: The End of You",
@@ -34,7 +60,7 @@ export const PRERELEASE_APPS: PrereleaseApp[] = [
       "army",
       "claim"
     ],
-    "version": "2.0.5",
+    "version": "2.0.7",
     "reviewState": "PREPARE_FOR_SUBMISSION",
     "reviewStateLabel": "In development",
     "reviewStage": "building",

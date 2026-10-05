@@ -14,5 +14,8 @@ User-agent: *
 Allow: /
 Disallow: /subscribers
 Disallow: /media
+Disallow: /orders
+Disallow: /order-status
+Disallow: /checkout/
 
 Sitemap: https://playdjgames.com/sitemap.xml

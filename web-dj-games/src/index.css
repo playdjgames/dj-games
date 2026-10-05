@@ -192,6 +192,9 @@
 
 @layer utilities {
   .reveal {
+    /* Grid/flex children default to min-width:auto and grow to their widest
+       content (long titles, button rows) — that pushed phones sideways. */
+    min-width: 0;
     opacity: 0;
     transform: translate3d(0, 22px, 0);
     transition:
