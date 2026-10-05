@@ -50,6 +50,30 @@ export const LISTING_PRODUCTS: Record<string, string> = {
   prd_mukpetafe0f2fc5d27: "6ab948d1d93c97b61d03329b", // Turntable Poster
 };
 
+/**
+ * PRESS HOUSE's current line-up (shop.playdjgames.com, spring 2026 refresh).
+ * The listings live in the same Printify account as this shop, so checkout
+ * prices and fulfils them exactly like LISTING_PRODUCTS — only the map differs.
+ * Keep in sync with `web-dj-games/scripts/sync-presshouse.mjs`.
+ */
+export const HOUSE_PRODUCTS: Record<string, string> = {
+  prd_mulbxnec5e69e64ed8: "6aba7670241d6dce5c0411d5", // Proof No. 001 Poster
+  prd_mulbxj4l82101e545f: "6aba766dd6029acfea09c47e", // Wood Type Poster
+  prd_mulbxem7b759402c0a: "6aba766797ca418b5d0840e4", // CMYK Poster
+  prd_mulbxbvidbfdc7755d: "6aba7664241d6dce5c0411cf", // Press Seal Sticker
+  prd_mulbx4yqf0977712a7: "6aba765bd6029acfea09c471", // Registration Bottle
+  prd_mulbx2yl69cd1852ed: "6aba765897ca418b5d0840dc", // Coffee Before Ink Mug
+  prd_mulbx10000c66da16d: "6aba765690c8c7b20703de32", // Press House Camp Cap
+  prd_mulbwz063bb01cdf4e: "6aba765387a1b356310d333a", // PH Dad Hat
+  prd_mulbwx626402bbdc14: "6aba765197ca418b5d0840d3", // Made To Order Tote
+  prd_mulbwoou245567e877: "6aba764697ca418b5d0840ca", // Proof Long Sleeve
+  prd_mulbwm7jcbc05b8717: "6aba764297ca418b5d0840c7", // Halftone Long Sleeve
+  prd_mulbwink3c9d54f04e: "6aba763e2d6e5e2ddc07164f", // Misprint Hoodie
+  prd_mulbwfvof79a5cb40c: "6aba763a2abb560f7d09fed5", // Ink Roller Hoodie
+  prd_mulbw7t722a1b6eee1: "6aba762f241d6dce5c0411af", // Registration Tee
+  prd_mulbw4mga8042ccb71: "6aba762b2d6e5e2ddc071644", // Press Seal Tee
+};
+
 interface PrintSpec {
   blueprintId: number;
   printProviderId: number;
@@ -269,7 +293,7 @@ export const priceLines = async (env: ShopEnv, lines: IncomingLine[], requireFil
         };
       }
 
-      const printifyId = LISTING_PRODUCTS[line.productId];
+      const printifyId = LISTING_PRODUCTS[line.productId] ?? HOUSE_PRODUCTS[line.productId];
       if (!printifyId) throw new ShopError("AN ITEM IN YOUR BAG IS NO LONGER SOLD — REMOVE IT TO CONTINUE");
       const product = await productFor(printifyId);
       const variant = product.variants.find((item) => item.id === line.variantId && item.is_enabled);

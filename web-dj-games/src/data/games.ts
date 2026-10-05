@@ -616,6 +616,35 @@ export const GAMES: Game[] = [
     websiteUrl: "[GAME_WEBSITE_URL]",
     trailerUrl: "[TRAILER_URL]",
   },
+  {
+    slug: "gumball-line",
+    division: "mobile-games",
+    title: "Gumball Line",
+    tagline: "One sweet machine — and a line out the door.",
+    /** 👇 Teaser copy — REPLACE with the real store description once it's written in App Store Connect. */
+    description:
+      "Gumball Line is the newest concept on the DJ Games slate, in development now.\n\nA glass dome stacked with gumballs, a queue that never seems to end, and one machine that had better keep up. That's all we're saying for the moment — it's too early to share how it plays.\n\nScreenshots, features and a release window will show up here first — the newsletter gets them early.",
+    genre: "Early concept",
+    status: "concept",
+    statusLabel: "In development",
+    category: "concept",
+    accent: "#FF7BAC",
+    platforms: ["Mobile"],
+    featured: false,
+    releaseDate: "TBA",
+    seoTitle: "Gumball Line — Upcoming Game | DJ Games",
+    seoDescription:
+      "Gumball Line is an upcoming game from DJ Games — one sweet machine, and a line out the door. In development; follow along for the first look.",
+    coverImage: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/9186fd8d-31c3-42d4-9da9-207632f43c96.png",
+    coverFit: "cover",
+    screenshots: [],
+    features: [],
+    appStoreId: 6817487973,
+    appStoreUrl: "[APP_STORE_URL]",
+    googlePlayUrl: "[GOOGLE_PLAY_URL]",
+    websiteUrl: "[GAME_WEBSITE_URL]",
+    trailerUrl: "[TRAILER_URL]",
+  },
 ];
 
 /**
