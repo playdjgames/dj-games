@@ -26,6 +26,21 @@ export interface NewsPost {
 
 export const POSTS: NewsPost[] = [
   {
+    slug: "run-dummy-2-3-3-controls",
+    title: "Run Dummy 2.3.3 — joystick or buttons, your call",
+    date: "2026-10-05",
+    category: "Patch Notes",
+    excerpt: "Smoother controls, bug fixes, and a new option to steer with a joystick or button controls.",
+    image: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/74b7731b-abaa-4f03-a756-155d3d402b85.png",
+    gameSlug: "run-dummy",
+    body: [
+      "Run Dummy 2.3.3 is out now on the App Store.",
+      "The big one: you can now pick how you steer. Run with an on-screen joystick or switch to button controls — flip between them in settings whenever you like, and find the one that fits your thumbs.",
+      "We also smoothed out the controls overall and squashed a batch of bugs, so turns in tight corridors feel cleaner than ever.",
+      "Run Dummy is still free, with every power-up included and no purchases or ads. Update the app and get back in the lab.",
+    ],
+  },
+  {
     slug: "everything-diy-camera-measure",
     title: "Everything DIY 2.1.4 — your camera is now a tape measure",
     date: "2026-09-22",
