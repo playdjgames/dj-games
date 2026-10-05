@@ -432,7 +432,7 @@ export const createCheckoutSession = (
   form.set("metadata[order_id]", params.orderId);
   form.set("metadata[source]", "playdjgames-store");
   form.set("payment_intent_data[metadata][order_id]", params.orderId);
-  form.set("payment_intent_data[description]", `DJ Games Store order ${params.orderId}`);
+  form.set("payment_intent_data[description]", `DJ Games LLC store order ${params.orderId}`);
   form.set("expires_at", String(Math.floor(Date.now() / 1000) + 2 * 60 * 60));
   params.lines.forEach((line, index) => {
     const prefix = `line_items[${index}]`;

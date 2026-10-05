@@ -116,7 +116,7 @@ const createTipCheckout = async (request: Request, env: Env): Promise<Response> 
   form.set("line_items[0][quantity]", "1");
   form.set("line_items[0][price_data][currency]", "usd");
   form.set("line_items[0][price_data][unit_amount]", String(amount * 100));
-  form.set("line_items[0][price_data][product_data][name]", "Tip for DJ Games");
+  form.set("line_items[0][price_data][product_data][name]", "Tip for DJ Games LLC");
   form.set(
     "line_items[0][price_data][product_data][description]",
     "Thanks for keeping the house moving.",

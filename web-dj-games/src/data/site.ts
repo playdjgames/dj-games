@@ -18,6 +18,8 @@ export type SocialKey = "discord" | "youtube" | "tiktok" | "x" | "instagram" | "
 
 export interface SiteConfig {
   brandName: string;
+  /** The registered company that owns the site, the store and every app. */
+  legalName: string;
   tagline: string;
   description: string;
   /** Canonical site URL. Used for the footer's domain line, and for SEO/share URLs
@@ -34,6 +36,7 @@ export interface SiteConfig {
 
 export const SITE: SiteConfig = {
   brandName: "DJ Games",
+  legalName: "DJ Games LLC",
   tagline: "Original mobile games and apps — and the websites too.",
   description:
     "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara, Astronix and Thinksort are out now on mobile — more on the way, and we design and build websites too.",

@@ -379,7 +379,7 @@ const Donate = () => {
         {/* Fine print */}
         <p className="mt-5 text-center text-[0.78rem] leading-relaxed text-[#8FA3B4]">
           You’ll finish checkout on the provider. We never see your card details.
-          Not tax-deductible.
+          Tips go to DJ Games LLC and are not tax-deductible.
         </p>
 
         {/* PRESS HOUSE — quiet text link, deliberately not competing with the CTA. */}
