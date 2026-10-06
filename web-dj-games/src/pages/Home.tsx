@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import { ANDROID_TEST } from "@/data/androidTest";
 import { ConceptCard } from "@/components/ConceptCard";
 import { GameCard } from "@/components/GameCard";
 import { LatestLiveCard } from "@/components/LatestLiveCard";
@@ -90,6 +91,34 @@ const Home = () => {
             <p className="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-muted-foreground">
               We also design + build websites
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ANDROID CLOSED TEST — recruit band for Vexara's Google Play testing */}
+      <section className="container">
+        <div className="flex flex-col gap-6 border border-[#243044] bg-[#0a0e14] p-6 sm:flex-row sm:items-center">
+          {ANDROID_TEST.scene ? (
+            <img
+              src={ANDROID_TEST.scene}
+              alt="A night stone keep on a rock with city glow behind it, and an Android phone whose screen shows a stone gate outlined in purple light"
+              width={1536}
+              height={1024}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[16/9] w-full shrink-0 border border-[#243044] object-cover sm:w-64 md:w-72"
+            />
+          ) : null}
+          <div className="min-w-0">
+            <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ember">{ANDROID_TEST.eyebrow}</p>
+            <h2 className="display-title mt-2 text-2xl tracking-tight">{ANDROID_TEST.title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{ANDROID_TEST.bandBody}</p>
+            <Link
+              to="/android-test"
+              className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-md bg-signal px-5 font-display text-sm font-bold uppercase tracking-wide text-background transition-colors duration-300 hover:bg-foreground"
+            >
+              Join the test
+            </Link>
           </div>
         </div>
       </section>

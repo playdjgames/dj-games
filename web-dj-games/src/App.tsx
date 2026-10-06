@@ -8,6 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { watchForWatermarkBadge } from "@/lib/remove-watermark";
 
 import About from "./pages/About";
+import AndroidTest from "./pages/AndroidTest";
 import ComingSoon from "./pages/ComingSoon";
 import Donate from "./pages/Donate";
 import GameDetail from "./pages/GameDetail";
@@ -67,6 +68,8 @@ const App = () => {
             <Route path="/checkout/*" element={<Navigate to="/store?bag=open" replace />} />
             <Route path="/cart" element={<Navigate to="/store?bag=open" replace />} />
             <Route path="/donate" element={<Donate />} />
+            {/* Vexara Google Play closed-test recruit page. */}
+            <Route path="/android-test" element={<AndroidTest />} />
             {/* Private studio pages — intentionally not linked in nav or footer. */}
             <Route path="/subscribers" element={<Subscribers />} />
             <Route path="/media" element={<MediaLibrary />} />
