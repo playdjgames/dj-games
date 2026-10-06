@@ -9,14 +9,13 @@ import { isLive, SITE, websiteDomain } from "@/data/site";
 import { isNewsletterConnected, subscribeEmail } from "@/lib/newsletter";
 
 const FOOTER_LINKS: { label: string; to: string }[] = [
-  { label: "Apps-n-Stuff", to: "/games" },
-  { label: "The Lab", to: "/coming-soon" },
-  { label: "About", to: "/about" },
+  { label: "Apps", to: "/games" },
   { label: "News", to: "/news" },
-  { label: "Support", to: "/support" },
+  { label: "About", to: "/about" },
+  { label: "Android test", to: "/android-test" },
   { label: "Store", to: "/store" },
-  { label: "Find my order", to: "/order-status" },
   { label: "Donate", to: "/donate" },
+  { label: "Find my order", to: "/order-status" },
 ];
 
 /** The one Discord invite. External, so it sits after the in-site links and opens a new tab. */

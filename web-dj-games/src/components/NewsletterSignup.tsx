@@ -3,8 +3,6 @@ import { useCallback, useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
-import { SocialLinks } from "@/components/SocialLinks";
-import { activeSocials } from "@/data/site";
 import { isNewsletterConnected, subscribeEmail } from "@/lib/newsletter";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +19,6 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
   const [searchParams] = useSearchParams();
   const [email, setEmail] = useState<string>(() => searchParams.get("email") ?? "");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const hasSocials = activeSocials().length > 0;
 
   const onSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -72,10 +69,7 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
       />
 
       <div className="relative mx-auto max-w-2xl">
-        <p className="eyebrow">
-          <span className="text-ember">//</span> Be first
-        </p>
-        <h2 className="display-title mt-3 text-3xl sm:text-4xl">Get notified first</h2>
+        <h2 className="display-title text-3xl sm:text-4xl">Get notified first</h2>
         <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground">
           Get TestFlight invites and one email when a game goes live.
         </p>
@@ -89,7 +83,7 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@email.com"
+            placeholder="Email address"
             className="min-h-[52px] flex-1 rounded-md border border-border bg-surface-raised px-4 text-[0.95rem] text-foreground placeholder:text-muted-foreground/70 transition-colors duration-200 focus:border-signal/60 focus:outline-none"
           />
           <button
@@ -103,12 +97,6 @@ export const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
           </button>
         </form>
 
-        {hasSocials ? (
-          <div className="mt-8 flex flex-col items-center gap-3">
-            <p className="font-mono text-[0.64rem] uppercase tracking-[0.22em] text-muted-foreground">Find us on</p>
-            <SocialLinks />
-          </div>
-        ) : null}
       </div>
     </section>
   );

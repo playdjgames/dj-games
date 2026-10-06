@@ -6,7 +6,7 @@ export const HERO_IMAGE =
   "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/c5ec20e2-febc-4769-bcf9-7a3f42e64c8c.png";
 
 interface HeroProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   subtitle?: string;
   description?: string;
@@ -62,11 +62,12 @@ export const Hero = ({
         />
 
         <div className="max-w-2xl animate-fade-up">
-          <p className="eyebrow">{eyebrow}</p>
+          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 
           <h1
             className={cn(
-              "display-title mt-4 text-balance",
+              "display-title text-balance",
+              eyebrow ? "mt-4" : null,
               compact ? "text-4xl sm:text-5xl lg:text-6xl" : "text-5xl sm:text-6xl lg:text-7xl",
             )}
           >

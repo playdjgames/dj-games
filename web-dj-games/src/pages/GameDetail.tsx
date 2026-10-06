@@ -453,7 +453,7 @@ const GameDetail = () => {
                 )
               ) : (
                 <Link
-                  to="/coming-soon#notify"
+                  to="/games#notify"
                   className="game-accent-border mt-6 inline-flex min-h-[52px] items-center gap-2.5 rounded-md border bg-surface-raised px-6 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:bg-signal/10"
                   style={{ color: game.accent }}
                 >

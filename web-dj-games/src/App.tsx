@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import { Layout } from "@/components/Layout";
 import { Toaster } from "@/components/ui/sonner";
@@ -9,7 +9,6 @@ import { watchForWatermarkBadge } from "@/lib/remove-watermark";
 
 import About from "./pages/About";
 import AndroidTest from "./pages/AndroidTest";
-import ComingSoon from "./pages/ComingSoon";
 import Donate from "./pages/Donate";
 import GameDetail from "./pages/GameDetail";
 import Games from "./pages/Games";
@@ -26,9 +25,14 @@ import Orders from "./pages/Orders";
 import PressHouse from "./pages/PressHouse";
 import Store from "./pages/Store";
 import Subscribers from "./pages/Subscribers";
-import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
+
+/** Redirect that keeps ?query and #hash, so old "/coming-soon#notify" links still land on the form. */
+const RedirectTo = ({ pathname }: { pathname: string }) => {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname, search, hash }} replace />;
+};
 
 const App = () => {
   useEffect(() => watchForWatermarkBadge(), []);
@@ -45,15 +49,17 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
             <Route path="/games/:slug" element={<GameDetail />} />
-            <Route path="/coming-soon" element={<ComingSoon />} />
+            {/* The Lab was folded into Apps; old links land there. */}
+            <Route path="/coming-soon" element={<RedirectTo pathname="/games" />} />
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsPost />} />
-            <Route path="/support" element={<Support />} />
+            {/* Support answers live on About now. */}
+            <Route path="/support" element={<RedirectTo pathname="/about" />} />
             {/* Everything DIY's LIVE App Store listing points its support URL at /contact.
                 That field is frozen while the version is READY_FOR_SALE, so the link has to
                 work from this side — otherwise players tapping "App Support" hit a 404. */}
-            <Route path="/contact" element={<Navigate to="/support" replace />} />
+            <Route path="/contact" element={<Navigate to="/about" replace />} />
             {/* Fallback landing while presshouse.playdjgames.com has no origin (522). */}
             <Route path="/press-house" element={<PressHouse />} />
             <Route path="/store" element={<Store />} />

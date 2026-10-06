@@ -32,7 +32,7 @@ export const StickyMobileCta = () => {
             Get Everything DIY
           </a>
           <Link
-            to="/coming-soon#notify"
+            to="/games#notify"
             className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-md border border-signal/50 px-4 font-mono text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-signal transition-colors duration-300 hover:bg-signal/10 active:scale-[0.98]"
           >
             <Bell size={15} />

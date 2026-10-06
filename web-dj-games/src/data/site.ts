@@ -96,17 +96,14 @@ export const activeSocials = (): { key: SocialKey; label: string; url: string }[
 
 export const NAV_LINKS: { label: string; to: string; accent?: "ember" }[] = [
   { label: "Home", to: "/" },
-  // The studio is no longer games-only — the library holds apps, mobile games,
-  // PC games and web work. The route stays /games so old links keep working.
-  { label: "Apps-n-Stuff", to: "/games" },
-  // Renamed to "The Lab"; the route stays /coming-soon so old links keep working.
-  { label: "The Lab", to: "/coming-soon" },
-  { label: "About", to: "/about" },
+  // Live + in-development apps on one page. The route stays /games so old links keep working;
+  // /coming-soon (the old Lab) redirects here.
+  { label: "Apps", to: "/games" },
   { label: "News", to: "/news" },
+  // Support answers live on About; /support redirects there.
+  { label: "About", to: "/about" },
   { label: "Android test", to: "/android-test" },
-  { label: "Support", to: "/support", accent: "ember" },
-  { label: "Store", to: "/store", accent: "ember" },
-  { label: "Donate", to: "/donate", accent: "ember" },
+  // Store and Donate are footer-only.
 ];
 
 /** The one live app, used by the sticky mobile CTA and anywhere an install link is needed. */

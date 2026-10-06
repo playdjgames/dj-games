@@ -90,7 +90,7 @@ const OrderDone = () => {
             {isPaid ? "Keep shopping" : "Back to your bag"}
           </Link>
           <Link
-            to="/support"
+            to="/about#support"
             className="inline-flex min-h-[48px] items-center justify-center rounded-md border border-border px-5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:border-signal/45 hover:text-foreground"
           >
             Need help?

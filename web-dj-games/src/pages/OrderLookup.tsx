@@ -145,7 +145,7 @@ const OrderLookup = () => {
                   Status, items, totals and carrier tracking once it ships.
                 </p>
                 <Link
-                  to="/support"
+                  to="/about#support"
                   className="mt-6 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-signal transition-colors hover:text-foreground"
                 >
                   Lost your order number? Contact support →
