@@ -303,9 +303,37 @@ export const pickedPriceDelta = (product: StoreProduct, picked: Record<string, s
  */
 export const STORE_IS_STOCKED = true;
 
-/** The rack as the page shows it — the synced PRESS HOUSE catalog, featured first. */
+/**
+ * Listings printed with PRESS HOUSE's own branding (wordmark, PH seal, proof
+ * art). They stay on PRESS HOUSE's shop but never show on the DJ Games store —
+ * this page carries DJ Games art only. Every product type here already has a
+ * DJ Games-art version on the rack (tee, hoodie, long sleeve, hats, tote, mug,
+ * bottle, sticker, posters). Kept here, not in the generated file, so a re-sync
+ * can't bring them back.
+ */
+const PRESS_HOUSE_BRANDED = new Set<string>([
+  "prod_house_proof-no-001-poster",
+  "prod_house_wood-type-poster",
+  "prod_house_cmyk-poster",
+  "prod_house_press-seal-sticker",
+  "prod_house_registration-bottle",
+  "prod_house_coffee-before-ink-mug",
+  "prod_house_press-house-camp-cap",
+  "prod_house_ph-dad-hat",
+  "prod_house_made-to-order-tote",
+  "prod_house_proof-long-sleeve",
+  "prod_house_halftone-long-sleeve",
+  "prod_house_misprint-hoodie",
+  "prod_house_ink-roller-hoodie",
+  "prod_house_registration-tee",
+  "prod_house_press-seal-tee",
+]);
+
+/** The rack as the page shows it — DJ Games-art listings only, featured first. */
 export const rackProducts = (): StoreProduct[] => {
-  const ordered = PRESS_HOUSE_PRODUCTS.map(withExtras).sort(
+  const ordered = PRESS_HOUSE_PRODUCTS.filter((product) => !PRESS_HOUSE_BRANDED.has(product.id))
+    .map(withExtras)
+    .sort(
     (a, b) => Number(b.featured === true) - Number(a.featured === true),
   );
   return STORE_IS_STOCKED
