@@ -27,7 +27,7 @@ export interface SiteConfig {
   website: string;
   /** General / business contact. */
   email: string;
-  /** Player support contact. */
+  /** Player support contact — same inbox as `email`; the studio uses one address. */
   supportEmail: string;
   /** 👇 REPLACE each link you actually use. Untouched ones stay hidden site-wide. */
   socials: Record<SocialKey, string>;
@@ -42,7 +42,7 @@ export const SITE: SiteConfig = {
     "DJ Games is an independent studio. Everything DIY, Run Dummy, Vexara, Astronix and Thinksort are out now on mobile — more on the way, and we design and build websites too.",
   website: "https://playdjgames.com",
   email: "hello@playdjgames.com",
-  supportEmail: "support@playdjgames.com",
+  supportEmail: "hello@playdjgames.com",
   socials: {
     discord: "[DISCORD_URL]",
     youtube: "[YOUTUBE_URL]",

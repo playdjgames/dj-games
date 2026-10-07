@@ -517,28 +517,16 @@ const Marketing = () => {
               </h2>
             </Reveal>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            <div className="mt-10 grid max-w-xl gap-4">
               <Reveal delay={70}>
                 <a
                   href="mailto:hello@playdjgames.com"
                   className="group block h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#8BE1FF]/40 hover:bg-white/[0.05] active:scale-[0.99]"
                 >
-                  <span className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#9FB6C6]">General</span>
+                  <span className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#9FB6C6]">Questions, feedback, or a bug</span>
                   <p className="mt-2.5 flex items-center gap-2.5 font-mono text-[0.95rem] font-bold text-[#8BE1FF]">
                     <Mail size={16} className="shrink-0" />
                     hello@playdjgames.com
-                  </p>
-                </a>
-              </Reveal>
-              <Reveal delay={140}>
-                <a
-                  href="mailto:support@playdjgames.com"
-                  className="group block h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#FFB020]/40 hover:bg-white/[0.05] active:scale-[0.99]"
-                >
-                  <span className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#9FB6C6]">Player support</span>
-                  <p className="mt-2.5 flex items-center gap-2.5 font-mono text-[0.95rem] font-bold text-[#FFB020]">
-                    <Mail size={16} className="shrink-0" />
-                    support@playdjgames.com
                   </p>
                 </a>
               </Reveal>
