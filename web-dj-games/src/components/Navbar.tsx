@@ -33,10 +33,15 @@ export const Navbar = () => {
   const close = useCallback(() => setOpen(false), []);
 
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "border-b border-border/70 bg-background/85 backdrop-blur-xl" : "border-b border-transparent",
+        open
+          ? "border-b border-border bg-background"
+          : scrolled
+            ? "border-b border-border/70 bg-background/85 backdrop-blur-xl"
+            : "border-b border-transparent",
       )}
     >
       <nav className="container flex h-[68px] items-center justify-between gap-6" aria-label="Main">
@@ -79,19 +84,32 @@ export const Navbar = () => {
           onClick={() => setOpen((value) => !value)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-menu"
           className="-mr-1 inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition-colors duration-300 hover:border-signal/50 hover:text-signal lg:hidden"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
+    </header>
 
+      {/* Lives outside <header>: the header's backdrop-filter would otherwise trap this fixed panel inside its 68px box. */}
       <div
+        id="mobile-menu"
+        aria-hidden={!open}
         className={cn(
-          "fixed inset-x-0 top-[68px] bottom-0 z-40 origin-top border-t border-border bg-background/97 backdrop-blur-xl transition-all duration-300 lg:hidden",
+          "fixed inset-x-0 top-[68px] bottom-0 z-[45] overflow-y-auto overscroll-contain bg-background transition-all duration-300 lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
         )}
       >
-        <ul className="container flex flex-col gap-1 py-6 pb-10">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 60% at 100% 0%, hsl(var(--signal) / 0.10), transparent 60%), radial-gradient(90% 50% at 0% 100%, hsl(var(--ember) / 0.08), transparent 65%)",
+          }}
+        />
+        <ul className="container relative flex flex-col gap-1 py-6 pb-10">
           {NAV_LINKS.map((link, index) => (
             <li key={link.to}>
               <NavLink
@@ -118,6 +136,6 @@ export const Navbar = () => {
           ))}
         </ul>
       </div>
-    </header>
+    </>
   );
 };
