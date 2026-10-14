@@ -60,6 +60,20 @@ const AndroidTest = () => {
             {ANDROID_TEST.listingNote}
           </p>
         </div>
+
+        <div className="mt-8">
+          <a
+            href={ANDROID_TEST.designcoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-md border border-ember/50 bg-surface px-6 font-display text-base font-bold uppercase tracking-wide text-foreground transition-colors duration-300 hover:border-ember hover:text-ember"
+          >
+            {ANDROID_TEST.designcoLabel}
+          </a>
+          <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
+            {ANDROID_TEST.designcoNote}
+          </p>
+        </div>
       </div>
     </div>
   );
