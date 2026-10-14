@@ -50,10 +50,9 @@ export const ANDROID_TEST = {
     "Install the app from Google Play when it appears.",
     "Leave it installed and stay opted in for 14 days.",
   ] as readonly string[],
-  listingLabel: "Play listing",
-  listingUrl: "https://play.google.com/store/apps/details?id=com.djgames.vexara",
-  listingNote:
-    "The public listing. It may not open until Google Play allows it. The closed-test link is the one that counts.",
+  listingLabel: "Play Console",
+  listingUrl: "https://play.google.com/console",
+  listingNote: "Opens your Play Console home. Only works when you're signed in as the owner.",
   /** Generated scene: night stone keep, city glow, Android phone with a purple-lit gate. */
   scene: "https://2s7937nfb5j5e0l2chd6r.rork.app/~assets/img/188d4682-44ab-4746-b3ae-7b0bb6037a4f.png",
 } as const;
