@@ -35,15 +35,24 @@ const AndroidTest = () => {
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{ANDROID_TEST.pageBody}</p>
 
         {ANDROID_TEST.tests.map((test) => (
-          <div key={test.url} className="mt-8">
-            <a
-              href={test.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-signal px-6 font-display text-base font-bold uppercase tracking-wide text-background transition-colors duration-300 hover:bg-foreground"
-            >
-              {test.label}
-            </a>
+          <div key={test.label} className="mt-8">
+            {test.comingSoon || !test.url ? (
+              <span
+                aria-disabled="true"
+                className="inline-flex min-h-[48px] cursor-not-allowed items-center justify-center rounded-md border border-border bg-surface px-6 font-display text-base font-bold uppercase tracking-wide text-muted-foreground"
+              >
+                {test.label}
+              </span>
+            ) : (
+              <a
+                href={test.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-signal px-6 font-display text-base font-bold uppercase tracking-wide text-background transition-colors duration-300 hover:bg-foreground"
+              >
+                {test.label}
+              </a>
+            )}
             <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
               {test.note}
             </p>

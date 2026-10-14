@@ -10,10 +10,12 @@
 export interface ClosedTest {
   /** Button text. */
   label: string;
-  /** Outbound Google Play link (opened in a new tab). */
-  url: string;
+  /** Outbound Google Play link (opened in a new tab). Omit while `comingSoon`. */
+  url?: string;
   /** Small mono note shown under the button. */
   note: string;
+  /** Reserve a slot before the Play link exists — renders muted and untappable. */
+  comingSoon?: boolean;
 }
 
 export const ANDROID_TEST = {
@@ -32,6 +34,11 @@ export const ANDROID_TEST = {
       label: "Join the DesignCo closed test",
       url: "https://play.google.com/store/apps/details?id=com.DesignCo.djgames",
       note: "Android phone. Same Gmail. 14 days. Second listing, same goal.",
+    },
+    {
+      label: "Run Dummy closed test",
+      note: "Coming soon.",
+      comingSoon: true,
     },
   ] as readonly ClosedTest[],
   listingLabel: "Play listing",
