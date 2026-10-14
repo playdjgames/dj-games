@@ -3,8 +3,9 @@ import { useSeo } from "@/hooks/use-seo";
 import { ANDROID_TEST } from "@/data/androidTest";
 
 /**
- * /android-test — the Google Play closed-test recruit page for Vexara.
- * One centred column on the campaign background, exact copy, two outbound links.
+ * /android-test — the Google Play closed-test recruit page.
+ * One centred column on the campaign background, exact copy, stacked test
+ * buttons (all primary style) and one secondary Play-listing link.
  */
 const AndroidTest = () => {
   useSeo({
@@ -33,19 +34,21 @@ const AndroidTest = () => {
         <h1 className="display-title mt-3 text-4xl tracking-tight sm:text-5xl">{ANDROID_TEST.title}</h1>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{ANDROID_TEST.pageBody}</p>
 
-        <div className="mt-8">
-          <a
-            href={ANDROID_TEST.joinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-signal px-6 font-display text-base font-bold uppercase tracking-wide text-background transition-colors duration-300 hover:bg-foreground"
-          >
-            {ANDROID_TEST.joinLabel}
-          </a>
-          <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
-            {ANDROID_TEST.joinNote}
-          </p>
-        </div>
+        {ANDROID_TEST.tests.map((test) => (
+          <div key={test.url} className="mt-8">
+            <a
+              href={test.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-signal px-6 font-display text-base font-bold uppercase tracking-wide text-background transition-colors duration-300 hover:bg-foreground"
+            >
+              {test.label}
+            </a>
+            <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
+              {test.note}
+            </p>
+          </div>
+        ))}
 
         <div className="mt-8">
           <a
@@ -58,20 +61,6 @@ const AndroidTest = () => {
           </a>
           <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
             {ANDROID_TEST.listingNote}
-          </p>
-        </div>
-
-        <div className="mt-8">
-          <a
-            href={ANDROID_TEST.designcoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[48px] items-center justify-center rounded-md border border-ember/50 bg-surface px-6 font-display text-base font-bold uppercase tracking-wide text-foreground transition-colors duration-300 hover:border-ember hover:text-ember"
-          >
-            {ANDROID_TEST.designcoLabel}
-          </a>
-          <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">
-            {ANDROID_TEST.designcoNote}
           </p>
         </div>
       </div>
