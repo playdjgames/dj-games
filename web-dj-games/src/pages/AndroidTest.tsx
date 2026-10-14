@@ -59,6 +59,20 @@ const AndroidTest = () => {
           </div>
         ))}
 
+        <div className="mt-10">
+          <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-ember">{ANDROID_TEST.stepsLabel}</p>
+          <ol className="mt-3 max-w-[560px] space-y-2">
+            {ANDROID_TEST.steps.map((step, index) => (
+              <li key={step} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                <span aria-hidden className="shrink-0 font-mono text-[0.7rem] font-bold text-signal">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
         <div className="mt-8">
           <a
             href={ANDROID_TEST.listingUrl}

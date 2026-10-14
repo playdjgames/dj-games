@@ -41,6 +41,15 @@ export const ANDROID_TEST = {
       comingSoon: true,
     },
   ] as readonly ClosedTest[],
+  /** Numbered join steps, shown under the test buttons. */
+  stepsLabel: "How to join",
+  steps: [
+    "Use the Gmail address that's on your Android phone.",
+    "Tap a closed-test button above and open the link on that phone.",
+    "Tap “Become a tester” (or “Install” on a listing link) and accept.",
+    "Install the app from Google Play when it appears.",
+    "Leave it installed and stay opted in for 14 days.",
+  ] as readonly string[],
   listingLabel: "Play listing",
   listingUrl: "https://play.google.com/store/apps/details?id=com.djgames.vexara",
   listingNote:
