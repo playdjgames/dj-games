@@ -32,7 +32,7 @@ export const ANDROID_TEST = {
     },
     {
       label: "Join the DesignCo closed test",
-      url: "https://play.google.com/store/apps/details?id=com.DesignCo.djgames",
+      url: "https://play.google.com/apps/testing/com.DesignCo.djgames",
       note: "Android phone. Same Gmail. 14 days.",
     },
     {
