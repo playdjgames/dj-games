@@ -36,6 +36,11 @@ export const ANDROID_TEST = {
       note: "Android phone. Same Gmail. 14 days.",
     },
     {
+      label: "Join the ThinkSort closed test",
+      url: "https://play.google.com/apps/testing/com.playdjgames.thinksort",
+      note: "Android phone. Same Gmail. 14 days.",
+    },
+    {
       label: "Run Dummy closed test",
       note: "Coming soon.",
       comingSoon: true,
